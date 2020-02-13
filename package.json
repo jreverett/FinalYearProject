@@ -1,5 +1,5 @@
 {
-  "name": "pub-quiz-app",
+  "name": "upvent-web-app",
   "version": "1.0.0",
   "scripts": {
     "client": "cd client && npm start",
