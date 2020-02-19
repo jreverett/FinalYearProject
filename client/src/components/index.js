@@ -8,4 +8,7 @@ e.g:
 
 import App from './App/App';
 
-export { App };
+import NavBar from './NavBar/NavBar';
+import NavMenu from './NavMenu/NavMenu';
+
+export { App, NavBar, NavMenu };
