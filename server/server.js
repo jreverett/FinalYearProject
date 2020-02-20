@@ -4,8 +4,9 @@ const path = require('path');
 const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config();
+mongoose.set('useCreateIndex', true);
 
-const testAPIRouter = require('./api/routes/testAPI');
+const userRouter = require('./routes/user');
 
 //////////////////////////////////////////////////////////////
 // SERVER SETUP
@@ -17,7 +18,7 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, '../client/public')));
 
 // routing
-app.use('/testAPI', testAPIRouter);
+app.use('/api', userRouter);
 
 // catch 404's and send them to the error handler
 app.use(function(req, res, next) {
@@ -46,4 +47,10 @@ db.once('open', function() {
   console.log('[mongodb] connection established with MongoDB');
 });
 
-app.listen(port, () => console.log(`listening on port ${port}`));
+app.listen(port, () => {
+  console.log(`listening on port ${port}`);
+  mongoose.connect(mongoString, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  });
+});

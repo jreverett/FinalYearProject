@@ -13,7 +13,7 @@ const UserSchema = mongoose.Schema({
   },
   lastname: {
     type: String,
-    required: truea
+    required: true
   },
   email: {
     type: String,
@@ -24,12 +24,10 @@ const UserSchema = mongoose.Schema({
     type: String
   },
   password: {
-    type: String,
-    required: true
+    type: String
   },
   salt: {
-    type: String,
-    required: true
+    type: String
   },
   verified: {
     type: Boolean,

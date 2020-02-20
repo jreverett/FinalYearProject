@@ -10,13 +10,13 @@ class App extends Component {
   }
 
   callAPI() {
-    fetch('http://localhost:9000/testAPI')
+    fetch('http://localhost:9000/.....') // TODO: test this with a working API route
       .then(res => res.text())
       .then(res => this.setState({ apiResponse: res }));
   }
 
   componentWillMount() {
-    this.callAPI();
+    //this.callAPI();
   }
 
   render() {
@@ -32,8 +32,8 @@ class App extends Component {
             <Route path="/events">
               <h1>Events Page</h1> // placeholder
             </Route>
-            <Route path="/profile">
-              <h1>Profile Page</h1> // placeholder
+            <Route path="/user">
+              <h1>User Page</h1> // placeholder
             </Route>
             <Route path="/send-announcement">
               <h1>Announcement Page</h1> // placeholder
@@ -43,8 +43,6 @@ class App extends Component {
             </Route>
           </Switch>
         </Router>
-
-        <p>{this.state.apiResponse}</p>
       </Fragment>
     );
   }
