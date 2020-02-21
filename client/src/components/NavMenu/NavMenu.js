@@ -9,7 +9,7 @@ class NavMenu extends Component {
         <a id="home" className="menu-item" href="/">
           Home
         </a>
-        <a id="home" className="menu-item" href="/events">
+        <a id="home" className="menu-item" href="/event-listings">
           Events
         </a>
         <a id="home" className="menu-item" href="/user">
