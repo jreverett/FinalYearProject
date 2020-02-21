@@ -6,6 +6,7 @@ e.g:
     export { PageA, PageB };
 */
 
-import HomePage from './HomePage/HomePage';
+import Home from './Home/Home';
+import Login from './Login/Login';
 
-export { HomePage };
+export { Home, Login };

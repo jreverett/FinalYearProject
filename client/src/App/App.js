@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { HomePage } from '../pages/index';
+import { Home, Login } from '../pages/index';
 import './App.css';
 
 class App extends Component {
@@ -23,6 +23,9 @@ class App extends Component {
     return (
       <Router>
         <Switch>
+          <Route path="/login">
+            <Login />
+          </Route>
           <Route path="/event">
             <h1>Event Page</h1> // placeholder
           </Route>
@@ -36,7 +39,7 @@ class App extends Component {
             <h1>Announcement Page</h1> // placeholder
           </Route>
           <Route path="/">
-            <HomePage />
+            <Home />
           </Route>
         </Switch>
       </Router>

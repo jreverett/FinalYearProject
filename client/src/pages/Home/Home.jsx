@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { NavBar } from '../../components/index';
 
-class HomePage extends Component {
+class Home extends Component {
   render() {
     return <NavBar />;
   }
 }
 
-export default HomePage;
+export default Home;
