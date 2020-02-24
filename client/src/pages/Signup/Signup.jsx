@@ -42,6 +42,7 @@ class Signup extends Component {
         console.log('Account created for user: ' + email);
         userService.login(email, password);
         this.setState({ loading: false });
+        window.location.href = '/';
       },
       error => this.setState({ error, loading: false })
     );
