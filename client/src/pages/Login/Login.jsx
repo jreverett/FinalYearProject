@@ -3,7 +3,7 @@ import { userService } from '../../services/user';
 import { NavBar } from '../../components/index';
 import './Login.css';
 
-class Signup extends Component {
+class Login extends Component {
   constructor(props) {
     super(props);
 
@@ -102,9 +102,9 @@ class Signup extends Component {
                 <div className="help-block">Password is required</div>
               )}
             </div>
-            <div id="signup-button-container" className="form-group">
+            <div id="login-button-container" className="form-group">
               <button
-                id="signup-button"
+                id="login-button"
                 className="btn btn-primary"
                 disabled={loading}
               >
@@ -135,4 +135,4 @@ class Signup extends Component {
   }
 }
 
-export default Signup;
+export default Login;

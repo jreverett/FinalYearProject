@@ -40,12 +40,12 @@ div .alert-danger {
   margin-bottom: 10px;
 }
 
-#signup-button-container {
+#login-button-container {
   width: 50%;
   margin: 0 auto;
 }
 
-#signup-button {
+#login-button {
   margin-top: 20px;
   width: 100%;
 }
