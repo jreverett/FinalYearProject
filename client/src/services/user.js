@@ -1,3 +1,5 @@
+import { API_URL } from '../config';
+
 function signup(firstname, lastname, email, password, address) {
   const requestOptions = {
     method: 'POST',
@@ -5,7 +7,7 @@ function signup(firstname, lastname, email, password, address) {
     body: JSON.stringify({ firstname, lastname, email, password, address })
   };
 
-  return fetch(`http://localhost:9000/api/user/signup`, requestOptions)
+  return fetch(`${API_URL}/api/user/signup`, requestOptions)
     .then(handleResponse)
     .then({
       if(user) {
@@ -21,7 +23,7 @@ function login(email, password) {
     body: JSON.stringify({ email, password })
   };
 
-  return fetch(`http://localhost:9000/api/user/login`, requestOptions)
+  return fetch(`${API_URL}/api/user/login`, requestOptions)
     .then(handleResponse)
     .then(user => {
       if (user) {
