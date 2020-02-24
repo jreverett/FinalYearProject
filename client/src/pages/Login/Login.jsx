@@ -36,7 +36,6 @@ class Login extends Component {
     this.setState({ loading: true });
     userService.login(email, password).then(
       user => {
-        console.log('logged in!');
         this.setState({ loading: false });
       },
       error => this.setState({ error, loading: false })

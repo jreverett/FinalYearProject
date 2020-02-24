@@ -11,6 +11,7 @@ class Signup extends Component {
       firstname: '',
       lastname: '',
       email: '',
+      address: '',
       password: '',
       submitted: false,
       loading: false,
@@ -30,13 +31,20 @@ class Signup extends Component {
     e.preventDefault();
 
     this.setState({ submitted: true });
-    const { firstname, lastname, email, password } = this.state;
+    const { firstname, lastname, email, address, password } = this.state;
 
     // check form is valid
     if (!(firstname && lastname && email && password)) return;
 
     this.setState({ loading: true });
-    userService.signup(email, password);
+    userService.signup(firstname, lastname, email, address, password).then(
+      user => {
+        console.log('Account created for user: ' + email);
+        userService.login(email, password);
+        this.setState({ loading: false });
+      },
+      error => this.setState({ error, loading: false })
+    );
   }
 
   render() {
@@ -45,6 +53,7 @@ class Signup extends Component {
       firstname,
       lastname,
       email,
+      address,
       password,
       loading,
       error
@@ -126,6 +135,22 @@ class Signup extends Component {
               {submitted && !email && (
                 <div className="help-block">Email is required</div>
               )}
+            </div>
+
+            {/* ADDRESS */}
+            <div
+              className={
+                'form-group' + (submitted && !address ? ' has-error' : '')
+              }
+            >
+              <label htmlFor="address">Address</label>
+              <input
+                type="text"
+                className="form-control"
+                name="address"
+                value={address}
+                onChange={this.handleChange}
+              />
             </div>
 
             {/* PASSWORD */}

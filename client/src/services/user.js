@@ -1,6 +1,18 @@
-// function signup() {
-//   // TODO
-// }
+function signup(firstname, lastname, email, password, address) {
+  const requestOptions = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ firstname, lastname, email, password, address })
+  };
+
+  return fetch(`http://localhost:9000/api/user/signup`, requestOptions)
+    .then(handleResponse)
+    .then({
+      if(user) {
+        return user;
+      }
+    });
+}
 
 function login(email, password) {
   const requestOptions = {
@@ -13,6 +25,7 @@ function login(email, password) {
     .then(handleResponse)
     .then(user => {
       if (user) {
+        console.log('logged in!');
         // TODO: set jwt auth here
       }
 
@@ -37,5 +50,6 @@ function handleResponse(response) {
 }
 
 export const userService = {
+  signup,
   login
 };
