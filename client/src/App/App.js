@@ -1,6 +1,6 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { Home, Signup } from '../pages/index';
+import { Home, Login, Signup } from '../pages/index';
 import './App.css';
 
 class App extends Component {
@@ -23,9 +23,9 @@ class App extends Component {
     return (
       <Router>
         <Switch>
-          {/* <Route path="/login">
+          <Route path="/login">
             <Login />
-          </Route> */}
+          </Route>
           <Route path="/signup">
             <Signup />
           </Route>

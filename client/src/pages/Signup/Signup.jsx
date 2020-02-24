@@ -173,7 +173,7 @@ class Signup extends Component {
           </div>
           <div id="question-container">
             <p>Already have an account? </p>
-            <a href="https://www.google.com">Sign in</a>
+            <a href="/login">Log in</a>
           </div>
         </div>
       </Fragment>
