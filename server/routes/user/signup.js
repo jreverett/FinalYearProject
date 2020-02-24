@@ -8,7 +8,7 @@ const User = require('../../model/user');
 router.post('/signup', (req, res, next) => {
   let newUser = new User();
 
-  newUser.type = req.body.type;
+  newUser.type = 0; // 0 = Standard, 1 = Admin
   newUser.firstname = req.body.firstname;
   newUser.lastname = req.body.lastname;
   newUser.email = req.body.email;
