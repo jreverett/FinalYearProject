@@ -9,11 +9,11 @@ function login(email, password) {
     body: JSON.stringify({ email, password })
   };
 
-  return fetch(`http://localhost:9000/api/users/login`, requestOptions)
+  return fetch(`http://localhost:9000/api/user/login`, requestOptions)
     .then(handleResponse)
     .then(user => {
       if (user) {
-        console.log('logged in!'); // TODO: set jwt auth here
+        // TODO: set jwt auth here
       }
 
       return user;

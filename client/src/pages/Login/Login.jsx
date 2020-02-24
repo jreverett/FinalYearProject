@@ -34,7 +34,13 @@ class Signup extends Component {
     if (!(email && password)) return;
 
     this.setState({ loading: true });
-    userService.signup(email, password);
+    userService.login(email, password).then(
+      user => {
+        console.log('logged in!');
+        this.setState({ loading: false });
+      },
+      error => this.setState({ error, loading: false })
+    );
   }
 
   render() {
@@ -102,7 +108,7 @@ class Signup extends Component {
                 className="btn btn-primary"
                 disabled={loading}
               >
-                Join now
+                Login
               </button>
               {loading && (
                 <Fragment>

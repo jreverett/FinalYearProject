@@ -7,8 +7,9 @@ const User = require('../../model/user');
 router.post('/login', (req, res) => {
   User.findOne({ email: req.body.email }, function(err, user) {
     if (user === null) {
+      // Account with this email does not exist
       return res.status(400).send({
-        message: 'User not found'
+        message: 'Invalid credentials'
       });
     } else {
       if (user.passwordIsValid(req.body.password)) {
@@ -16,8 +17,9 @@ router.post('/login', (req, res) => {
           message: 'User logged in'
         });
       } else {
+        // Incorrect password for this account
         return res.status(400).send({
-          message: 'Wrong password'
+          message: 'Invalid credentials'
         });
       }
     }

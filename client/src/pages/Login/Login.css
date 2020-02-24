@@ -22,6 +22,11 @@
   color: rgb(255, 82, 62);
 }
 
+div .alert-danger {
+  margin-top: 1rem;
+  margin-bottom: 0;
+}
+
 #logo-container {
   width: 50%;
   margin: 0 auto;
