@@ -28,8 +28,10 @@ app.use(function(req, res, next) {
 // error handler
 app.use(function(err, req, res, next) {
   // only show error in dev mode
-  res.locals.message = err.message;
-  res.locals.error = process.env.NODE_ENV === 'development' ? err : {};
+  // ********** TEMPORARILY DISABLED ************
+  // res.locals.message = err.message;
+  // res.locals.error = process.env.NODE_ENV === 'development' ? err : {};
+  // ********************************************
 
   // show error page
   res.status(err.status || 500);
