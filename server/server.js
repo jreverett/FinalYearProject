@@ -20,6 +20,11 @@ app.use(express.static(path.join(__dirname, '../client/build')));
 // routing
 app.use('/api', userRouter);
 
+// heroku + react router bug fix
+app.get('/*', function(req, res) {
+  res.sendFile(path.join(__dirname, '../client/build'));
+});
+
 // catch 404's and send them to the error handler
 app.use(function(req, res, next) {
   next(createError(404));
