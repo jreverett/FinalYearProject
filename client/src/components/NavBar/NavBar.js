@@ -13,7 +13,9 @@ class NavBar extends Component {
             LOGIN
           </Button>
           <div id="img-container">
-            <img src={require('../../images/upvent.png')} />
+            <a href="/">
+              <img src={require('../../images/upvent.png')} />
+            </a>
           </div>
         </div>
       </Fragment>
