@@ -1,0 +1,19 @@
+#nav-container {
+  display: flex;
+  height: 100px;
+  align-items: center;
+  margin-left: 90px;
+}
+
+#nav-login-button {
+  width: 100%;
+  text-align: left;
+  margin-top: 0;
+  color: black;
+  font-size: large;
+}
+
+#img-container {
+  display: flex;
+  align-items: center;
+}

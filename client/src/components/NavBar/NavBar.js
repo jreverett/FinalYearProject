@@ -1,13 +1,22 @@
 import React, { Component, Fragment } from 'react';
 import { NavMenu } from '../index';
+import Button from 'react-bootstrap/Button';
 import './NavBar.css';
 
 class NavBar extends Component {
   render() {
     return (
-      <NavMenu />
-      /* <Login /> */
-      /* <img src="../../../images/upvent.png" alt="Upvent Logo" /> */
+      <Fragment>
+        <NavMenu />
+        <div id="nav-container">
+          <Button id="nav-login-button" href="/login" variant="link">
+            LOGIN
+          </Button>
+          <div id="img-container">
+            <img src={require('../../images/upvent.png')} />
+          </div>
+        </div>
+      </Fragment>
     );
   }
 }
