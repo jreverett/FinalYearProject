@@ -5,10 +5,13 @@
   margin-left: 90px;
 }
 
-#nav-login-button {
+#nav-login-button-container {
   width: 100%;
   text-align: left;
   margin-top: 0;
+}
+
+#nav-login-button {
   color: black;
   font-size: large;
 }

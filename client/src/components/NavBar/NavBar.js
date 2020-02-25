@@ -9,9 +9,11 @@ class NavBar extends Component {
       <Fragment>
         <NavMenu />
         <div id="nav-container">
-          <Button id="nav-login-button" href="/login" variant="link">
-            LOGIN
-          </Button>
+          <div id="nav-login-button-container">
+            <Button id="nav-login-button" href="/login" variant="link">
+              LOGIN
+            </Button>
+          </div>
           <div id="img-container">
             <a href="/">
               <img src={require('../../images/upvent.png')} />
