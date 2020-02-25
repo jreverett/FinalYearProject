@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from 'react';
 import { userService } from '../../services/user';
-import { NavBar } from '../../components/index';
 import './Login.css';
 
 class Login extends Component {
@@ -47,8 +46,6 @@ class Login extends Component {
     const { submitted, email, password, loading, error } = this.state;
     return (
       <Fragment>
-        <NavBar />
-
         {loading && <div id="loading-fade" />}
 
         <div id="form-container" className="col-md-4 offset-md-4">
