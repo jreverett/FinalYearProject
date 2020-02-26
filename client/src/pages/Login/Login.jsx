@@ -36,6 +36,7 @@ class Login extends Component {
     userService.login(email, password).then(
       user => {
         this.setState({ loading: false });
+        this.props.userAction(email);
         window.location.href = '/';
       },
       error => this.setState({ error, loading: false })

@@ -10,7 +10,7 @@ class NavBar extends Component {
   }
 
   render() {
-    var loggedIn = this.props.isLoggedIn;
+    var loggedInUser = this.props.loggedInUser;
     return (
       <Fragment>
         <NavMenu />
@@ -21,16 +21,12 @@ class NavBar extends Component {
               href="/login"
               variant="link"
               onClick={() => {
-<<<<<<< HEAD
-                if (loggedIn) {
+                if (loggedInUser) {
                 } // userService.logout(email); // TODO: get email prop and link this up
-=======
-                if (loggedIn) userService.logout;
->>>>>>> 5ad32917a5ac7c11d824f9069eae878505bd06a8
               }}
             >
-              {loggedIn && 'LOGOUT'}
-              {!loggedIn && 'LOGIN'}
+              {loggedInUser && 'LOGOUT'}
+              {!loggedInUser && 'LOGIN'}
             </Button>
           </div>
           <div id="img-container">

@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { Home, Login, Signup } from '../pages/index';
 import { NavBar } from '../components/index';
 import './App.css';
@@ -8,34 +9,45 @@ class App extends Component {
   constructor(props) {
     super(props);
 
+    this.userHandler = this.userHandler.bind(this);
+
     this.state = {
-      isLoggedIn: false
+      loggedInUser: '' // check for jwt token on load
     };
+  }
+
+  userHandler(email) {
+    this.setState({
+      loggedInUser: email
+    });
   }
 
   render() {
     return (
       <Fragment>
-        <NavBar isLoggedIn={this.state.isLoggedIn} />
+        <NavBar loggedInUser={this.state.loggedInUser} />
         <Router>
           <Switch>
             <Route path="/login">
-              <Login />
+              <Login userAction={this.userHandler} />
             </Route>
             <Route path="/signup">
               <Signup />
             </Route>
-            <Route path="/event">
-              <h1>Event Page</h1> // placeholder
+            <Route path="/event/view">
+              <h1>Event Viewing Page</h1>
+            </Route>
+            <Route path="/event/create">
+              <h1>Event Creation Page</h1>
             </Route>
             <Route path="/event-listings">
-              <h1>Events Page</h1> // placeholder
+              <h1>Events Page</h1>
             </Route>
             <Route path="/user">
-              <h1>User Page</h1> // placeholder
+              <h1>User Page</h1>
             </Route>
             <Route path="/send-announcement">
-              <h1>Announcement Page</h1> // placeholder
+              <h1>Announcement Page</h1>
             </Route>
             <Route path="/">
               <Home />
@@ -46,5 +58,9 @@ class App extends Component {
     );
   }
 }
+
+App.propTypes = {
+  loggedInUser: PropTypes.string
+};
 
 export default App;
