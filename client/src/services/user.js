@@ -35,6 +35,10 @@ function login(email, password) {
     });
 }
 
+function logout(email) {
+  // TODO: this (delete jwt session token)
+}
+
 // function deleteUser() {
 //   // TODO
 // }
@@ -53,5 +57,6 @@ function handleResponse(response) {
 
 export const userService = {
   signup,
-  login
+  login,
+  logout
 };

@@ -9,14 +9,14 @@ class App extends Component {
     super(props);
 
     this.state = {
-      apiResponse: ''
+      isLoggedIn: false
     };
   }
 
   render() {
     return (
       <Fragment>
-        <NavBar />
+        <NavBar isLoggedIn={this.state.isLoggedIn} />
         <Router>
           <Switch>
             <Route path="/login">
