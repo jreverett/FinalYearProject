@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { userService } from '../../services/user';
+import '../../common.css';
 import './Login.css';
 
 class Login extends Component {

@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { Home, Login, Signup } from '../pages/index';
-import { NavBar } from '../components/index';
+import { Home, Login, Signup, CreateEvent } from '../pages';
+import { NavBar } from '../components';
 import './App.css';
 
 class App extends Component {
@@ -38,7 +38,7 @@ class App extends Component {
               <h1>Event Viewing Page</h1>
             </Route>
             <Route path="/event/create">
-              <h1>Event Creation Page</h1>
+              <CreateEvent loggedInUser={this.state.loggedInUser} />
             </Route>
             <Route path="/event-listings">
               <h1>Events Page</h1>
