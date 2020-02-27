@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { Form, Row, Col } from 'react-bootstrap';
 import DateTime from 'react-datetime';
-import eventService from '../../../services/event';
+import { eventService } from '../../../services/event';
 import '../../../common.css';
 import './CreateEvent.css';
 
@@ -45,6 +45,24 @@ class CreateEvent extends Component {
     if (!(title && description && start && end && cost && images)) return;
 
     this.setState({ loading: true });
+    // eventService.createEvent(this.props.loggedInUser, title, description, start, end, cost, images) // TODO: implement this when loggedInUser is implemented
+    eventService
+      .createEvent(
+        'placeholder@gmail.com',
+        title,
+        description,
+        start,
+        end,
+        cost,
+        images
+      )
+      .then(
+        event => {
+          this.setState({ loading: false });
+          window.location.href = '/event-listings';
+        },
+        error => this.setState({ error, loading: false })
+      );
   }
 
   render() {
@@ -58,9 +76,6 @@ class CreateEvent extends Component {
       loading,
       error
     } = this.state;
-    const email = this.props.loggedInUser;
-    const patt = /^[1-9]\d*(((,\d{3}){1})?(\.\d{0,2})?)$/;
-    const costIsValid = patt.test(cost);
 
     return (
       <Fragment>

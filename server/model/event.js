@@ -22,8 +22,7 @@ const EventSchema = mongoose.Schema({
     type: Date
   },
   cost: {
-    type: Number,
-    required: true
+    type: Number
   },
   images: {
     type: Array

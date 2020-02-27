@@ -7,6 +7,7 @@ require('dotenv').config();
 mongoose.set('useCreateIndex', true);
 
 const userRouter = require('./routes/user');
+const eventRouter = require('./routes/event');
 
 //////////////////////////////////////////////////////////////
 // SERVER SETUP
@@ -19,6 +20,7 @@ app.use(express.static(path.join(__dirname, '../client/build')));
 
 // routing
 app.use('/api', userRouter);
+app.use('/api', eventRouter);
 
 // heroku + react router bug fix
 app.get('*', (req, res) => {
