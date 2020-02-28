@@ -1,7 +1,10 @@
 import React, { Component, Fragment } from 'react';
 import { Form, Row, Col } from 'react-bootstrap';
 import DateTime from 'react-datetime';
+import FileBase64 from 'react-file-base64';
+
 import { eventService } from '../../../services/event';
+
 import '../../../common.css';
 import './CreateEvent.css';
 
@@ -12,10 +15,10 @@ class CreateEvent extends Component {
     this.state = {
       title: '',
       description: '',
-      start: Date,
-      end: Date,
+      start: '',
+      end: '',
       cost: Number,
-      images: Array,
+      images: [],
       submitted: false,
       loading: false,
       error: ''
@@ -36,13 +39,25 @@ class CreateEvent extends Component {
     }
   };
 
+  getImageData(images) {
+    var base64Images = [];
+    images.forEach(img => {
+      images = base64Images.push(
+        // remove header info and just get the base64 string
+        img.base64.replace(/^data:image\/(png);base64,/, '')
+      );
+    });
+
+    this.setState({ images: base64Images });
+  }
+
   handleSubmit(e) {
     e.preventDefault();
 
     this.setState({ submitted: true });
     const { title, description, start, end, cost, images } = this.state;
 
-    if (!(title && description && start && end && cost && images)) return;
+    if (!(title && description && start && cost && images)) return;
 
     this.setState({ loading: true });
     // eventService.createEvent(this.props.loggedInUser, title, description, start, end, cost, images) // TODO: implement this when loggedInUser is implemented
@@ -71,7 +86,6 @@ class CreateEvent extends Component {
       description,
       start,
       cost,
-      images,
       submitted,
       loading,
       error
@@ -170,17 +184,14 @@ class CreateEvent extends Component {
             </Form.Group>
 
             {/* IMAGES */}
-            <Form.Group id="imagesContainer" controlId="formImages">
-              <Form.Label>Upload Images</Form.Label>
-              <Form.Control
-                type="file"
-                multiple
-                name="images"
-                value={images}
-                onChange={this.handleChange}
-              ></Form.Control>
-            </Form.Group>
+            <div id="imagesContainer">
+              <FileBase64
+                multiple={true}
+                onDone={this.getImageData.bind(this)}
+              />
+            </div>
 
+            {/* SUBMIT EVENT */}
             <Form.Group id="create-button-container">
               <button className="btn btn-primary" disabled={loading}>
                 Create

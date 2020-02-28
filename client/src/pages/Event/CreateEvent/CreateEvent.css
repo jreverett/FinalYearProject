@@ -1,7 +1,3 @@
-.row {
-  margin-bottom: 0.8rem;
-}
-
 .dateLabel {
   margin-bottom: 0.4rem;
 }
@@ -27,7 +23,7 @@
 }
 
 #imagesContainer {
-  margin-top: 1rem;
+  margin-top: 1.2rem;
 }
 
 #create-button-container {
