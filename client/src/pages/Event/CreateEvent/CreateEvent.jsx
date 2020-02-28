@@ -34,9 +34,7 @@ class CreateEvent extends Component {
   }
 
   handleDateChange = key => newDate => {
-    if (newDate !== 'Invalid date') {
-      this.setState({ [key]: newDate / 1000 });
-    }
+    this.setState({ [key]: newDate });
   };
 
   getImageData(images) {
