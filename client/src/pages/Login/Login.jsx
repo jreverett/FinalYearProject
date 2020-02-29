@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { userService } from '../../services/user';
+import { authenticationService } from '../../services';
 import '../../common.css';
 import './Login.css';
 
@@ -34,7 +34,7 @@ class Login extends Component {
     if (!(email && password)) return;
 
     this.setState({ loading: true });
-    userService.login(email, password).then(
+    authenticationService.login(email, password).then(
       user => {
         this.setState({ loading: false });
         this.props.userAction(email);

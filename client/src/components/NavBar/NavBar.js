@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { userService } from '../../services/user';
+import { authenticationService } from '../../services';
 import { NavMenu } from '../index';
 import Button from 'react-bootstrap/Button';
 import './NavBar.css';
@@ -22,7 +22,7 @@ class NavBar extends Component {
               variant="link"
               onClick={() => {
                 if (loggedInUser) {
-                } // userService.logout(email); // TODO: get email prop and link this up
+                } // authenticationService.logout(email); // TODO: get email prop and link this up
               }}
             >
               {loggedInUser && 'LOGOUT'}

@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { userService } from '../../services/user';
+import { authenticationService, userService } from '../../services';
 import '../../common.css';
 import './Signup.css';
 
@@ -40,7 +40,7 @@ class Signup extends Component {
     userService.signup(firstname, lastname, email, address, password).then(
       user => {
         console.log('Account created for user: ' + email);
-        userService.login(email, password);
+        authenticationService.login(email, password);
         this.setState({ loading: false });
         window.location.href = '/';
       },
