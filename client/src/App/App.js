@@ -29,7 +29,7 @@ class App extends Component {
         <Router>
           <Switch>
             <Route path="/login">
-              <Login />
+              <Login loggedInUser={loggedInUser} />
             </Route>
             <Route path="/signup">
               <Signup />

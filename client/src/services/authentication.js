@@ -37,6 +37,6 @@ export const authenticationService = {
   logout,
   loggedInUser: currentUserSubject.asObservable(),
   get loggedInUserValue() {
-    return this.currentUserSubject.value;
+    return this.currentUserSubject ? this.currentUserSubject.value : null;
   }
 };
