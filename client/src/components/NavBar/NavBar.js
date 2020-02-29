@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
-import { authenticationService } from '../../services';
 import { NavMenu } from '../index';
 import Button from 'react-bootstrap/Button';
+import { authenticationService } from '../../services';
 import './NavBar.css';
 
 class NavBar extends Component {
@@ -10,7 +10,7 @@ class NavBar extends Component {
   }
 
   render() {
-    var loggedInUser = this.props.loggedInUser;
+    const loggedInUser = this.props.loggedInUser;
     return (
       <Fragment>
         <NavMenu />
@@ -22,7 +22,8 @@ class NavBar extends Component {
               variant="link"
               onClick={() => {
                 if (loggedInUser) {
-                } // authenticationService.logout(email); // TODO: get email prop and link this up
+                  authenticationService.logout(loggedInUser.email);
+                }
               }}
             >
               {loggedInUser && 'LOGOUT'}

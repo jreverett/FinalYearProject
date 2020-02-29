@@ -3,33 +3,33 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Home, Login, Signup, CreateEvent } from '../pages';
 import { NavBar } from '../components';
+import { authenticationService } from '../services';
 import './App.css';
 
 class App extends Component {
   constructor(props) {
     super(props);
 
-    this.userHandler = this.userHandler.bind(this);
-
     this.state = {
-      loggedInUser: '' // check for jwt token on load
+      loggedInUser: null
     };
   }
 
-  userHandler(email) {
-    this.setState({
-      loggedInUser: email
-    });
+  componentDidMount() {
+    authenticationService.loggedInUser.subscribe(x =>
+      this.setState({ loggedInUser: x })
+    );
   }
 
   render() {
+    const { loggedInUser } = this.state;
     return (
       <Fragment>
-        <NavBar loggedInUser={this.state.loggedInUser} />
+        <NavBar loggedInUser={loggedInUser} />
         <Router>
           <Switch>
             <Route path="/login">
-              <Login userAction={this.userHandler} />
+              <Login />
             </Route>
             <Route path="/signup">
               <Signup />
@@ -38,7 +38,7 @@ class App extends Component {
               <h1>Event Viewing Page</h1>
             </Route>
             <Route path="/event/create">
-              <CreateEvent loggedInUser={this.state.loggedInUser} />
+              <CreateEvent loggedInUser={loggedInUser} />
             </Route>
             <Route path="/event-listings">
               <h1>Events Page</h1>

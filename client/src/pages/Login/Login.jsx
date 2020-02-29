@@ -37,8 +37,7 @@ class Login extends Component {
     authenticationService.login(email, password).then(
       user => {
         this.setState({ loading: false });
-        this.props.userAction(email);
-        window.location.href = '/';
+        // window.location.href = '/';
       },
       error => this.setState({ error, loading: false })
     );

@@ -14,7 +14,11 @@ router.post('/login', (req, res) => {
     } else {
       if (user.passwordIsValid(req.body.password)) {
         return res.status(200).send({
-          message: 'User logged in'
+          firstname: user.firstname,
+          lastname: user.lastname,
+          email: user.email,
+          verified: user.verified,
+          token: 'test-token' // TODO: add token generation/storage in MongoDB
         });
       } else {
         // Incorrect password for this account
