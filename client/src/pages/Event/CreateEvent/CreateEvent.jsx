@@ -39,23 +39,31 @@ class CreateEvent extends Component {
 
   getImageData(images) {
     var base64Images = [];
+    var invalidType = false;
+
     images.forEach(img => {
+      // verify files are of type PNG
+      if (img.type !== 'image/png') {
+        this.setState({ error: 'Image(s) must be of type PNG' });
+        invalidType = true;
+      }
+
       images = base64Images.push(
         // remove header info and just get the base64 string
-        img.base64.replace(/^data:image\/(png);base64,/, '')
+        img.base64.replace(/^data:image\/(png)/, '')
       );
     });
 
-    this.setState({ images: base64Images });
+    if (!invalidType) this.setState({ error: '', images: base64Images });
   }
 
   handleSubmit(e) {
     e.preventDefault();
 
     this.setState({ submitted: true });
-    const { title, description, start, end, cost, images } = this.state;
+    const { title, description, start, end, cost, images, error } = this.state;
 
-    if (!(title && description && start && cost && images)) return;
+    if (!(title && description && start && cost && images && !error)) return;
 
     this.setState({ loading: true });
     // eventService.createEvent(this.props.loggedInUser, title, description, start, end, cost, images) // TODO: implement this when loggedInUser is implemented
