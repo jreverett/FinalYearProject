@@ -21,6 +21,7 @@ function login(email, password) {
       // store user info in localStorage, push user data to observable
       localStorage.setItem('loggedInUser', JSON.stringify(user));
       currentUserSubject.next(user);
+      console.log('logged in user');
 
       return user;
     });

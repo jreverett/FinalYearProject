@@ -40,9 +40,11 @@ class Signup extends Component {
     userService.signup(firstname, lastname, email, address, password).then(
       user => {
         console.log('Account created for user: ' + email);
-        authenticationService.login(email, password);
+        authenticationService.login(email, password).then(userRes => {
+          console.log('user is ', userRes);
+          window.location.href = '/';
+        });
         this.setState({ loading: false });
-        window.location.href = '/';
       },
       error => this.setState({ error, loading: false })
     );
