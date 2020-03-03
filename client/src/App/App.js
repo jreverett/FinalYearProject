@@ -1,9 +1,11 @@
 import React, { Component, Fragment } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
+
 import { Home, Login, Signup, CreateEvent } from '../pages';
-import { NavBar } from '../components';
+import { NavBar, PrivateRoute } from '../components';
 import { authenticationService } from '../services';
+
 import './App.css';
 
 class App extends Component {
@@ -15,7 +17,7 @@ class App extends Component {
     };
   }
 
-  componentDidMount() {
+  componentWillMount() {
     authenticationService.loggedInUser.subscribe(x =>
       this.setState({ loggedInUser: x })
     );
@@ -23,6 +25,7 @@ class App extends Component {
 
   render() {
     const { loggedInUser } = this.state;
+    console.log('app state user: ', loggedInUser);
     return (
       <Fragment>
         <NavBar loggedInUser={loggedInUser} />
@@ -37,18 +40,18 @@ class App extends Component {
             <Route path="/event/view">
               <h1>Event Viewing Page</h1>
             </Route>
-            <Route path="/event/create">
+            <PrivateRoute path="/event/create" loggedInUser={loggedInUser}>
               <CreateEvent loggedInUser={loggedInUser} />
-            </Route>
+            </PrivateRoute>
             <Route path="/event-listings">
               <h1>Events Page</h1>
             </Route>
-            <Route path="/user">
+            <PrivateRoute path="/user" loggedInUser={loggedInUser}>
               <h1>User Page</h1>
-            </Route>
-            <Route path="/send-announcement">
+            </PrivateRoute>
+            <PrivateRoute path="/send-announcement" loggedInUser={loggedInUser}>
               <h1>Announcement Page</h1>
-            </Route>
+            </PrivateRoute>
             <Route path="/">
               <Home />
             </Route>

@@ -42,7 +42,7 @@ class Login extends Component {
     );
   }
 
-  componentDidUpdate() {
+  componentWillUpdate() {
     // if user is already logged in, redirect to home
     if (this.props.loggedInUser) window.location.href = '/';
   }

@@ -17,7 +17,7 @@ class CreateEvent extends Component {
       description: '',
       start: '',
       end: '',
-      cost: Number,
+      cost: '',
       images: [],
       submitted: false,
       loading: false,
