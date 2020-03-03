@@ -31,27 +31,42 @@ class App extends Component {
         <NavBar loggedInUser={loggedInUser} />
         <Router>
           <Switch>
+            {/* LOGIN */}
             <Route path="/login">
               <Login loggedInUser={loggedInUser} />
             </Route>
+
+            {/* SIGN UP */}
             <Route path="/signup">
               <Signup loggedInUser={loggedInUser} />
             </Route>
+
+            {/* VIEW EVENT */}
             <Route path="/event/view">
               <h1>Event Viewing Page</h1>
             </Route>
+
+            {/* CREATE EVENT */}
             <PrivateRoute path="/event/create" loggedInUser={loggedInUser}>
               <CreateEvent loggedInUser={loggedInUser} />
             </PrivateRoute>
+
+            {/* EVENT LISTINGS */}
             <Route path="/event-listings">
               <h1>Events Page</h1>
             </Route>
+
+            {/* USER PAGE */}
             <PrivateRoute path="/user" loggedInUser={loggedInUser}>
               <h1>User Page</h1>
             </PrivateRoute>
+
+            {/* ANNOUNCEMENT PAGE */}
             <PrivateRoute path="/send-announcement" loggedInUser={loggedInUser}>
               <h1>Announcement Page</h1>
             </PrivateRoute>
+
+            {/* HOME PAGE */}
             <Route path="/">
               <Home />
             </Route>
