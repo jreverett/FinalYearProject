@@ -35,7 +35,7 @@ class App extends Component {
               <Login loggedInUser={loggedInUser} />
             </Route>
             <Route path="/signup">
-              <Signup />
+              <Signup loggedInUser={loggedInUser} />
             </Route>
             <Route path="/event/view">
               <h1>Event Viewing Page</h1>

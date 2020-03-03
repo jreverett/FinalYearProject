@@ -7,6 +7,9 @@ class Login extends Component {
   constructor(props) {
     super(props);
 
+    // if user is already logged in, redirect to home
+    if (this.props.loggedInUser) window.location.href = '/';
+
     this.state = {
       email: '',
       password: '',
@@ -37,14 +40,10 @@ class Login extends Component {
     authenticationService.login(email, password).then(
       user => {
         this.setState({ loading: false });
+        window.location.href = '/';
       },
       error => this.setState({ error, loading: false })
     );
-  }
-
-  componentWillUpdate() {
-    // if user is already logged in, redirect to home
-    if (this.props.loggedInUser) window.location.href = '/';
   }
 
   render() {

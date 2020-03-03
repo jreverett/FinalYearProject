@@ -7,6 +7,9 @@ class Signup extends Component {
   constructor(props) {
     super(props);
 
+    // if user is already logged in, redirect to home
+    if (this.props.loggedInUser) window.location.href = '/';
+
     this.state = {
       firstname: '',
       lastname: '',
