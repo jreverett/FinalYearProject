@@ -5,10 +5,6 @@ import moment from 'moment';
 import './EventTile.css';
 
 class EventTile extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     let event = this.props.eventDetails;
 

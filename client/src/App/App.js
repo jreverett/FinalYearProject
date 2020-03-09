@@ -2,7 +2,14 @@ import React, { Component, Fragment } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import { Home, Login, Signup, CreateEvent, EventListings } from '../pages';
+import {
+  Home,
+  Login,
+  Signup,
+  CreateEvent,
+  EventListings,
+  Profile
+} from '../pages';
 import { NavBar, PrivateRoute } from '../components';
 import { authenticationService } from '../services';
 
@@ -13,15 +20,25 @@ class App extends Component {
     super(props);
 
     this.state = {
-      loggedInUser: null
+      loggedInUser: authenticationService.loggedInUser
     };
   }
 
-  componentWillMount() {
-    authenticationService.loggedInUser.subscribe(x =>
-      this.setState({ loggedInUser: x })
+  componentDidMount() {
+    authenticationService.loggedInUser.subscribe(this.handleLoggedInUserChange);
+  }
+
+  componentWillUnmount() {
+    authenticationService.loggedInUser.unsubscribe(
+      this.handleLoggedInUserChange
     );
   }
+
+  handleLoggedInUserChange = loggedInUser => {
+    this.setState({
+      loggedInUser: loggedInUser
+    });
+  };
 
   render() {
     const { loggedInUser } = this.state;
@@ -57,7 +74,7 @@ class App extends Component {
 
             {/* USER PAGE */}
             <PrivateRoute path="/user" loggedInUser={loggedInUser}>
-              <h1>User Page</h1>
+              <Profile />
             </PrivateRoute>
 
             {/* ANNOUNCEMENT PAGE */}

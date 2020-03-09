@@ -21,13 +21,12 @@ function login(email, password) {
       // store user info in localStorage, push user data to observable
       localStorage.setItem('loggedInUser', JSON.stringify(user));
       currentUserSubject.next(user);
-      console.log('logged in user');
 
       return user;
     });
 }
 
-function logout(email) {
+function logout() {
   // remove user value from localStorage, push null to observable
   localStorage.removeItem('loggedInUser');
   currentUserSubject.next(null);
@@ -38,6 +37,6 @@ export const authenticationService = {
   logout,
   loggedInUser: currentUserSubject.asObservable(),
   get loggedInUserValue() {
-    return this.currentUserSubject ? this.currentUserSubject.value : null;
+    return currentUserSubject ? currentUserSubject.value : null;
   }
 };

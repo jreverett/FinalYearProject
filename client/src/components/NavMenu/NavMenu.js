@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { slide as Menu } from 'react-burger-menu';
 import './NavMenu.css';
 

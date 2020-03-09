@@ -5,10 +5,6 @@ import { authenticationService } from '../../services';
 import './NavBar.css';
 
 class NavBar extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const loggedInUser = this.props.loggedInUser;
     return (
@@ -32,7 +28,7 @@ class NavBar extends Component {
           </div>
           <div id="img-container">
             <a href="/">
-              <img src={require('../../images/upvent.png')} />
+              <img src={require('../../images/upvent.png')} alt="Upvent logo" />
             </a>
           </div>
         </div>

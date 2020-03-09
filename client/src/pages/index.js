@@ -11,5 +11,6 @@ import Login from './Login/Login';
 import Signup from './Signup/Signup';
 import CreateEvent from './Event/CreateEvent/CreateEvent';
 import EventListings from './EventListings/EventListings';
+import Profile from './Profile/Profile';
 
-export { Home, Login, Signup, CreateEvent, EventListings };
+export { Home, Login, Signup, CreateEvent, EventListings, Profile };

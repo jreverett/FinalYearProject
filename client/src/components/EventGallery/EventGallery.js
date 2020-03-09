@@ -1,14 +1,10 @@
-import React, { Component, Fragment } from 'react';
-import { Button, CardDeck, CardColumns } from 'react-bootstrap';
+import React, { Component } from 'react';
+import { CardColumns } from 'react-bootstrap';
 
 import { EventTile } from '../index';
 import './EventGallery.css';
 
 class EventGallery extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     var events = this.props.events.data;
     var eventTiles = [];
