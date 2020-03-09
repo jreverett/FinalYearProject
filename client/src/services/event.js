@@ -1,4 +1,5 @@
 import { API_URL } from '../config';
+import { handleResponse } from '../utilities';
 
 function createEvent(owner, title, description, start, end, cost, images) {
   const requestOptions = {
@@ -24,18 +25,22 @@ function createEvent(owner, title, description, start, end, cost, images) {
     });
 }
 
-function handleResponse(response) {
-  return response.text().then(text => {
-    const data = text && JSON.parse(text);
-    if (!response.ok) {
-      const error = (data && data.message) || response.statusMessage;
-      return Promise.reject(error);
-    }
+function getEvents() {
+  const requestOptions = {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' }
+  };
 
-    return data;
-  });
+  return fetch(`${API_URL}/api/events`, requestOptions)
+    .then(handleResponse)
+    .then({
+      if(data) {
+        return data;
+      }
+    });
 }
 
 export const eventService = {
-  createEvent
+  createEvent,
+  getEvents
 };

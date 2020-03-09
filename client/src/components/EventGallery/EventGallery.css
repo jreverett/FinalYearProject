@@ -1,0 +1,5 @@
+.card-column {
+  margin: 20px;
+  column-count: 4;
+  column-gap: normal;
+}

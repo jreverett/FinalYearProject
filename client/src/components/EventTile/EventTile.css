@@ -1,0 +1,25 @@
+.card {
+  cursor: pointer;
+}
+
+.start-time-label {
+  margin-bottom: 0.25rem;
+  color: rgb(255, 79, 79);
+  font-weight: bold;
+}
+
+.cost-label {
+  margin-bottom: 0.25rem;
+  color: rgb(190, 177, 54);
+  font-weight: bold;
+}
+
+.cost-label.free-event {
+  color: rgb(22, 163, 29);
+}
+
+.card-image {
+  width: 100%;
+  max-height: 150px;
+  object-fit: cover;
+}

@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import { Home, Login, Signup, CreateEvent } from '../pages';
+import { Home, Login, Signup, CreateEvent, EventListings } from '../pages';
 import { NavBar, PrivateRoute } from '../components';
 import { authenticationService } from '../services';
 
@@ -25,7 +25,6 @@ class App extends Component {
 
   render() {
     const { loggedInUser } = this.state;
-    console.log('app state user: ', loggedInUser);
     return (
       <Fragment>
         <NavBar loggedInUser={loggedInUser} />
@@ -53,7 +52,7 @@ class App extends Component {
 
             {/* EVENT LISTINGS */}
             <Route path="/event-listings">
-              <h1>Events Page</h1>
+              <EventListings />
             </Route>
 
             {/* USER PAGE */}
