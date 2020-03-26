@@ -14,6 +14,17 @@ div .alert-danger {
   margin-bottom: 0;
 }
 
+.text-success {
+  color: green;
+  font-size: small;
+  font-weight: bold;
+}
+
+.text-subtext {
+  color: rgb(134, 134, 134);
+  font-size: small;
+}
+
 /* LOADING SCREEN */
 #loading-wheel {
   position: absolute;

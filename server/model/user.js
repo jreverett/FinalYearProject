@@ -5,7 +5,8 @@ var crypto = require('crypto');
 const UserSchema = mongoose.Schema({
   type: {
     type: Number,
-    required: true
+    required: true,
+    default: 0
   },
   firstname: {
     type: String,
@@ -20,8 +21,12 @@ const UserSchema = mongoose.Schema({
     required: true,
     unique: true
   },
+  emailConsent: {
+    type: Boolean,
+    default: false
+  },
   address: {
-    type: String
+    type: Object
   },
   hash: {
     type: String
@@ -31,7 +36,8 @@ const UserSchema = mongoose.Schema({
   },
   verified: {
     type: Boolean,
-    required: true
+    required: true,
+    default: false
   },
   events: {
     type: Array

@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import Geosuggest from 'react-geosuggest';
 import { authenticationService, userService } from '../../services';
 import '../../common.css';
 import './Signup.css';
@@ -23,6 +24,7 @@ class Signup extends Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.onSuggestSelect = this.onSuggestSelect.bind(this);
   }
 
   handleChange(e) {
@@ -52,13 +54,16 @@ class Signup extends Component {
     );
   }
 
+  onSuggestSelect(suggest) {
+    this.setState({ address: suggest });
+  }
+
   render() {
     const {
       submitted,
       firstname,
       lastname,
       email,
-      address,
       password,
       loading,
       error
@@ -141,19 +146,16 @@ class Signup extends Component {
             </div>
 
             {/* ADDRESS */}
-            <div
-              className={
-                'form-group' + (submitted && !address ? ' has-error' : '')
-              }
-            >
+            <div className={'form-group'}>
               <label htmlFor="address">Address</label>
-              <input
-                type="text"
-                className="form-control"
-                name="address"
-                value={address}
-                onChange={this.handleChange}
+              <Geosuggest
+                className="address-search"
+                placeholder="Start tying an address..."
+                onSuggestSelect={this.onSuggestSelect}
               />
+              <p className="text-subtext">
+                We use your location to provide you with relevant content
+              </p>
             </div>
 
             {/* PASSWORD */}
