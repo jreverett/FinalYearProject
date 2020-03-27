@@ -8,18 +8,6 @@ class EventTile extends Component {
   render() {
     let event = this.props.eventDetails;
 
-    /*
-    event:
-      _id
-      owner
-      title
-      description
-      //TODO: location
-      start
-      end
-      cost
-    */
-
     let startDate = formatDateTime(event.start);
 
     // check if an image for this event exists, otherwise use the placeholder
@@ -36,7 +24,7 @@ class EventTile extends Component {
             {event.cost ? '£' + event.cost : 'FREE!'}
           </p>
           <Card.Title>{event.title}</Card.Title>
-          <Card.Text>*Location Here*</Card.Text>
+          <Card.Text>{event.address.description}</Card.Text>
         </Card.Body>
       </Card>
     );
