@@ -24,6 +24,9 @@ const EventSchema = mongoose.Schema({
   cost: {
     type: Number
   },
+  address: {
+    type: Object
+  },
   images: {
     type: Array
   }

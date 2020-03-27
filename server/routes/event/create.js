@@ -13,6 +13,7 @@ router.post('/create', (req, res, next) => {
   newEvent.start = req.body.start;
   newEvent.end = req.body.end;
   newEvent.cost = req.body.cost;
+  newEvent.address = req.body.address;
   newEvent.images = req.body.images;
 
   newEvent.save((err, Event) => {

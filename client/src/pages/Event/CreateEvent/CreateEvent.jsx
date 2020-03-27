@@ -1,10 +1,9 @@
 import React, { Component, Fragment } from 'react';
 import { Form, Row, Col } from 'react-bootstrap';
 import DateTime from 'react-datetime';
+import Geosuggest from 'react-geosuggest';
 import FileBase64 from 'react-file-base64';
-
 import { eventService } from '../../../services/event';
-
 import '../../../common.css';
 import './CreateEvent.css';
 
@@ -18,6 +17,7 @@ class CreateEvent extends Component {
       start: '',
       end: '',
       cost: '',
+      address: '',
       images: [],
       submitted: false,
       loading: false,
@@ -26,6 +26,7 @@ class CreateEvent extends Component {
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.onSuggestSelect = this.onSuggestSelect.bind(this);
   }
 
   handleChange(e) {
@@ -36,6 +37,10 @@ class CreateEvent extends Component {
   handleDateChange = key => newDate => {
     this.setState({ [key]: newDate });
   };
+
+  onSuggestSelect(suggest) {
+    this.setState({ address: suggest });
+  }
 
   getImageData(images) {
     var base64Images = [];
@@ -61,24 +66,35 @@ class CreateEvent extends Component {
     e.preventDefault();
 
     this.setState({ submitted: true });
-    const { title, description, start, end, cost, images, error } = this.state;
+    const {
+      title,
+      description,
+      start,
+      end,
+      cost,
+      address,
+      images,
+      error
+    } = this.state;
 
-    if (!(title && description && start && cost && images && !error)) return;
+    console.log('1');
+    if (!(title && description && start && address && !error)) return;
+    console.log('2');
 
     this.setState({ loading: true });
-    // eventService.createEvent(this.props.loggedInUser, title, description, start, end, cost, images) // TODO: implement this when loggedInUser is implemented
     eventService
       .createEvent(
-        'placeholder@gmail.com',
+        this.props.loggedInUser.email,
         title,
         description,
         start,
         end,
         cost,
+        address,
         images
       )
       .then(
-        event => {
+        () => {
           this.setState({ loading: false });
           window.location.href = '/event-listings';
         },
@@ -108,7 +124,9 @@ class CreateEvent extends Component {
               controlId="formTitle"
               className={submitted && !title ? ' has-error' : ''}
             >
-              <Form.Label>Title</Form.Label>
+              <Form.Label>
+                Title<p className="compulsory-asterisk">*</p>
+              </Form.Label>
               <Form.Control
                 type="text"
                 name="title"
@@ -126,7 +144,9 @@ class CreateEvent extends Component {
               controlId="formDescription"
               className={submitted && !description ? ' has-error' : ''}
             >
-              <Form.Label>Description</Form.Label>
+              <Form.Label>
+                Description<p className="compulsory-asterisk">*</p>
+              </Form.Label>
               <Form.Control
                 as="textarea"
                 name="description"
@@ -149,7 +169,9 @@ class CreateEvent extends Component {
                   controlId="formStartDate"
                   className={submitted && !start ? ' has-error' : ''}
                 >
-                  <p className="dateLabel">Start Date/Time</p>
+                  <Form.Label className="dateLabel">
+                    Start Date/Time<p className="compulsory-asterisk">*</p>
+                  </Form.Label>
                   <DateTime
                     onChange={this.handleDateChange('start')}
                     dateFormat="DD-MM-YYYY"
@@ -187,6 +209,18 @@ class CreateEvent extends Component {
                 ></Form.Control>
                 <i>£</i>
               </div>
+            </Form.Group>
+
+            {/* ADDRESS */}
+            <Form.Group controlId="formAddress">
+              <Form.Label>
+                Address<p className="compulsory-asterisk">*</p>
+              </Form.Label>
+              <Geosuggest
+                className="address-search"
+                placeholder="Start tying an address..."
+                onSuggestSelect={this.onSuggestSelect}
+              />
             </Form.Group>
 
             {/* IMAGES */}

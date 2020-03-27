@@ -1,7 +1,16 @@
 import { API_URL } from '../config';
 import { handleResponse } from '../utilities';
 
-function createEvent(owner, title, description, start, end, cost, images) {
+function createEvent(
+  owner,
+  title,
+  description,
+  start,
+  end,
+  cost,
+  address,
+  images
+) {
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -12,6 +21,7 @@ function createEvent(owner, title, description, start, end, cost, images) {
       start,
       end,
       cost,
+      address,
       images
     })
   };
