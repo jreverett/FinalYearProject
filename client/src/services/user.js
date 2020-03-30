@@ -23,7 +23,6 @@ function get(id) {
     headers: { 'Content-Type': 'application/json' }
   };
 
-  console.log('id is: ', id);
   const encodedParams = encodeURIComponent(id);
 
   return fetch(`${API_URL}/api/users?id=${encodedParams}`, requestOptions)
