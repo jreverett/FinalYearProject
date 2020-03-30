@@ -22,8 +22,13 @@
   padding-right: 0;
 }
 
-#imagesContainer {
+#images-container {
   margin-top: 1.2rem;
+}
+
+#event-image-upload {
+  padding-top: 0.5rem;
+  font-size: small;
 }
 
 #create-button-container {

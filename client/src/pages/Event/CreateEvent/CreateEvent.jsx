@@ -55,7 +55,7 @@ class CreateEvent extends Component {
 
       images = base64Images.push(
         // remove header info and just get the base64 string
-        img.base64.replace(/^data:image\/(png)/, '')
+        img.base64.replace(/^data:image\/png;base64,/, '')
       );
     });
 
@@ -84,7 +84,7 @@ class CreateEvent extends Component {
     this.setState({ loading: true });
     eventService
       .createEvent(
-        this.props.loggedInUser.email,
+        this.props.loggedInUser.id,
         title,
         description,
         start,
@@ -201,7 +201,7 @@ class CreateEvent extends Component {
               <div className="input-icon">
                 <Form.Control
                   type="text" // not number as React bug with number inputs
-                  pattern="[0-9]*"
+                  pattern="[0-9]+(\.[0-9]{1,2})?"
                   name="cost"
                   value={cost}
                   onChange={this.handleChange.bind(this)}
@@ -224,11 +224,14 @@ class CreateEvent extends Component {
             </Form.Group>
 
             {/* IMAGES */}
-            <div id="imagesContainer">
+            <div id="images-container">
               <FileBase64
                 multiple={true}
                 onDone={this.getImageData.bind(this)}
               />
+              <p id="event-image-upload" className="text-muted">
+                Note: there is a 50MB limit on uploads
+              </p>
             </div>
 
             {/* SUBMIT EVENT */}

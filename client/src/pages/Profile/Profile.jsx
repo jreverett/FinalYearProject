@@ -134,7 +134,7 @@ export class Profile extends Component {
             <div className="form-group">
               <button
                 id="save-button"
-                className="btn btn-primary"
+                className="btn btn-primary button-green"
                 disabled={loading}
               >
                 Save
