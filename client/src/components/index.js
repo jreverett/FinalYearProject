@@ -4,5 +4,6 @@ import PrivateRoute from './PrivateRoute/PrivateRoute';
 
 import EventTile from './EventTile/EventTile';
 import EventGallery from './EventGallery/EventGallery';
+import EventModal from './EventModal/EventModal';
 
-export { NavBar, NavMenu, PrivateRoute, EventTile, EventGallery };
+export { NavBar, NavMenu, PrivateRoute, EventTile, EventGallery, EventModal };

@@ -1,0 +1,41 @@
+@import '~react-image-gallery/styles/css/image-gallery.css';
+
+#modal-gallery-container {
+  width: 100%;
+  display: flex;
+}
+
+div.image-gallery {
+  width: 100%;
+  width: -moz-available;
+  width: -webkit-fill-available;
+  width: stretch;
+}
+
+img.image-gallery-image {
+  max-height: 25em !important; /* override default stying */
+}
+
+#modal-col-title {
+  flex-grow: 3;
+}
+
+#modal-title {
+  font-size: xx-large;
+}
+
+#subscribe-button {
+  width: 100%;
+  margin-top: 0.5rem;
+  padding: 0.65rem 0.65rem;
+}
+
+.modal-icon {
+  margin-right: 0.3rem;
+}
+
+#modal-description {
+  max-height: 25rem;
+  overflow: scroll;
+  white-space: pre-line;
+}

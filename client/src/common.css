@@ -20,9 +20,24 @@ div .alert-danger {
   font-weight: bold;
 }
 
+.button-green {
+  background-color: rgb(31, 192, 40);
+}
+
 .text-subtext {
   color: rgb(134, 134, 134);
   font-size: small;
+}
+
+/* EVENT LABELS */
+.cost-label {
+  margin-bottom: 0.25rem;
+  color: rgb(190, 177, 54);
+  font-weight: bold;
+}
+
+.cost-label.free-event {
+  color: rgb(22, 163, 29);
 }
 
 /* LOADING SCREEN */
