@@ -14,8 +14,6 @@ import { userService, authenticationService } from '../../services';
 import '../../common.css';
 import './EventModal.css';
 import 'react-toastify/dist/ReactToastify.css';
-const ReactDOM = require('react-dom');
-
 class EventModal extends Component {
   constructor(props) {
     super(props);
