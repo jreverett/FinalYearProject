@@ -72,7 +72,7 @@ class Signup extends Component {
       <Fragment>
         {loading && <div id="loading-fade" />}
 
-        <div id="form-container" className="col-md-4 offset-md-4">
+        <div className="form-container col-md-4 offset-md-4">
           <div id="logo-container">
             <img
               id="logo"

@@ -117,7 +117,7 @@ class CreateEvent extends Component {
       <Fragment>
         {loading && <div id="loading-fade" />}
 
-        <div id="form-container" className="col-md-6 offset-md-3">
+        <div className="form-container col-md-6 offset-md-3">
           <Form name="form" onSubmit={this.handleSubmit}>
             {/* TITLE */}
             <Form.Group
