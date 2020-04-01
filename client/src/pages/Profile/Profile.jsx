@@ -13,7 +13,10 @@ export class Profile extends Component {
       name: '',
       email: '',
       emailConsent: '',
-      address: ''
+      address: '',
+      loading: false,
+      submitted: false,
+      error: ''
     };
 
     this.handleChange = this.handleChange.bind(this);
