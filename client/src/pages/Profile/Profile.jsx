@@ -1,5 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import Geosuggest from 'react-geosuggest';
+import { toast } from 'react-toastify';
+import { FaSave } from 'react-icons/fa';
 import { userService, authenticationService } from '../../services';
 import '../../common.css';
 import './Profile.css';
@@ -58,8 +60,16 @@ export class Profile extends Component {
     userService.update(id, email, emailConsent, address).then(
       () => {
         this.setState({ loading: false });
+        toast.success(
+          <p>
+            <FaSave className="modal-icon" /> Your changes have been saved
+          </p>
+        );
       },
-      error => this.setState({ error, loading: false })
+      error => {
+        this.setState({ error, loading: false });
+        toast.error(error);
+      }
     );
   }
 
@@ -81,72 +91,78 @@ export class Profile extends Component {
       <Fragment>
         {loading && <div id="loading-fade" />}
 
-        <div id="form-container" className="col-md-4 offset-md-4">
-          <div>
-            <p id="name-label">{name}</p>
-          </div>
-          <form name="form" onSubmit={this.handleSubmit}>
-            {/* EMAIL */}
-            <div
-              className={
-                'form-group' + (submitted && !email ? ' has-error' : '')
-              }
-            >
-              <label htmlFor="email">
-                Email<p className="compulsory-asterisk">*</p>
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                name="email"
-                value={email}
-                onChange={this.handleChange}
-                autoComplete="username"
-              />
-              {submitted && !email && (
-                <div className="help-block">Email cannot be blank</div>
-              )}
+        <div id="profile-container">
+          <div
+            id="form-container"
+            className="col-md-6 offset-md-3 profile-form-container"
+          >
+            <div>
+              <p id="name-label">{name}</p>
             </div>
-
-            {/* EMAIL NOTIFICATIONS */}
-            <div className={'form-group'}>
-              <label htmlFor="emailConsent">
-                <input
-                  type="checkbox"
-                  name="emailConsent"
-                  checked={emailConsent}
-                  onChange={this.handleChange}
-                />
-                <p id="notification-label">
-                  I would like to recieve event announcements
-                </p>
-              </label>
-            </div>
-
-            {/* ADDRESS */}
-            <div className={'form-group'}>
-              <label htmlFor="address">Address</label>
-              <Geosuggest
-                className="address-search"
-                placeholder="Start tying an address..."
-                initialValue={address.description}
-                onSuggestSelect={this.onSuggestSelect}
-              />
-            </div>
-
-            <div className="form-group">
-              <button
-                id="save-button"
-                className="btn btn-primary button-green"
-                disabled={loading}
+            <form name="form" onSubmit={this.handleSubmit}>
+              {/* EMAIL */}
+              <div
+                className={
+                  'form-group' + (submitted && !email ? ' has-error' : '')
+                }
               >
-                Save
-              </button>
-              {submitted && !error && (
-                <p className="text-success">Your changes have been saved</p>
-              )}
-            </div>
-          </form>
+                <label htmlFor="email">
+                  Email<p className="compulsory-asterisk">*</p>
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  name="email"
+                  value={email}
+                  onChange={this.handleChange}
+                  autoComplete="username"
+                />
+                {submitted && !email && (
+                  <div className="help-block">Email cannot be blank</div>
+                )}
+              </div>
+
+              {/* EMAIL NOTIFICATIONS */}
+              <div className={'form-group'}>
+                <label htmlFor="emailConsent">
+                  <input
+                    type="checkbox"
+                    name="emailConsent"
+                    checked={emailConsent}
+                    onChange={this.handleChange}
+                  />
+                  <p id="notification-label">
+                    I would like to recieve event announcements
+                  </p>
+                </label>
+              </div>
+
+              {/* ADDRESS */}
+              <div className={'form-group'}>
+                <label htmlFor="address">Address</label>
+                <Geosuggest
+                  className="address-search"
+                  placeholder="Start tying an address..."
+                  initialValue={address.description}
+                  onSuggestSelect={this.onSuggestSelect}
+                />
+              </div>
+
+              <div className="form-group">
+                <button
+                  id="save-button"
+                  className="btn btn-primary button-green"
+                  disabled={loading}
+                >
+                  Save
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <div className="profile-sub-container">
+            <p>another one</p>
+          </div>
         </div>
       </Fragment>
     );
