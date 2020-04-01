@@ -1,27 +1,113 @@
-import React, { Component } from 'react';
-import { Modal, Row, Col } from 'react-bootstrap';
+import React, { Component, Fragment } from 'react';
+import { Modal, Row, Col, Button } from 'react-bootstrap';
+import { ToastContainer, toast } from 'react-toastify';
 import ImageGallery from 'react-image-gallery';
-import { FaRegClock, FaFlagCheckered, FaMoneyBillWave } from 'react-icons/fa';
+import {
+  FaRegClock,
+  FaFlagCheckered,
+  FaMoneyBillWave,
+  FaCalendarCheck,
+  FaCalendarTimes
+} from 'react-icons/fa';
 import { formatDateTime } from '../../utilities';
-import { userService } from '../../services';
+import { userService, authenticationService } from '../../services';
+import '../../common.css';
 import './EventModal.css';
+import 'react-toastify/dist/ReactToastify.css';
+const ReactDOM = require('react-dom');
 
 class EventModal extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      owner: ''
+      owner: '',
+      userIsSubscribed: false,
+      subscriptionButtonText: '',
+      loading: false,
+      error: ''
     };
   }
 
   componentDidMount() {
+    // fetch event owner details
     userService.get(this.props.eventDetails.owner).then(user => {
       this.setState({ owner: `${user.data.firstname} ${user.data.lastname}` });
     });
+
+    // check if user is subscribed to this event
+    const userID = authenticationService.loggedInUserValue.id;
+
+    userService.get(userID).then(user => {
+      user = user.data;
+      if (user.events.includes(this.props.eventDetails._id))
+        this.setState({
+          userIsSubscribed: true,
+          subscriptionButtonText: 'Subscribed'
+        });
+    });
   }
 
+  subscribeToEvent = () => {
+    this.setState({ loading: true });
+
+    userService
+      .subscribe(this.props.loggedInUser.id, this.props.eventDetails._id)
+      .then(
+        () => {
+          this.setState({ userIsSubscribed: true, loading: false });
+          toast.success(
+            <p>
+              <FaCalendarCheck className="modal-icon" />
+              Subscribed to {this.props.eventDetails.title}
+            </p>
+          );
+        },
+        error => {
+          this.setState({ error, loading: false });
+          toast.error(error);
+        }
+      );
+  };
+
+  unsubscribeFromEvent = () => {
+    this.setState({ loading: true });
+
+    userService
+      .unsubscribe(this.props.loggedInUser.id, this.props.eventDetails._id)
+      .then(
+        () => {
+          this.setState({ userIsSubscribed: false, loading: false });
+          toast.success(
+            <p>
+              <FaCalendarTimes className="modal-icon" />
+              Unsubscribed from {this.props.eventDetails.title}
+            </p>
+          );
+        },
+        error => {
+          this.setState({ error, loading: false });
+          toast.error(error);
+        }
+      );
+  };
+
+  onMouseEnter = () => {
+    this.setState({ hover: true, subscriptionButtonText: 'Unsubscribe?' });
+  };
+
+  onMouseLeave = () => {
+    this.setState({ hover: false, subscriptionButtonText: 'Subscribed' });
+  };
+
   render() {
+    const {
+      owner,
+      userIsSubscribed,
+      subscriptionButtonText,
+      loading
+    } = this.state;
+
     let event = this.props.eventDetails;
 
     let startDate = formatDateTime(event.start);
@@ -37,58 +123,78 @@ class EventModal extends Component {
         ];
 
     return (
-      <Modal show={this.props.show} onHide={this.props.toggleModal} size="lg">
-        <Modal.Header>
-          <div id="modal-gallery-container">
-            <ImageGallery
-              items={images}
-              autoPlay={true}
-              showFullscreenButton={false}
-              slideDuration={400}
-              slideInterval={3000}
-            />
-          </div>
-        </Modal.Header>
-        <Modal.Body>
-          <Row>
-            <Col id="modal-col-title">
-              <Modal.Title id="modal-title">{event.title}</Modal.Title>
-              <p className="text-subtext">hosted by {this.state.owner}</p>
-            </Col>
-            <Col>
-              <button
-                id="subscribe-button"
-                className="btn btn-primary button-green"
-              >
-                Subscribe
-              </button>
-            </Col>
-          </Row>
-          <p className={'cost-label ' + (!event.cost ? 'free-event' : null)}>
-            <FaMoneyBillWave className="modal-icon" size={'1.5em'} />
-            {event.cost ? '£' + event.cost : 'FREE!'}
-          </p>
-          <Row>
-            <Col>
-              <p>
-                <FaRegClock className="modal-icon" size={'1.3em'} />
-                {startDate}
-              </p>
-            </Col>
-            {endDate !== 'Invalid date' && (
+      <Fragment>
+        <Modal show={this.props.show} onHide={this.props.toggleModal} size="lg">
+          <Modal.Header>
+            <div id="modal-gallery-container">
+              <ImageGallery
+                items={images}
+                autoPlay={true}
+                showFullscreenButton={false}
+                slideDuration={400}
+                slideInterval={3000}
+              />
+            </div>
+          </Modal.Header>
+          <Modal.Body>
+            <Row>
+              <Col id="modal-col-title">
+                <Modal.Title id="modal-title">{event.title}</Modal.Title>
+                <p className="text-subtext">hosted by {owner}</p>
+              </Col>
+              {this.props.loggedInUser && (
+                <Col>
+                  {userIsSubscribed ? (
+                    <Button
+                      id="subscribe-button"
+                      ref="subscribeButton"
+                      className="btn btn-primary button-green button-subscribed"
+                      onClick={!loading ? this.unsubscribeFromEvent : null}
+                      onMouseEnter={this.onMouseEnter}
+                      onMouseLeave={this.onMouseLeave}
+                    >
+                      {loading ? 'Unsubscribing...' : subscriptionButtonText}
+                    </Button>
+                  ) : (
+                    <Button
+                      id="subscribe-button"
+                      className="btn btn-primary button-green"
+                      onClick={!loading ? this.subscribeToEvent : null}
+                      disabled={loading}
+                    >
+                      {loading ? 'Subscribing...' : 'Subscribe'}
+                    </Button>
+                  )}
+                  <ToastContainer />
+                </Col>
+              )}
+            </Row>
+            <p className={'cost-label ' + (!event.cost ? 'free-event' : null)}>
+              <FaMoneyBillWave className="modal-icon" size={'1.5em'} />
+              {event.cost ? '£' + event.cost : 'FREE!'}
+            </p>
+            <Row>
               <Col>
                 <p>
-                  <FaFlagCheckered className="modal-icon" size={'1.3em'} />
-                  {endDate}
+                  <FaRegClock className="modal-icon" size={'1.3em'} />
+                  {startDate}
                 </p>
               </Col>
-            )}
-          </Row>
-          <div id="modal-description-container">
-            <p id="modal-description">{event.description}</p>
-          </div>
-        </Modal.Body>
-      </Modal>
+              {endDate !== 'Invalid date' && (
+                <Col>
+                  <p>
+                    <FaFlagCheckered className="modal-icon" size={'1.3em'} />
+                    {endDate}
+                  </p>
+                </Col>
+              )}
+            </Row>
+            <div id="modal-description-container">
+              <p id="modal-description">{event.description}</p>
+            </div>
+          </Modal.Body>
+        </Modal>
+      </Fragment>
     );
   }
 }

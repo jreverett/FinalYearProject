@@ -8,7 +8,7 @@ function signup(firstname, lastname, email, address, password) {
     body: JSON.stringify({ firstname, lastname, email, address, password })
   };
 
-  return fetch(`${API_URL}/api/user/signup`, requestOptions)
+  return fetch(`${API_URL}/api/user/signup`, requestOptions) //TODO: change this to use /api/users (POST)
     .then(handleResponse)
     .then({
       if(user) {
@@ -41,12 +41,43 @@ function update(id, email, emailConsent, address) {
     body: JSON.stringify({ id, email, emailConsent, address })
   };
 
-  console.log('vals', id, email, emailConsent, address);
   return fetch(`${API_URL}/api/user/update`, requestOptions)
     .then(handleResponse)
     .then({
       if(user) {
         return user;
+      }
+    });
+}
+
+function subscribe(userID, eventID) {
+  const requestOptions = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ userID, eventID })
+  };
+
+  return fetch(`${API_URL}/api/user/subscribe`, requestOptions)
+    .then(handleResponse)
+    .then({
+      if(subscription) {
+        return subscription;
+      }
+    });
+}
+
+function unsubscribe(userID, eventID) {
+  const requestOptions = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ userID, eventID })
+  };
+
+  return fetch(`${API_URL}/api/user/unsubscribe`, requestOptions)
+    .then(handleResponse)
+    .then({
+      if(unsubscription) {
+        return unsubscription;
       }
     });
 }
@@ -58,5 +89,7 @@ function update(id, email, emailConsent, address) {
 export const userService = {
   signup,
   get,
+  subscribe,
+  unsubscribe,
   update
 };

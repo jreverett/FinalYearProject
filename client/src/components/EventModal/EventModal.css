@@ -39,3 +39,11 @@ img.image-gallery-image {
   overflow: scroll;
   white-space: pre-line;
 }
+
+.btn-primary.button-subscribed {
+  background-color: var(--disabled);
+}
+
+.btn-primary.button-subscribed:hover {
+  background-color: var(--red);
+}

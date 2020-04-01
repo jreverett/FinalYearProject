@@ -43,6 +43,7 @@ class EventTile extends Component {
           show={this.state.show}
           toggleModal={this.toggleModal}
           eventDetails={this.props.eventDetails}
+          loggedInUser={this.props.loggedInUser}
         />
       </Fragment>
     );

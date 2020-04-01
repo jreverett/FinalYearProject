@@ -25,7 +25,10 @@ export class EventListings extends Component {
       <div>
         {/* <EventFilter> */}
         {/* <EventOrdering> */}
-        <EventGallery events={this.state.events} />
+        <EventGallery
+          events={this.state.events}
+          loggedInUser={this.props.loggedInUser}
+        />
       </div>
     );
   }

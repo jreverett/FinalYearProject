@@ -11,8 +11,14 @@ class EventGallery extends Component {
 
     if (events) {
       eventTiles = events.map(function(event, index) {
-        return <EventTile key={index} eventDetails={event} />;
-      });
+        return (
+          <EventTile
+            key={index}
+            eventDetails={event}
+            loggedInUser={this.props.loggedInUser}
+          />
+        );
+      }, this);
     }
 
     return <CardColumns className="card-column">{eventTiles}</CardColumns>;

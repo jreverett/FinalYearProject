@@ -69,7 +69,7 @@ class App extends Component {
 
             {/* EVENT LISTINGS */}
             <Route path="/event-listings">
-              <EventListings />
+              <EventListings loggedInUser={loggedInUser} />
             </Route>
 
             {/* USER PAGE */}

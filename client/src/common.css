@@ -1,12 +1,19 @@
+/* GLOBAL COLOUR SCHEME */
+:root {
+  --red: #ff523e;
+  --green: #1fc028;
+  --disabled: #5aa2ff;
+}
+
 /* FORM RESPONSE */
 .help-block {
   font-size: small;
-  color: rgb(255, 82, 62);
+  color: var(--red);
 }
 
 .compulsory-asterisk {
   display: inline;
-  color: rgb(255, 82, 62);
+  color: var(--red);
 }
 
 div .alert-danger {
@@ -15,13 +22,13 @@ div .alert-danger {
 }
 
 .text-success {
-  color: green;
+  color: var(--green);
   font-size: small;
   font-weight: bold;
 }
 
 .button-green {
-  background-color: rgb(31, 192, 40);
+  background-color: var(--green);
 }
 
 .text-subtext {
