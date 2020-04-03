@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { BehaviorSubject } from 'rxjs';
 import {
   Home,
   Login,
@@ -17,11 +16,6 @@ import { authenticationService } from '../services';
 import './App.css';
 
 toast.configure();
-
-// get the loggedInUser subject
-const currentUserSubject = new BehaviorSubject(
-  JSON.parse(localStorage.getItem('loggedInUser'))
-);
 
 class App extends Component {
   constructor(props) {
