@@ -21,6 +21,7 @@ router.post('/login', (req, res) => {
           emailConsent: user.emailConsent,
           address: user.address,
           verified: user.verified,
+          events: user.events,
           token: 'test-token' // TODO: add token generation/storage in MongoDB
         });
       } else {

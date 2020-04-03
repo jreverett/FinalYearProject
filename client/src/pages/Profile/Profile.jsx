@@ -2,7 +2,8 @@ import React, { Component, Fragment } from 'react';
 import Geosuggest from 'react-geosuggest';
 import { toast } from 'react-toastify';
 import { FaSave } from 'react-icons/fa';
-import { userService, authenticationService } from '../../services';
+import { userService } from '../../services';
+import { SubscriptionGallery } from '../../components';
 import '../../common.css';
 import './Profile.css';
 
@@ -11,48 +12,19 @@ export class Profile extends Component {
     super(props);
 
     this.state = {
-      id: '',
-      name: '',
-      email: '',
-      emailConsent: '',
-      address: '',
       loading: false,
       submitted: false,
       error: ''
     };
 
-    this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.onSuggestSelect = this.onSuggestSelect.bind(this);
-  }
-
-  componentDidMount() {
-    // fetch and set user state properties
-    const userID = authenticationService.loggedInUserValue.id;
-
-    userService.get(userID).then(user => {
-      user = user.data;
-      this.setState({
-        id: user._id,
-        name: `${user.firstname} ${user.lastname}`,
-        email: user.email,
-        emailConsent: user.emailConsent,
-        address: user.address
-      });
-    });
-  }
-
-  handleChange(e) {
-    const name = e.target.name;
-    const value = name === 'emailConsent' ? e.target.checked : e.target.value;
-    this.setState({ [name]: value });
   }
 
   handleSubmit(e) {
     e.preventDefault();
 
     this.setState({ submitted: true });
-    const { id, email, emailConsent, address } = this.state;
+    const { id, email, emailConsent, address } = this.props.loggedInUser;
 
     if (!email) return;
 
@@ -73,29 +45,25 @@ export class Profile extends Component {
     );
   }
 
-  onSuggestSelect(suggest) {
-    this.setState({ address: suggest });
-  }
-
   render() {
     const {
       submitted,
-      name,
       email,
       emailConsent,
       address,
-      loading,
-      error
-    } = this.state;
+      loading
+    } = this.props.loggedInUser;
+
+    const name = `${this.props.loggedInUser.firstname} ${this.props.loggedInUser.lastname}`;
     return (
       <Fragment>
         {loading && <div id="loading-fade" />}
 
-        <div id="profile-container">
-          <div
-            id="form-container"
-            className="col-md-6 offset-md-3 profile-form-container"
-          >
+        <div
+          id="profile-container"
+          className="form-container col-md-6 offset-md-3"
+        >
+          <div id="profile-form-container">
             <div>
               <p id="name-label">{name}</p>
             </div>
@@ -113,8 +81,8 @@ export class Profile extends Component {
                   type="text"
                   className="form-control"
                   name="email"
-                  value={email}
-                  onChange={this.handleChange}
+                  value={email || ''}
+                  onChange={this.props.onChangeValue}
                   autoComplete="username"
                 />
                 {submitted && !email && (
@@ -128,8 +96,8 @@ export class Profile extends Component {
                   <input
                     type="checkbox"
                     name="emailConsent"
-                    checked={emailConsent}
-                    onChange={this.handleChange}
+                    checked={emailConsent || ''}
+                    onChange={this.props.onChangeValue}
                   />
                   <p id="notification-label">
                     I would like to recieve event announcements
@@ -143,14 +111,14 @@ export class Profile extends Component {
                 <Geosuggest
                   className="address-search"
                   placeholder="Start tying an address..."
-                  initialValue={address.description}
-                  onSuggestSelect={this.onSuggestSelect}
+                  initialValue={address?.description}
+                  onSuggestSelect={this.props.onSuggestSelect}
                 />
               </div>
 
-              <div className="form-group">
+              <div id="profile-save-button-container" className="form-group">
                 <button
-                  id="save-button"
+                  id="profile-save-button"
                   className="btn btn-primary button-green"
                   disabled={loading}
                 >
@@ -160,8 +128,9 @@ export class Profile extends Component {
             </form>
           </div>
 
-          <div className="profile-sub-container">
-            <p>another one</p>
+          <div id="profile-subs-container">
+            <p id="profile-subs-header">Subscriptions</p>
+            <SubscriptionGallery />
           </div>
         </div>
       </Fragment>

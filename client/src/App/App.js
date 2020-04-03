@@ -1,7 +1,9 @@
 import React, { Component, Fragment } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
-
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { BehaviorSubject } from 'rxjs';
 import {
   Home,
   Login,
@@ -12,8 +14,14 @@ import {
 } from '../pages';
 import { NavBar, PrivateRoute } from '../components';
 import { authenticationService } from '../services';
-
 import './App.css';
+
+toast.configure();
+
+// get the loggedInUser subject
+const currentUserSubject = new BehaviorSubject(
+  JSON.parse(localStorage.getItem('loggedInUser'))
+);
 
 class App extends Component {
   constructor(props) {
@@ -34,10 +42,33 @@ class App extends Component {
     );
   }
 
+  // called when the user logs in/out
   handleLoggedInUserChange = loggedInUser => {
     this.setState({
       loggedInUser: loggedInUser
     });
+  };
+
+  // called when a property of the loggedInUser is modified
+  handleChangeValue = e => {
+    const name = e.target.name;
+    var updatedUser = {
+      ...this.state.loggedInUser,
+      [e.target.name]:
+        name === 'emailConsent' ? e.target.checked : e.target.value
+    };
+
+    authenticationService.updateUserObservable(updatedUser);
+  };
+
+  // called when a geosuggest suggestion is selected
+  onSuggestSelect = suggest => {
+    var updatedUser = {
+      ...this.state.loggedInUser,
+      address: suggest
+    };
+
+    authenticationService.updateUserObservable(updatedUser);
   };
 
   render() {
@@ -74,7 +105,11 @@ class App extends Component {
 
             {/* USER PAGE */}
             <PrivateRoute path="/user" loggedInUser={loggedInUser}>
-              <Profile />
+              <Profile
+                loggedInUser={loggedInUser}
+                onChangeValue={this.handleChangeValue}
+                onSuggestSelect={this.onSuggestSelect}
+              />
             </PrivateRoute>
 
             {/* ANNOUNCEMENT PAGE */}

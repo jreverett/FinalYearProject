@@ -6,4 +6,14 @@ import EventTile from './EventTile/EventTile';
 import EventGallery from './EventGallery/EventGallery';
 import EventModal from './EventModal/EventModal';
 
-export { NavBar, NavMenu, PrivateRoute, EventTile, EventGallery, EventModal };
+import SubscriptionGallery from './SubscriptionGallery/SubscriptionGallery';
+
+export {
+  NavBar,
+  NavMenu,
+  PrivateRoute,
+  EventTile,
+  EventGallery,
+  EventModal,
+  SubscriptionGallery
+};

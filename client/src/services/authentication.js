@@ -19,8 +19,7 @@ function login(email, password) {
     .then(handleResponse)
     .then(user => {
       // store user info in localStorage, push user data to observable
-      localStorage.setItem('loggedInUser', JSON.stringify(user));
-      currentUserSubject.next(user);
+      updateUserObservable(user);
 
       return user;
     });
@@ -32,10 +31,16 @@ function logout() {
   currentUserSubject.next(null);
 }
 
+function updateUserObservable(user) {
+  localStorage.setItem('loggedInUser', JSON.stringify(user));
+  currentUserSubject.next(user);
+}
+
 export const authenticationService = {
   login,
   logout,
   loggedInUser: currentUserSubject.asObservable(),
+  updateUserObservable,
   get loggedInUserValue() {
     return currentUserSubject ? currentUserSubject.value : null;
   }

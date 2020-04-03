@@ -10,7 +10,7 @@ import {
   FaCalendarTimes
 } from 'react-icons/fa';
 import { formatDateTime } from '../../utilities';
-import { userService, authenticationService } from '../../services';
+import { userService } from '../../services';
 import '../../common.css';
 import './EventModal.css';
 import 'react-toastify/dist/ReactToastify.css';
@@ -34,16 +34,11 @@ class EventModal extends Component {
     });
 
     // check if user is subscribed to this event
-    const userID = authenticationService.loggedInUserValue.id;
-
-    userService.get(userID).then(user => {
-      user = user.data;
-      if (user.events.includes(this.props.eventDetails._id))
-        this.setState({
-          userIsSubscribed: true,
-          subscriptionButtonText: 'Subscribed'
-        });
-    });
+    if (this.props.loggedInUser.events.includes(this.props.eventDetails._id))
+      this.setState({
+        userIsSubscribed: true,
+        subscriptionButtonText: 'Subscribed'
+      });
   }
 
   subscribeToEvent = () => {
