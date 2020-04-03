@@ -10,7 +10,7 @@ class EventGallery extends Component {
     var eventTiles = [];
 
     if (events) {
-      eventTiles = events.map(function(event, index) {
+      eventTiles = events.map((event, index) => {
         return (
           <EventTile
             key={index}
@@ -18,7 +18,7 @@ class EventGallery extends Component {
             loggedInUser={this.props.loggedInUser}
           />
         );
-      }, this);
+      });
     }
 
     return <CardColumns className="card-column">{eventTiles}</CardColumns>;
