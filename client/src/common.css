@@ -20,6 +20,10 @@
   border-radius: 10px;
 }
 
+.hidden {
+  display: none !important;
+}
+
 /* FORM RESPONSE */
 .help-block {
   font-size: small;

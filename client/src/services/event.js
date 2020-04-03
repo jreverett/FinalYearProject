@@ -35,6 +35,24 @@ function createEvent(
     });
 }
 
+// TODO: change this and getEvents() to be a polymorphic get()/get(id)
+function getEvent(id) {
+  const requestOptions = {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' }
+  };
+
+  const encodedParams = encodeURIComponent(id);
+
+  return fetch(`${API_URL}/api/events?id=${encodedParams}`, requestOptions)
+    .then(handleResponse)
+    .then({
+      if(event) {
+        return event;
+      }
+    });
+}
+
 function getEvents() {
   const requestOptions = {
     method: 'GET',
@@ -52,5 +70,6 @@ function getEvents() {
 
 export const eventService = {
   createEvent,
+  getEvent,
   getEvents
 };

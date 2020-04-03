@@ -6,6 +6,7 @@ import EventTile from './EventTile/EventTile';
 import EventGallery from './EventGallery/EventGallery';
 import EventModal from './EventModal/EventModal';
 
+import SubscriptionTile from './SubscriptionTile/SubscriptionTile';
 import SubscriptionGallery from './SubscriptionGallery/SubscriptionGallery';
 
 export {
@@ -15,5 +16,6 @@ export {
   EventTile,
   EventGallery,
   EventModal,
+  SubscriptionTile,
   SubscriptionGallery
 };

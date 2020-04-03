@@ -130,7 +130,7 @@ export class Profile extends Component {
 
           <div id="profile-subs-container">
             <p id="profile-subs-header">Subscriptions</p>
-            <SubscriptionGallery />
+            <SubscriptionGallery loggedInUser={this.props.loggedInUser} />
           </div>
         </div>
       </Fragment>
