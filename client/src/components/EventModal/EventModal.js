@@ -34,7 +34,7 @@ class EventModal extends Component {
     });
 
     // check if user is subscribed to this event
-    if (this.props.loggedInUser.events.includes(this.props.eventDetails._id))
+    if (this.props.loggedInUser?.events.includes(this.props.eventDetails._id))
       this.setState({
         userIsSubscribed: true,
         subscriptionButtonText: 'Subscribed'
@@ -45,7 +45,7 @@ class EventModal extends Component {
     this.setState({ loading: true });
 
     userService
-      .subscribe(this.props.loggedInUser.id, this.props.eventDetails._id)
+      .subscribe(this.props.loggedInUser._id, this.props.eventDetails._id)
       .then(
         () => {
           this.setState({ userIsSubscribed: true, loading: false });
@@ -67,7 +67,7 @@ class EventModal extends Component {
     this.setState({ loading: true });
 
     userService
-      .unsubscribe(this.props.loggedInUser.id, this.props.eventDetails._id)
+      .unsubscribe(this.props.loggedInUser._id, this.props.eventDetails._id)
       .then(
         () => {
           this.setState({ userIsSubscribed: false, loading: false });

@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { authenticationService } from '../../services';
+import { authenticationService, userService } from '../../services';
 import '../../common.css';
 import './Login.css';
 
@@ -8,7 +8,7 @@ class Login extends Component {
     super(props);
 
     // if user is already logged in, redirect to home
-    if (authenticationService.loggedInUserValue) window.location.href = '/';
+    if (userService.loggedInUserValue) window.location.href = '/';
 
     this.state = {
       email: '',

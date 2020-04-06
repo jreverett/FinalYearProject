@@ -1,5 +1,12 @@
+import { BehaviorSubject } from 'rxjs';
+
 import { API_URL } from '../config';
 import { handleResponse } from '../utilities';
+
+// setup user observable
+const currentUserSubject = new BehaviorSubject(
+  JSON.parse(localStorage.getItem('loggedInUser'))
+);
 
 function signup(firstname, lastname, email, address, password) {
   const requestOptions = {
@@ -32,6 +39,11 @@ function get(id) {
         return user;
       }
     });
+}
+
+function updateUserObservable(userData) {
+  localStorage.setItem('loggedInUser', JSON.stringify(userData));
+  currentUserSubject.next(userData);
 }
 
 function update(id, email, emailConsent, address) {
@@ -87,9 +99,14 @@ function unsubscribe(userID, eventID) {
 // }
 
 export const userService = {
+  loggedInUser: currentUserSubject.asObservable(),
+  updateUserObservable,
   signup,
   get,
   subscribe,
   unsubscribe,
-  update
+  update,
+  get loggedInUserValue() {
+    return currentUserSubject ? currentUserSubject.value : null;
+  }
 };

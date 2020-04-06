@@ -84,7 +84,7 @@ class CreateEvent extends Component {
     this.setState({ loading: true });
     eventService
       .createEvent(
-        this.props.loggedInUser.id,
+        this.props.loggedInUser._id,
         title,
         description,
         start,

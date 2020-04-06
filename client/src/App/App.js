@@ -12,7 +12,7 @@ import {
   Profile
 } from '../pages';
 import { NavBar, PrivateRoute } from '../components';
-import { authenticationService } from '../services';
+import { userService } from '../services';
 import './App.css';
 
 toast.configure();
@@ -22,18 +22,27 @@ class App extends Component {
     super(props);
 
     this.state = {
-      loggedInUser: authenticationService.loggedInUser
+      loggedInUser: userService.loggedInUser
     };
   }
 
   componentDidMount() {
-    authenticationService.loggedInUser.subscribe(this.handleLoggedInUserChange);
+    userService.loggedInUser.subscribe(this.handleLoggedInUserChange);
+
+    // fetch data for the current logged-in user
+    const userID = userService.loggedInUserValue?._id;
+
+    if (userID) {
+      userService.get(userID).then(user => {
+        if (user) {
+          userService.updateUserObservable(user.data);
+        }
+      });
+    }
   }
 
   componentWillUnmount() {
-    authenticationService.loggedInUser.unsubscribe(
-      this.handleLoggedInUserChange
-    );
+    userService.loggedInUser.unsubscribe(this.handleLoggedInUserChange);
   }
 
   // called when the user logs in/out
@@ -52,7 +61,7 @@ class App extends Component {
         name === 'emailConsent' ? e.target.checked : e.target.value
     };
 
-    authenticationService.updateUserObservable(updatedUser);
+    userService.updateUserObservable(updatedUser);
   };
 
   // called when a geosuggest suggestion is selected
@@ -62,7 +71,7 @@ class App extends Component {
       address: suggest
     };
 
-    authenticationService.updateUserObservable(updatedUser);
+    userService.updateUserObservable(updatedUser);
   };
 
   render() {
@@ -82,7 +91,7 @@ class App extends Component {
               <Signup loggedInUser={loggedInUser} />
             </Route>
 
-            {/* VIEW EVENT */}
+            {/* VIEW EVENT -- NO LONGER REQUIRED */}
             <Route path="/event/view">
               <h1>Event Viewing Page</h1>
             </Route>

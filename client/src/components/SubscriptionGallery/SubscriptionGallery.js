@@ -13,7 +13,7 @@ class SubscriptionGallery extends Component {
         return (
           <SubscriptionTile
             key={index}
-            userID={this.props.loggedInUser.id}
+            userID={this.props.loggedInUser._id}
             eventID={sub}
           />
         );

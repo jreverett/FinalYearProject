@@ -24,12 +24,12 @@ export class Profile extends Component {
     e.preventDefault();
 
     this.setState({ submitted: true });
-    const { id, email, emailConsent, address } = this.props.loggedInUser;
+    const { _id, email, emailConsent, address } = this.props.loggedInUser;
 
     if (!email) return;
 
     this.setState({ loading: true });
-    userService.update(id, email, emailConsent, address).then(
+    userService.update(_id, email, emailConsent, address).then(
       () => {
         this.setState({ loading: false });
         toast.success(

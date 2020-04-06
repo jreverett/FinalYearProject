@@ -14,7 +14,7 @@ router.post('/login', (req, res) => {
     } else {
       if (user.passwordIsValid(req.body.password)) {
         return res.status(200).send({
-          id: user.id,
+          _id: user.id,
           firstname: user.firstname,
           lastname: user.lastname,
           email: user.email,
