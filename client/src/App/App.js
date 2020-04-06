@@ -27,7 +27,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    userService.loggedInUser.subscribe(this.handleLoggedInUserChange);
+    userService.loggedInUser.subscribe(this.handleUserUpdate);
 
     // fetch data for the current logged-in user
     const userID = userService.loggedInUserValue?._id;
@@ -42,11 +42,11 @@ class App extends Component {
   }
 
   componentWillUnmount() {
-    userService.loggedInUser.unsubscribe(this.handleLoggedInUserChange);
+    userService.loggedInUser.unsubscribe(this.handleUserUpdate);
   }
 
-  // called when the user logs in/out
-  handleLoggedInUserChange = loggedInUser => {
+  // called when the user is updated
+  handleUserUpdate = loggedInUser => {
     this.setState({
       loggedInUser: loggedInUser
     });
