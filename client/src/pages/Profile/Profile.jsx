@@ -16,11 +16,31 @@ export class Profile extends Component {
       submitted: false,
       error: ''
     };
-
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleSubmit(e) {
+  // called when a property of the loggedInUser is modified
+  handleChangeValue = e => {
+    const name = e.target.name;
+    var updatedUser = {
+      ...this.props.loggedInUser,
+      [e.target.name]:
+        name === 'emailConsent' ? e.target.checked : e.target.value
+    };
+
+    this.props.updateUser(updatedUser);
+  };
+
+  // called when a geosuggest suggestion is selected
+  onSuggestSelect = suggest => {
+    var updatedUser = {
+      ...this.props.loggedInUser,
+      address: suggest
+    };
+
+    this.props.updateUser(updatedUser);
+  };
+
+  handleSubmit = e => {
     e.preventDefault();
 
     this.setState({ submitted: true });
@@ -43,7 +63,7 @@ export class Profile extends Component {
         toast.error(error);
       }
     );
-  }
+  };
 
   render() {
     const {
@@ -82,7 +102,7 @@ export class Profile extends Component {
                   className="form-control"
                   name="email"
                   value={email || ''}
-                  onChange={this.props.onChangeValue}
+                  onChange={this.handleChangeValue}
                   autoComplete="username"
                 />
                 {submitted && !email && (
@@ -97,7 +117,7 @@ export class Profile extends Component {
                     type="checkbox"
                     name="emailConsent"
                     checked={emailConsent || ''}
-                    onChange={this.props.onChangeValue}
+                    onChange={this.handleChangeValue}
                   />
                   <p id="notification-label">
                     I would like to recieve event announcements
@@ -112,7 +132,7 @@ export class Profile extends Component {
                   className="address-search"
                   placeholder="Start tying an address..."
                   initialValue={address?.description}
-                  onSuggestSelect={this.props.onSuggestSelect}
+                  onSuggestSelect={this.onSuggestSelect}
                 />
               </div>
 

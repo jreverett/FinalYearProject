@@ -45,33 +45,11 @@ class App extends Component {
     userService.loggedInUser.unsubscribe(this.handleUserUpdate);
   }
 
-  // called when the user is updated
+  // called when the user is updated (including login/logout)
   handleUserUpdate = loggedInUser => {
     this.setState({
       loggedInUser: loggedInUser
     });
-  };
-
-  // called when a property of the loggedInUser is modified
-  handleChangeValue = e => {
-    const name = e.target.name;
-    var updatedUser = {
-      ...this.state.loggedInUser,
-      [e.target.name]:
-        name === 'emailConsent' ? e.target.checked : e.target.value
-    };
-
-    userService.updateUserObservable(updatedUser);
-  };
-
-  // called when a geosuggest suggestion is selected
-  onSuggestSelect = suggest => {
-    var updatedUser = {
-      ...this.state.loggedInUser,
-      address: suggest
-    };
-
-    userService.updateUserObservable(updatedUser);
   };
 
   render() {
@@ -110,8 +88,7 @@ class App extends Component {
             <PrivateRoute path="/user" loggedInUser={loggedInUser}>
               <Profile
                 loggedInUser={loggedInUser}
-                onChangeValue={this.handleChangeValue}
-                onSuggestSelect={this.onSuggestSelect}
+                updateUser={this.handleUserUpdate}
               />
             </PrivateRoute>
 
