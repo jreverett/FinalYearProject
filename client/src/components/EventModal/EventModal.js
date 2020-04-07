@@ -51,7 +51,7 @@ class EventModal extends Component {
           this.setState({ userIsSubscribed: true, loading: false });
           toast.success(
             <p>
-              <FaCalendarCheck className="modal-icon" />
+              <FaCalendarCheck className="form-icon" />
               Subscribed to {this.props.eventDetails.title}
             </p>
           );
@@ -73,7 +73,7 @@ class EventModal extends Component {
           this.setState({ userIsSubscribed: false, loading: false });
           toast.success(
             <p>
-              <FaCalendarTimes className="modal-icon" />
+              <FaCalendarTimes className="form-icon" />
               Unsubscribed from {this.props.eventDetails.title}
             </p>
           );
@@ -163,20 +163,20 @@ class EventModal extends Component {
               )}
             </Row>
             <p className={'cost-label ' + (!event.cost ? 'free-event' : null)}>
-              <FaMoneyBillWave className="modal-icon" size={'1.5em'} />
+              <FaMoneyBillWave className="form-icon" size={'1.5em'} />
               {event.cost ? '£' + event.cost : 'FREE!'}
             </p>
             <Row>
               <Col>
                 <p>
-                  <FaRegClock className="modal-icon" size={'1.3em'} />
+                  <FaRegClock className="form-icon" size={'1.3em'} />
                   {startDate}
                 </p>
               </Col>
               {endDate !== 'Invalid date' && (
                 <Col>
                   <p>
-                    <FaFlagCheckered className="modal-icon" size={'1.3em'} />
+                    <FaFlagCheckered className="form-icon" size={'1.3em'} />
                     {endDate}
                   </p>
                 </Col>

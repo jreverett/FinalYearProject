@@ -54,7 +54,7 @@ export class Profile extends Component {
         this.setState({ loading: false });
         toast.success(
           <p>
-            <FaSave className="modal-icon" /> Your changes have been saved
+            <FaSave className="form-icon" /> Your changes have been saved
           </p>
         );
       },

@@ -84,6 +84,11 @@ div .alert-danger {
   font-size: small;
 }
 
+/* ICONS */
+.form-icon {
+  margin-right: 0.3rem;
+}
+
 /* EVENT LABELS */
 .cost-label {
   margin-bottom: 0.25rem;

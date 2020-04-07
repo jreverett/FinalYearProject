@@ -30,7 +30,7 @@ class SubscriptionTile extends Component {
         this.setState({ removed: true });
         toast.success(
           <p>
-            <FaCalendarTimes className="modal-icon" />
+            <FaCalendarTimes className="form-icon" />
             Unsubscribed from {this.state.title}
           </p>
         );
