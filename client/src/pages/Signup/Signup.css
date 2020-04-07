@@ -1,16 +1,3 @@
-#logo-container {
-  width: 50%;
-  margin: 0 auto;
-}
-
-#logo {
-  padding-bottom: 20px;
-}
-
-.form-group {
-  margin-bottom: 10px;
-}
-
 #signup-button-container {
   width: 50%;
   margin: 0 auto;
@@ -19,19 +6,4 @@
 #signup-button {
   margin-top: 20px;
   width: 100%;
-}
-
-#question-container {
-  text-align: center;
-  padding-top: 20px;
-  padding-bottom: 10px;
-}
-
-#question-container p {
-  display: inline;
-}
-
-#question-container a {
-  color: blue;
-  font-size: unset;
 }
