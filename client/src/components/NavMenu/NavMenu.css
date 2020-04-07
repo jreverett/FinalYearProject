@@ -65,7 +65,7 @@
   background: rgba(0, 0, 0, 0.3);
 }
 
-a {
+.menu-item {
   color: azure;
   font-size: x-large;
   padding-top: 15px;
