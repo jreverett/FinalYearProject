@@ -7,6 +7,8 @@ import {
   Home,
   Login,
   Signup,
+  ForgotPassword,
+  ResetPassword,
   CreateEvent,
   EventListings,
   Profile
@@ -69,6 +71,19 @@ class App extends Component {
             <Route path="/signup">
               <Signup loggedInUser={loggedInUser} />
             </Route>
+
+            {/* FORGOT PASSWORD */}
+            <Route path="/forgot-password">
+              <ForgotPassword loggedInUser={loggedInUser} />
+            </Route>
+
+            {/* RESET PASSWORD */}
+            <Route
+              path="/reset-password/:token"
+              render={props => (
+                <ResetPassword {...props} loggedInUser={loggedInUser} />
+              )}
+            />
 
             {/* VIEW EVENT -- NO LONGER REQUIRED */}
             <Route path="/event/view">

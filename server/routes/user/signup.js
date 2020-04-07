@@ -16,6 +16,8 @@ router.post('/signup', (req, res, next) => {
   newUser.setPassword(req.body.password);
   newUser.verified = false;
   newUser.events = {};
+  newUser.resetToken = '';
+  newUser.resetTokenExpiration = '';
 
   newUser.save((err, User) => {
     if (err) {

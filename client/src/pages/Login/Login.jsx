@@ -125,7 +125,11 @@ class Login extends Component {
             </div>
             {error && <div className={'alert alert-danger'}>{error}</div>}
           </form>
-          <br />
+          <div className="login-forgot-password-container">
+            <a className="login-forgot-password" href="/forgot-password">
+              Forgot password?
+            </a>
+          </div>
           <div className="strike">
             <span>or</span>
           </div>

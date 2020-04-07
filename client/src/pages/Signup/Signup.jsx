@@ -44,7 +44,6 @@ class Signup extends Component {
     this.setState({ loading: true });
     userService.signup(firstname, lastname, email, address, password).then(
       user => {
-        console.log('Account created for user: ' + email);
         authenticationService.login(email, password).then(userRes => {
           window.location.href = '/';
         });

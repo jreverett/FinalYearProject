@@ -41,6 +41,12 @@ const UserSchema = mongoose.Schema({
   },
   events: {
     type: Array
+  },
+  resetToken: {
+    type: String
+  },
+  resetTokenExpiration: {
+    type: Date
   }
 });
 

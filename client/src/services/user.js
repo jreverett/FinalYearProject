@@ -62,6 +62,38 @@ function update(id, email, emailConsent, address) {
     });
 }
 
+// function resetPassword(id) { // TODO: this should be part of update()
+//   const requestOptions = {
+//     method: 'POST',
+//     headers: { 'Content-Type': 'application/json' },
+//     body: JSON.stringify({ id })
+//   };
+
+//   return fetch(`${API_URL}/api/user/resetPassword`, requestOptions)
+//     .then(handleResponse)
+//     .then({
+//       if(user) {
+//         return user;
+//       }
+//     });
+// }
+
+function forgotPassword(email) {
+  const requestOptions = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email })
+  };
+
+  return fetch(`${API_URL}/api/user/forgot-password`, requestOptions)
+    .then(handleResponse)
+    .then({
+      if(user) {
+        return user;
+      }
+    });
+}
+
 function subscribe(userID, eventID) {
   const requestOptions = {
     method: 'POST',
@@ -106,6 +138,8 @@ export const userService = {
   subscribe,
   unsubscribe,
   update,
+  // resetPassword,
+  forgotPassword,
   get loggedInUserValue() {
     return currentUserSubject ? currentUserSubject.value : null;
   }

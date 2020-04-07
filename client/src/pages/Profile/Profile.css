@@ -26,6 +26,22 @@
   font-size: small;
 }
 
+#profile-reset-pass-container {
+  margin-top: 2rem;
+}
+
+#profile-reset-pass {
+  padding: 0;
+  color: #2078bb;
+  font-size: 1.3rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#profile-reset-pass:hover {
+  color: #0e4b79;
+}
+
 #profile-save-button-container {
   position: absolute;
   bottom: 0.5rem;

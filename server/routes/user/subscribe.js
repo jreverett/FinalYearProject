@@ -16,7 +16,7 @@ router.post('/subscribe', (req, res, next) => {
     }
     if (!event) {
       return res.status(500).send({
-        message: 'Failed to subsribe: Could not find the specifed event'
+        message: 'Failed to subscribe: Could not find the specifed event'
       });
     }
 
@@ -29,7 +29,7 @@ router.post('/subscribe', (req, res, next) => {
       }
       if (!user) {
         return res.status(500).send({
-          message: 'Failed to subsribe: Could not find the specifed user'
+          message: 'Failed to subscribe: Could not find the specifed user'
         });
       }
 

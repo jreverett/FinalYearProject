@@ -65,6 +65,17 @@ export class Profile extends Component {
     );
   };
 
+  changePassword = () => {
+    alert('TODO: This should reveal password reset (new/confirm new) boxes');
+    // userService.changePassword(this.props.loggedInUser._id).then(() => {
+    //   toast.success(
+    //     <p>
+    //         <MdEmail className="form-icon" /> A password reset link has been emailed to you
+    //       </p>
+    //   )
+    // })
+  };
+
   render() {
     const {
       submitted,
@@ -136,6 +147,14 @@ export class Profile extends Component {
                 />
               </div>
 
+              {/* RESET PASSWORD */}
+              <div id="profile-reset-pass-container">
+                <a id="profile-reset-pass" onClick={this.changePassword}>
+                  Change Password
+                </a>
+              </div>
+
+              {/* SAVE */}
               <div id="profile-save-button-container" className="form-group">
                 <button
                   id="profile-save-button"

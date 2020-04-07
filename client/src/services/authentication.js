@@ -25,7 +25,22 @@ function logout() {
   userService.updateUserObservable(null);
 }
 
+function checkResetTokenValidity(token) {
+  const requestOptions = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ token })
+  };
+
+  return fetch(`${API_URL}/api/user/verify-token`, requestOptions)
+    .then(handleResponse)
+    .then(user => {
+      return user;
+    });
+}
+
 export const authenticationService = {
   login,
-  logout
+  logout,
+  checkResetTokenValidity
 };
