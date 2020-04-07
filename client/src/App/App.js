@@ -60,9 +60,10 @@ class App extends Component {
         <Router>
           <Switch>
             {/* LOGIN */}
-            <Route path="/login">
-              <Login loggedInUser={loggedInUser} />
-            </Route>
+            <Route
+              path="/login"
+              render={props => <Login {...props} loggedInUser={loggedInUser} />}
+            />
 
             {/* SIGN UP */}
             <Route path="/signup">
@@ -80,9 +81,12 @@ class App extends Component {
             </PrivateRoute>
 
             {/* EVENT LISTINGS */}
-            <Route path="/event-listings">
-              <EventListings loggedInUser={loggedInUser} />
-            </Route>
+            <Route
+              path="/event-listings"
+              render={props => (
+                <EventListings {...props} loggedInUser={loggedInUser} />
+              )}
+            />
 
             {/* USER PAGE */}
             <PrivateRoute path="/user" loggedInUser={loggedInUser}>
