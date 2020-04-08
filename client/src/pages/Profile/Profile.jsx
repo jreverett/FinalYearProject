@@ -12,14 +12,34 @@ export class Profile extends Component {
     super(props);
 
     this.state = {
+      currentPassword: '',
+      newPassword: '',
+      confirmNewPassword: '',
+      changePassword: false,
       loading: false,
       submitted: false,
       error: ''
     };
   }
 
+  // toggles displaying of password boxes when the 'change password' or 'close' button is selected
+  changePassword = () => {
+    this.setState({
+      currentPassword: '',
+      newPassword: '',
+      confirmNewPassword: '',
+      changePassword: !this.state.changePassword
+    });
+  };
+
+  // called when profile state values are modified
+  handlePasswordChangeValue = e => {
+    const { name, value } = e.target;
+    this.setState({ [name]: value });
+  };
+
   // called when a property of the loggedInUser is modified
-  handleChangeValue = e => {
+  handleUserChangeValue = e => {
     const name = e.target.name;
     var updatedUser = {
       ...this.props.loggedInUser,
@@ -44,43 +64,61 @@ export class Profile extends Component {
     e.preventDefault();
 
     this.setState({ submitted: true });
-    const { _id, email, emailConsent, address } = this.props.loggedInUser;
 
+    // check that the email field has been filled
+    const { _id, email, emailConsent, address } = this.props.loggedInUser;
     if (!email) return;
 
-    this.setState({ loading: true });
-    userService.update(_id, email, emailConsent, address).then(
-      () => {
-        this.setState({ loading: false });
-        toast.success(
-          <p>
-            <FaSave className="form-icon" /> Your changes have been saved
-          </p>
+    // check if a new password has been input, validate if it has
+    const {
+      currentPassword,
+      newPassword,
+      confirmNewPassword,
+      changePassword
+    } = this.state;
+    if (changePassword) {
+      if (!currentPassword || !newPassword || !confirmNewPassword) {
+        return toast.info(
+          "Click 'Close' above the password fields to proceed without changing your password"
         );
-      },
-      error => {
-        this.setState({ error, loading: false });
-        toast.error(error);
       }
-    );
-  };
+      if (newPassword !== confirmNewPassword) {
+        return this.setState({ error: 'New passwords do not match' });
+      }
+    }
 
-  changePassword = () => {
-    alert('TODO: This should reveal password reset (new/confirm new) boxes');
-    // userService.changePassword(this.props.loggedInUser._id).then(() => {
-    //   toast.success(
-    //     <p>
-    //         <MdEmail className="form-icon" /> A password reset link has been emailed to you
-    //       </p>
-    //   )
-    // })
+    this.setState({ loading: true });
+    userService
+      .update(_id, email, emailConsent, address, currentPassword, newPassword)
+      .then(
+        () => {
+          this.setState({ loading: false });
+          toast.success(
+            <p>
+              <FaSave className="form-icon" /> Your changes have been saved
+            </p>
+          );
+        },
+        error => {
+          this.setState({ error, loading: false });
+          toast.error(error);
+        }
+      );
   };
 
   render() {
     const { email, emailConsent, address } = this.props.loggedInUser;
     const name = `${this.props.loggedInUser.firstname} ${this.props.loggedInUser.lastname}`;
 
-    const { submitted, loading } = this.state;
+    const {
+      currentPassword,
+      newPassword,
+      confirmNewPassword,
+      changePassword,
+      submitted,
+      loading,
+      error
+    } = this.state;
     return (
       <Fragment>
         {loading && <div id="loading-fade" />}
@@ -108,7 +146,7 @@ export class Profile extends Component {
                   className="form-control"
                   name="email"
                   value={email || ''}
-                  onChange={this.handleChangeValue}
+                  onChange={this.handleUserChangeValue}
                   autoComplete="username"
                 />
                 {submitted && !email && (
@@ -123,7 +161,7 @@ export class Profile extends Component {
                     type="checkbox"
                     name="emailConsent"
                     checked={emailConsent || ''}
-                    onChange={this.handleChangeValue}
+                    onChange={this.handleUserChangeValue}
                   />
                   <p id="notification-label">
                     I would like to recieve event announcements
@@ -143,11 +181,101 @@ export class Profile extends Component {
               </div>
 
               {/* RESET PASSWORD */}
-              <div id="profile-reset-pass-container">
+              {changePassword ? (
+                <>
+                  <div>
+                    {/* Hidden username field for accessability (https://goo.gl/9p2vKq) */}
+                    <input
+                      type="text"
+                      className="hidden"
+                      name="email"
+                      autoComplete="username email"
+                    ></input>
+
+                    <a id="profile-reset-pass" onClick={this.changePassword}>
+                      Close
+                    </a>
+
+                    {/* CURRENT PASSWORD */}
+                    <div
+                      className={
+                        'form-group' +
+                        (submitted && !currentPassword ? ' has-error' : '')
+                      }
+                    >
+                      <label htmlFor="currentPassword">
+                        Current password<p className="compulsory-asterisk">*</p>
+                      </label>
+                      <input
+                        type="password"
+                        className="form-control"
+                        name="currentPassword"
+                        value={currentPassword}
+                        onChange={this.handlePasswordChangeValue}
+                        autoComplete="new-password"
+                      ></input>
+                      {submitted && !currentPassword && (
+                        <div className="help-block">
+                          Current password is required
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* NEW PASSWORD */}
+                  <div
+                    className={
+                      'form-group' +
+                      (submitted && !newPassword ? ' has-error' : '')
+                    }
+                  >
+                    <label htmlFor="newPassword">
+                      New password<p className="compulsory-asterisk">*</p>
+                    </label>
+                    <input
+                      type="password"
+                      className="form-control"
+                      name="newPassword"
+                      value={newPassword}
+                      onChange={this.handlePasswordChangeValue}
+                      autoComplete="new-password"
+                    ></input>
+                    {submitted && !newPassword && (
+                      <div className="help-block">New password is required</div>
+                    )}
+                  </div>
+
+                  {/* CONFIRM NEW PASSWORD */}
+                  <div
+                    className={
+                      'form-group' +
+                      (submitted && !confirmNewPassword ? ' has-error' : '')
+                    }
+                  >
+                    <label htmlFor="confirmNewPassword">
+                      Confirm new password
+                      <p className="compulsory-asterisk">*</p>
+                    </label>
+                    <input
+                      type="password"
+                      className="form-control"
+                      name="confirmNewPassword"
+                      value={confirmNewPassword}
+                      onChange={this.handlePasswordChangeValue}
+                      autoComplete="new-password"
+                    ></input>
+                    {submitted && !confirmNewPassword && (
+                      <div className="help-block">
+                        Password confirmation is required
+                      </div>
+                    )}
+                  </div>
+                </>
+              ) : (
                 <a id="profile-reset-pass" onClick={this.changePassword}>
                   Change Password
                 </a>
-              </div>
+              )}
 
               {/* SAVE */}
               <div id="profile-save-button-container" className="form-group">
@@ -159,6 +287,7 @@ export class Profile extends Component {
                   Save
                 </button>
               </div>
+              {error && <div className={'alert alert-danger'}>{error}</div>}
             </form>
           </div>
 

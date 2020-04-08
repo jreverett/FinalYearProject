@@ -46,11 +46,25 @@ function updateUserObservable(userData) {
   currentUserSubject.next(userData);
 }
 
-function update(id, email, emailConsent, address) {
+function update(
+  id,
+  email,
+  emailConsent,
+  address,
+  currentPassword,
+  newPassword
+) {
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ id, email, emailConsent, address })
+    body: JSON.stringify({
+      id,
+      email,
+      emailConsent,
+      address,
+      currentPassword,
+      newPassword
+    })
   };
 
   return fetch(`${API_URL}/api/user/update`, requestOptions)
