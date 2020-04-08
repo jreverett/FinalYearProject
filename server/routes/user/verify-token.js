@@ -1,40 +1,16 @@
 const express = require('express');
 const router = express.Router();
-
-// import user schema
-const User = require('../../model/user');
+const verificationService = require('../../services/verifyResetToken');
 
 router.post('/verify-token', (req, res, next) => {
-  if (!req.body.token) {
-    return res.status(400).send({ message: 'Token is required' });
-  }
-
-  // verify token exists
-  User.findOne({ resetToken: req.body.token }, (err, user) => {
+  verificationService.verifyResetToken(req.body.token, (err, success) => {
     if (err) {
-      return res
-        .status(500)
-        .send({ message: 'Failed to verify token: ' + err });
-    }
-    if (!user) {
-      return res
-        .status(500)
-        .send({
-          message: 'Token does not exist, please request a new reset link'
-        });
+      return res.status(err.status).send({ message: err.message });
     }
 
-    // verify token has not expired
-    if (user.resetTokenExpiration.getTime() < Date.now()) {
-      return res
-        .status(500)
-        .send({
-          message: 'Token has expired, please request a new reset link'
-        });
-    }
-
-    // token is valid
-    return res.status(200).send({ message: 'VALID', user: user });
+    return res
+      .status(success.status)
+      .send({ message: success.message, user: success.user });
   });
 });
 

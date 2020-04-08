@@ -1,5 +1,7 @@
 import React, { Component, Fragment } from 'react';
-import { authenticationService } from '../../services';
+import { toast } from 'react-toastify';
+import { FaSave } from 'react-icons/fa';
+import { authenticationService, userService } from '../../services';
 import './ResetPassword.css';
 import '../../common.css';
 
@@ -55,7 +57,17 @@ class ResetPassword extends Component {
     }
 
     this.setState({ loading: true });
-    // TODO: update user account here
+    userService.resetPassword(this.props.match.params.token, password).then(
+      () => {
+        this.setState({ loading: false });
+        toast.success(
+          <p>
+            <FaSave className="form-icon" /> Your password has been updated
+          </p>
+        );
+      },
+      error => this.setState({ error, loading: false })
+    );
   };
 
   render() {
@@ -93,7 +105,7 @@ class ResetPassword extends Component {
                 New password<p className="compulsory-asterisk">*</p>
               </label>
               <input
-                type="text"
+                type="password"
                 className="form-control"
                 name="password"
                 value={password}
@@ -115,7 +127,7 @@ class ResetPassword extends Component {
                 Confirm new password<p className="compulsory-asterisk">*</p>
               </label>
               <input
-                type="text"
+                type="password"
                 className="form-control"
                 name="confirmPassword"
                 value={confirmPassword}
