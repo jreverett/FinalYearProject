@@ -77,15 +77,10 @@ export class Profile extends Component {
   };
 
   render() {
-    const {
-      submitted,
-      email,
-      emailConsent,
-      address,
-      loading
-    } = this.props.loggedInUser;
-
+    const { email, emailConsent, address } = this.props.loggedInUser;
     const name = `${this.props.loggedInUser.firstname} ${this.props.loggedInUser.lastname}`;
+
+    const { submitted, loading } = this.state;
     return (
       <Fragment>
         {loading && <div id="loading-fade" />}
