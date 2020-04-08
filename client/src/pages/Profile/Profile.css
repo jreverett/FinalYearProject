@@ -26,15 +26,16 @@
   font-size: small;
 }
 
-#profile-reset-pass {
+.profile-toggle-pass {
   padding: 0;
   color: #2078bb;
+  border: none;
   font-size: 1.1rem;
   font-weight: bold;
   cursor: pointer;
 }
 
-#profile-reset-pass:hover {
+.profile-toggle-pass:hover {
   color: #0e4b79;
 }
 

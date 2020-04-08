@@ -192,9 +192,12 @@ export class Profile extends Component {
                       autoComplete="username email"
                     ></input>
 
-                    <a id="profile-reset-pass" onClick={this.changePassword}>
+                    <button
+                      className="profile-toggle-pass"
+                      onClick={this.changePassword}
+                    >
                       Close
-                    </a>
+                    </button>
 
                     {/* CURRENT PASSWORD */}
                     <div
@@ -272,9 +275,12 @@ export class Profile extends Component {
                   </div>
                 </>
               ) : (
-                <a id="profile-reset-pass" onClick={this.changePassword}>
+                <button
+                  className="profile-toggle-pass"
+                  onClick={this.changePassword}
+                >
                   Change Password
-                </a>
+                </button>
               )}
 
               {/* SAVE */}
