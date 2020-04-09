@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import { Tabs, Tab } from 'react-bootstrap';
 import Geosuggest from 'react-geosuggest';
 import { toast } from 'react-toastify';
 import { FaSave } from 'react-icons/fa';
@@ -12,6 +13,7 @@ export class Profile extends Component {
     super(props);
 
     this.state = {
+      tabKey: 'subscriptions',
       currentPassword: '',
       newPassword: '',
       confirmNewPassword: '',
@@ -297,9 +299,24 @@ export class Profile extends Component {
             </form>
           </div>
 
+          {/* SUBBSCRIPTIONS / MY EVENTS */}
           <div id="profile-subs-container">
-            <p id="profile-subs-header">Subscriptions</p>
-            <SubscriptionGallery loggedInUser={this.props.loggedInUser} />
+            <Tabs
+              activeKey={this.state.tabKey}
+              onSelect={tabKey => this.setState({ tabKey })}
+              className="profile-tabs"
+            >
+              <Tab
+                eventKey="subscriptions"
+                title="Subscriptions"
+                className="profile-subscription-tab"
+              >
+                <SubscriptionGallery loggedInUser={this.props.loggedInUser} />
+              </Tab>
+              <Tab eventKey="myEvents" title="My Events">
+                <p>MyEvents component goes here...</p>
+              </Tab>
+            </Tabs>
           </div>
         </div>
       </Fragment>

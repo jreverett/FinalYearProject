@@ -1,7 +1,6 @@
 #subgallery-container {
-  height: 90%;
+  height: 94.5%;
   background-image: linear-gradient(#fff, #d4f7f0);
-  border: 1px dotted black;
   border-radius: 3px;
   box-shadow: 2px 2px 5px rgba(1, 1, 1, 0.5);
   overflow: scroll;

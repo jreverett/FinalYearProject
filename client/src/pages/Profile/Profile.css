@@ -11,9 +11,62 @@
 }
 
 #profile-subs-container {
+  margin-bottom: 0.3rem;
   margin-left: 2%;
   width: 100%;
 }
+
+.profile-tabs {
+  flex-wrap: nowrap;
+  white-space: nowrap;
+}
+
+.tab-content {
+  height: 100%;
+}
+
+.profile-subscription-tab {
+  height: 100%;
+}
+
+#profile-header-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 2.1rem;
+}
+
+.profile-header {
+  background-color: rgb(226, 226, 226);
+  border-radius: 4px;
+  padding: 0 2px 60px 2px;
+  font-size: x-large;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.profile-header.selected {
+  background-color: rgb(175, 175, 175);
+}
+
+#profile-subs-header:after {
+  content: '';
+  position: absolute;
+  background-color: black;
+  width: 2px;
+  height: 36px;
+  top: 22px;
+  left: 76.8%;
+  cursor: initial;
+}
+
+#profile-header-seperator {
+  font-size: xx-large;
+  font-weight: 200;
+}
+
+/* #profile-myevents-header {
+} */
 
 #name-label {
   font-size: xx-large;
@@ -53,13 +106,6 @@
 .text-success {
   margin-top: 0.5em;
   margin-bottom: 0;
-}
-
-#profile-subs-header {
-  font-size: x-large;
-  font-weight: bold;
-  padding-top: 0.56rem;
-  margin-bottom: 0.3rem;
 }
 
 /*********************
