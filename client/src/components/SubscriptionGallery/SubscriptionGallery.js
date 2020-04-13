@@ -5,7 +5,7 @@ import './SubscriptionGallery.css';
 
 class SubscriptionGallery extends Component {
   render() {
-    var subscriptions = this.props.loggedInUser.events;
+    var subscriptions = this.props.loggedInUser.subscriptions;
     var subscriptionTiles = [];
 
     if (subscriptions) {

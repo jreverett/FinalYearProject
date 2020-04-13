@@ -34,14 +34,14 @@ router.post('/subscribe', (req, res, next) => {
       }
 
       // user exists, subscribe them to the event if not already subbed
-      if (user.events.includes(event._id)) {
+      if (user.subscriptions.includes(event._id)) {
         return res.status(500).send({
           message:
             'Failed to subscribe: User is already subscribed to this event'
         });
       }
 
-      user.events.push(event._id);
+      user.subscriptions.push(event._id);
       user.save();
 
       return res.status(200).send({

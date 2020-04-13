@@ -34,7 +34,11 @@ class EventModal extends Component {
     });
 
     // check if user is subscribed to this event
-    if (this.props.loggedInUser?.events.includes(this.props.eventDetails._id))
+    if (
+      this.props.loggedInUser?.subscriptions.includes(
+        this.props.eventDetails._id
+      )
+    )
       this.setState({
         userIsSubscribed: true,
         subscriptionButtonText: 'Subscribed'

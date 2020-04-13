@@ -33,14 +33,14 @@ router.post('/unsubscribe', (req, res, next) => {
         });
       }
 
-      const index = user.events.indexOf(event._id);
+      const index = user.subscriptions.indexOf(event._id);
       if (!(index > -1)) {
         return res.status(500).send({
           message: 'Failed to unsubsribe: User is not subscribed to this event'
         });
       }
 
-      user.events.splice(index, 1);
+      user.subscriptions.splice(index, 1);
       user.save();
 
       return res.status(200).send({

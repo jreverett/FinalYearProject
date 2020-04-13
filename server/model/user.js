@@ -39,7 +39,7 @@ const UserSchema = mongoose.Schema({
     required: true,
     default: false
   },
-  events: {
+  subscriptions: {
     type: Array
   },
   resetToken: {
