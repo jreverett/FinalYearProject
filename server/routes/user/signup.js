@@ -15,7 +15,6 @@ router.post('/signup', (req, res, next) => {
   newUser.address = req.body.address ? req.body.address : '';
   newUser.setPassword(req.body.password);
   newUser.verified = false;
-  newUser.subscriptions = {};
   newUser.resetToken = '';
   newUser.resetTokenExpiration = '';
 
