@@ -13,7 +13,7 @@ export class Profile extends Component {
     super(props);
 
     this.state = {
-      tabKey: 'myEvents',
+      tabKey: 'subscriptions',
       currentPassword: '',
       newPassword: '',
       confirmNewPassword: '',
