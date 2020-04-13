@@ -4,7 +4,7 @@ import Geosuggest from 'react-geosuggest';
 import { toast } from 'react-toastify';
 import { FaSave } from 'react-icons/fa';
 import { userService } from '../../services';
-import { SubscriptionGallery, MyEventsTable } from '../../components';
+import { SubscriptionTable, MyEventsTable } from '../../components';
 import '../../common.css';
 import './Profile.css';
 
@@ -311,7 +311,7 @@ export class Profile extends Component {
                 title="Subscriptions"
                 className="profile-tab"
               >
-                <SubscriptionGallery loggedInUser={this.props.loggedInUser} />
+                <SubscriptionTable loggedInUser={this.props.loggedInUser} />
               </Tab>
               <Tab
                 eventKey="myEvents"

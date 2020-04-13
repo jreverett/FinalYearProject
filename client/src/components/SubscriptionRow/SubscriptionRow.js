@@ -4,9 +4,9 @@ import { FaCalendarTimes } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import { eventService, userService } from '../../services';
 import { formatDateTime } from '../../utilities';
-import './SubscriptionTile.css';
+import './SubscriptionRow.css';
 
-class SubscriptionTile extends Component {
+class SubscriptionRow extends Component {
   constructor(props) {
     super(props);
 
@@ -68,4 +68,4 @@ class SubscriptionTile extends Component {
   }
 }
 
-export default SubscriptionTile;
+export default SubscriptionRow;

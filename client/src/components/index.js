@@ -6,8 +6,8 @@ import EventTile from './EventTile/EventTile';
 import EventGallery from './EventGallery/EventGallery';
 import EventModal from './EventModal/EventModal';
 
-import SubscriptionTile from './SubscriptionTile/SubscriptionTile';
-import SubscriptionGallery from './SubscriptionGallery/SubscriptionGallery';
+import SubscriptionRow from './SubscriptionRow/SubscriptionRow';
+import SubscriptionTable from './SubscriptionTable/SubscriptionTable';
 
 import MyEventsTable from './MyEventsTable/MyEventsTable';
 import MyEventsRow from './MyEventsRow/MyEventsRow';
@@ -19,8 +19,8 @@ export {
   EventTile,
   EventGallery,
   EventModal,
-  SubscriptionTile,
-  SubscriptionGallery,
+  SubscriptionRow,
+  SubscriptionTable,
   MyEventsTable,
   MyEventsRow
 };

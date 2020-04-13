@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
-import { SubscriptionTile } from '../';
+import { SubscriptionRow } from '..';
 import '../../common.css';
-import './SubscriptionGallery.css';
+import './SubscriptionTable.css';
 
-class SubscriptionGallery extends Component {
+class SubscriptionTable extends Component {
   render() {
     var subscriptions = this.props.loggedInUser.subscriptions;
-    var subscriptionTiles = [];
+    var subscriptionRows = [];
 
     if (subscriptions) {
-      subscriptionTiles = subscriptions.map((sub, index) => {
+      subscriptionRows = subscriptions.map((sub, index) => {
         return (
-          <SubscriptionTile
+          <SubscriptionRow
             key={index}
             userID={this.props.loggedInUser._id}
             eventID={sub}
@@ -22,10 +22,10 @@ class SubscriptionGallery extends Component {
 
     return (
       <div id="subgallery-container">
-        <div>{subscriptionTiles}</div>
+        <div>{subscriptionRows}</div>
       </div>
     );
   }
 }
 
-export default SubscriptionGallery;
+export default SubscriptionTable;
