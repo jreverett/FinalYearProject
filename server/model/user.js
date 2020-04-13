@@ -39,6 +39,9 @@ const UserSchema = mongoose.Schema({
     required: true,
     default: false
   },
+  ownedEvents: {
+    type: Array
+  },
   subscriptions: {
     type: Array
   },
