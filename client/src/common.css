@@ -84,6 +84,22 @@ div .alert-danger {
   font-size: small;
 }
 
+/* TABBED CONTENT */
+.profile-tab-item-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 2.5rem;
+  margin: 2px;
+  padding: 0.4rem;
+  font-size: small;
+  border: grey solid 1px;
+  border-radius: 3px;
+  overflow: hidden;
+  line-height: 1.8rem;
+  background-color: rgb(221, 221, 221);
+}
+
 /* ICONS */
 .form-icon {
   margin-right: 0.3rem;

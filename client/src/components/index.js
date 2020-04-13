@@ -9,6 +9,9 @@ import EventModal from './EventModal/EventModal';
 import SubscriptionTile from './SubscriptionTile/SubscriptionTile';
 import SubscriptionGallery from './SubscriptionGallery/SubscriptionGallery';
 
+import MyEventsTable from './MyEventsTable/MyEventsTable';
+import MyEventsRow from './MyEventsRow/MyEventsRow';
+
 export {
   NavBar,
   NavMenu,
@@ -17,5 +20,7 @@ export {
   EventGallery,
   EventModal,
   SubscriptionTile,
-  SubscriptionGallery
+  SubscriptionGallery,
+  MyEventsTable,
+  MyEventsRow
 };

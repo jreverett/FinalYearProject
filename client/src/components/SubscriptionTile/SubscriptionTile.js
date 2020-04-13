@@ -45,7 +45,7 @@ class SubscriptionTile extends Component {
     const { title, start, removed } = this.state;
     return (
       <div
-        className={`subscription-tile-container ${removed ? 'hidden' : null}`}
+        className={`profile-tab-item-container ${removed ? 'hidden' : null}`}
       >
         <div className="subscription-tile-text-container">
           <p className="subscription-tile-text">{`${title} @ ${formatDateTime(
