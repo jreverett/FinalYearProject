@@ -1,0 +1,12 @@
+.eventrow-event-dropdown {
+  padding-left: 0;
+  bottom: 0.5rem;
+}
+
+.dropdown-toggle:after {
+  content: none;
+}
+
+#collapsible-nav-dropdown {
+  padding: 0.5rem 0.5rem;
+}

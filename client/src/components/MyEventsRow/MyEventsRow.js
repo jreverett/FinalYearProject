@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { toast } from 'react-toastify';
-import { eventService, userService } from '../../services';
+import { NavDropdown } from 'react-bootstrap';
+import { FaEllipsisH } from 'react-icons/fa';
+import { eventService } from '../../services';
 import { formatDateTime } from '../../utilities';
 import '../../common.css';
 import './MyEventsRow.css';
@@ -29,13 +30,23 @@ class MyEventsRow extends Component {
       <div
         className={`profile-tab-item-container ${removed ? 'hidden' : null}`}
       >
-        <div>
+        <div className="profile-tab-item-text-container">
           <p>{`${title} @ ${formatDateTime(start)}`}</p>
         </div>
         <div>
-          <button
-          //TODO: three dotted lines to open: SEND ACCOUNCEMENT or DELETE EVENT
-          ></button>
+          <NavDropdown
+            className="eventrow-event-dropdown"
+            title={<FaEllipsisH size={'1.5em'} />}
+            id="collapsible-nav-dropdown"
+          >
+            <NavDropdown.Item href="#action/3.1">
+              Send Announcement
+            </NavDropdown.Item>
+            <NavDropdown.Divider />
+            <NavDropdown.Item href="#action/3.4" style={{ color: 'red' }}>
+              Delete Event
+            </NavDropdown.Item>
+          </NavDropdown>
         </div>
       </div>
     );

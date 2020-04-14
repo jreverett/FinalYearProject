@@ -47,20 +47,15 @@ class SubscriptionRow extends Component {
       <div
         className={`profile-tab-item-container ${removed ? 'hidden' : null}`}
       >
-        <div className="subscription-tile-text-container">
-          <p className="subscription-tile-text">{`${title} @ ${formatDateTime(
-            start
-          )}`}</p>
+        <div className="profile-tab-item-text-container">
+          <p>{`${title} @ ${formatDateTime(start)}`}</p>
         </div>
-        <div className="subscription-tile-button-container">
+        <div>
           <button
             className="button-cancel-subscription"
             onClick={this.unsubscribe}
           >
-            <MdDeleteForever
-              className="subscription-tile-icon"
-              size={'1.5em'}
-            />
+            <MdDeleteForever className="subscription-row-icon" size={'1.5em'} />
           </button>
         </div>
       </div>

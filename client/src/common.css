@@ -95,9 +95,12 @@ div .alert-danger {
   font-size: small;
   border: grey solid 1px;
   border-radius: 3px;
-  overflow: hidden;
   line-height: 1.8rem;
   background-color: rgb(221, 221, 221);
+}
+
+.profile-tab-item-text-container {
+  overflow: hidden;
 }
 
 /* ICONS */

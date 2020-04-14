@@ -3,7 +3,7 @@
   border: none;
 }
 
-.subscription-tile-icon {
+.subscription-row-icon {
   color: var(--red);
   margin-bottom: 5px;
 }
