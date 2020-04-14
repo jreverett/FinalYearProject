@@ -10,3 +10,7 @@
 #collapsible-nav-dropdown {
   padding: 0.5rem 0.5rem;
 }
+
+.eventrow-event-dropdown-delete {
+  color: var(--red);
+}

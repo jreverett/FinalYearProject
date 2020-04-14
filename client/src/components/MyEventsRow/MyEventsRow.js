@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { NavDropdown } from 'react-bootstrap';
 import { FaEllipsisH } from 'react-icons/fa';
+import { ConfirmationModal } from '../';
 import { eventService } from '../../services';
 import { formatDateTime } from '../../utilities';
 import '../../common.css';
@@ -13,7 +14,8 @@ class MyEventsRow extends Component {
     this.state = {
       title: '',
       start: '',
-      removed: false
+      removed: false,
+      show: false
     };
   }
 
@@ -24,31 +26,52 @@ class MyEventsRow extends Component {
     });
   }
 
+  toggleConfirmationModal = () => {
+    this.setState({ show: !this.state.show });
+  };
+
+  deleteEvent = () => {
+    this.setState({ show: false });
+    // TODO: Delete event and send announcement to any subscribers (and the former event owner)
+    alert('coming soon...');
+  };
+
   render() {
     const { title, start, removed } = this.state;
     return (
-      <div
-        className={`profile-tab-item-container ${removed ? 'hidden' : null}`}
-      >
-        <div className="profile-tab-item-text-container">
-          <p>{`${title} @ ${formatDateTime(start)}`}</p>
+      <>
+        <div
+          className={`profile-tab-item-container ${removed ? 'hidden' : null}`}
+        >
+          <div className="profile-tab-item-text-container">
+            <p>{`${title} @ ${formatDateTime(start)}`}</p>
+          </div>
+          <div>
+            <NavDropdown
+              className="eventrow-event-dropdown"
+              title={<FaEllipsisH size={'1.5em'} />}
+              id="collapsible-nav-dropdown"
+            >
+              <NavDropdown.Item>Send Announcement</NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item
+                onClick={this.toggleConfirmationModal}
+                className="eventrow-event-dropdown-delete"
+              >
+                Delete Event
+              </NavDropdown.Item>
+            </NavDropdown>
+          </div>
         </div>
-        <div>
-          <NavDropdown
-            className="eventrow-event-dropdown"
-            title={<FaEllipsisH size={'1.5em'} />}
-            id="collapsible-nav-dropdown"
-          >
-            <NavDropdown.Item href="#action/3.1">
-              Send Announcement
-            </NavDropdown.Item>
-            <NavDropdown.Divider />
-            <NavDropdown.Item href="#action/3.4" style={{ color: 'red' }}>
-              Delete Event
-            </NavDropdown.Item>
-          </NavDropdown>
-        </div>
-      </div>
+        <ConfirmationModal
+          show={this.state.show}
+          title="Confirm Event Deletion?"
+          body="This action cannot be reversed and will result in your event being removed immediately.
+          An announcment will be sent to anyone subscribed to this event notifying them of the event removal."
+          onClose={this.toggleConfirmationModal}
+          onConfirm={this.deleteEvent}
+        />
+      </>
     );
   }
 }

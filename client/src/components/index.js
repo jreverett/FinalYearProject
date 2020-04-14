@@ -12,6 +12,8 @@ import SubscriptionTable from './SubscriptionTable/SubscriptionTable';
 import MyEventsTable from './MyEventsTable/MyEventsTable';
 import MyEventsRow from './MyEventsRow/MyEventsRow';
 
+import ConfirmationModal from './ConfirmationModal/ConfirmationModal';
+
 export {
   NavBar,
   NavMenu,
@@ -22,5 +24,6 @@ export {
   SubscriptionRow,
   SubscriptionTable,
   MyEventsTable,
-  MyEventsRow
+  MyEventsRow,
+  ConfirmationModal
 };

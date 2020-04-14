@@ -1,0 +1,8 @@
+.confirmation-modal-confirm-button {
+  margin-left: 0.5rem;
+  background-color: rgb(230, 56, 56);
+}
+
+.confirmation-modal-confirm-button:hover {
+  background-color: rgb(177, 47, 47);
+}
