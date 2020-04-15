@@ -77,9 +77,7 @@ class CreateEvent extends Component {
       error
     } = this.state;
 
-    console.log('1');
     if (!(title && description && start && address && !error)) return;
-    console.log('2');
 
     this.setState({ loading: true });
     eventService

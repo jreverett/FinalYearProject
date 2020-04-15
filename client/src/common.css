@@ -69,14 +69,24 @@ div .alert-danger {
   margin-bottom: 0;
 }
 
+.button-green {
+  background-color: var(--green);
+}
+
+/* TEXT */
+.text-header {
+  font-size: xx-large;
+  font-weight: bold;
+}
+
 .text-success {
   color: var(--green);
   font-size: small;
   font-weight: bold;
 }
 
-.button-green {
-  background-color: var(--green);
+.text-small {
+  font-size: small;
 }
 
 .text-subtext {

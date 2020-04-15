@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import { NavDropdown } from 'react-bootstrap';
 import { FaEllipsisH } from 'react-icons/fa';
 import { ConfirmationModal } from '../';
@@ -30,6 +31,15 @@ class MyEventsRow extends Component {
     this.setState({ show: !this.state.show });
   };
 
+  sendAnnouncement = () => {
+    this.props.history.push({
+      pathname: '/send-announcement',
+      state: {
+        eventID: this.props.eventID
+      }
+    });
+  };
+
   deleteEvent = () => {
     this.setState({ show: false });
     // TODO: Delete event and send announcement to any subscribers (and the former event owner)
@@ -52,7 +62,9 @@ class MyEventsRow extends Component {
               title={<FaEllipsisH size={'1.5em'} />}
               id="collapsible-nav-dropdown"
             >
-              <NavDropdown.Item>Send Announcement</NavDropdown.Item>
+              <NavDropdown.Item onClick={this.sendAnnouncement}>
+                Send Announcement
+              </NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item
                 onClick={this.toggleConfirmationModal}
@@ -76,4 +88,4 @@ class MyEventsRow extends Component {
   }
 }
 
-export default MyEventsRow;
+export default withRouter(MyEventsRow);

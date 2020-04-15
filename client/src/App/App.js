@@ -11,7 +11,8 @@ import {
   ResetPassword,
   CreateEvent,
   EventListings,
-  Profile
+  Profile,
+  SendAnnouncement
 } from '../pages';
 import { NavBar, PrivateRoute } from '../components';
 import { userService } from '../services';
@@ -112,9 +113,11 @@ class App extends Component {
             </PrivateRoute>
 
             {/* ANNOUNCEMENT PAGE */}
-            <PrivateRoute path="/send-announcement" loggedInUser={loggedInUser}>
-              <h1>Announcement Page</h1>
-            </PrivateRoute>
+            <PrivateRoute
+              path="/send-announcement"
+              loggedInUser={loggedInUser}
+              component={SendAnnouncement}
+            />
 
             {/* HOME PAGE */}
             <Route path="/">
