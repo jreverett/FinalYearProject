@@ -68,8 +68,39 @@ function getEvents() {
     });
 }
 
+function sendAnnouncement(
+  userID,
+  eventID,
+  scheduleSendDateTime,
+  subject,
+  body,
+  requestCopy
+) {
+  const requestOptions = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      userID,
+      eventID,
+      scheduleSendDateTime,
+      subject,
+      body,
+      requestCopy
+    })
+  };
+
+  return fetch(`${API_URL}/api/event/announcement`, requestOptions)
+    .then(handleResponse)
+    .then({
+      if(data) {
+        return data;
+      }
+    });
+}
+
 export const eventService = {
   createEvent,
   getEvent,
-  getEvents
+  getEvents,
+  sendAnnouncement
 };

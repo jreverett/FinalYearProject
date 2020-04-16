@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import DateTime from 'react-datetime';
+import { toast } from 'react-toastify';
+import { MdEmail } from 'react-icons/md';
+import { eventService } from '../../services';
+import { formatDateTime } from '../../utilities';
 import '../../common.css';
 import './SendAnnouncement.css';
 
@@ -44,9 +48,9 @@ class SendAnnouncement extends Component {
 
     this.setState({ submitted: true });
     const {
-      subject,
       immediateSend,
-      scheduleSend,
+      scheduleSendDateTime,
+      subject,
       body,
       requestCopy,
       error
@@ -55,6 +59,39 @@ class SendAnnouncement extends Component {
     if (!subject || !body || error) return;
 
     this.setState({ loading: true });
+    eventService
+      .sendAnnouncement(
+        this.props.loggedInUser._id,
+        this.props.location.state.eventID,
+        scheduleSendDateTime,
+        subject,
+        body,
+        requestCopy
+      )
+      .then(
+        () => {
+          this.setState({ loading: false });
+          if (immediateSend) {
+            toast.success(
+              <p>
+                <MdEmail className="form-icon" size={'1.5em'} /> Your
+                announcement is being broadcast
+              </p>
+            );
+          } else {
+            toast.success(
+              <p>
+                <MdEmail className="form-icon" size={'1.5em'} /> Your
+                annoucement has been scheduled for{' '}
+                {formatDateTime(scheduleSendDateTime)}
+              </p>
+            );
+          }
+        },
+        error => {
+          toast.error(error);
+        }
+      );
   };
 
   render() {

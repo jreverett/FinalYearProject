@@ -41,8 +41,11 @@ router.post('/subscribe', (req, res, next) => {
         });
       }
 
+      // update user and event
       user.subscriptions.push(event._id);
       user.save();
+      event.subscribers.push(user._id);
+      event.save();
 
       return res.status(200).send({
         message: 'Subscription successful'

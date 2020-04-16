@@ -29,6 +29,9 @@ const EventSchema = mongoose.Schema({
   },
   images: {
     type: Array
+  },
+  subscribers: {
+    type: Array
   }
 });
 
