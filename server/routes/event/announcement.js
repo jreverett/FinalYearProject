@@ -65,26 +65,19 @@ router.post('/announcement', (req, res, next) => {
 
           // 4. for each subscriber of the event...
           docs.forEach(doc => {
+            const mailOptions = {
+              from: 'Upvent ☁️ <accounts@upvent.com>', // 'from' email cannot be customised when using gmail as host
+              to: doc.email,
+              subject: req.body.subject,
+              text: req.body.body
+            };
+
             if (!req.body.scheduleSendDateTime) {
               // 4.1 immediate send: send email content now
-              const mailOptions = {
-                from: 'Upvent ☁️ <accounts@upvent.com>', // 'from' email cannot be customised when using gmail as host
-                to: doc.email,
-                subject: req.body.subject,
-                text: req.body.body
-              };
-
               emailService.send(mailOptions);
             } else {
               // 4.2 scheduled send: setup cron job
               schedule.scheduleJob(req.body.scheduleSendDateTime, () => {
-                const mailOptions = {
-                  from: 'Upvent ☁️ <accounts@upvent.com>', // 'from' email cannot be customised when using gmail as host
-                  to: doc.email,
-                  subject: req.body.subject,
-                  text: req.body.body
-                };
-
                 emailService.send(mailOptions);
               });
             }

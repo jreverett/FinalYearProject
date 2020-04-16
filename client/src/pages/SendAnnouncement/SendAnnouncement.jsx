@@ -31,6 +31,7 @@ class SendAnnouncement extends Component {
 
     if (name === 'immediateSend') {
       this.setState({ scheduleSend: false });
+      this.setState({ scheduleSendDateTime: '' });
     }
     if (name === 'scheduleSend') {
       this.setState({ immediateSend: false });
