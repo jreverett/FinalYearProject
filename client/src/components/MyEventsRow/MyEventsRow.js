@@ -54,7 +54,11 @@ class MyEventsRow extends Component {
           className={`profile-tab-item-container ${removed ? 'hidden' : null}`}
         >
           <div className="profile-tab-item-text-container">
-            <p>{`${title} @ ${formatDateTime(start)}`}</p>
+            {title && start ? (
+              <p>{`${title} @ ${formatDateTime(start)}`}</p>
+            ) : (
+              <p>loading...</p>
+            )}
           </div>
           <div>
             <NavDropdown
