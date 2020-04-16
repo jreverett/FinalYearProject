@@ -3,7 +3,7 @@
   bottom: 0.5rem;
 }
 
-.dropdown-toggle:after {
+.eventrow-event-dropdown .dropdown-toggle:after {
   content: none;
 }
 
