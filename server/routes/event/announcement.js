@@ -65,6 +65,9 @@ router.post('/announcement', (req, res, next) => {
 
           // 4. for each subscriber of the event...
           docs.forEach(doc => {
+            // 4.1 check consent
+            if (!doc.emailConsent) return;
+
             const mailOptions = {
               from: 'Upvent ☁️ <accounts@upvent.com>', // 'from' email cannot be customised when using gmail as host
               to: doc.email,
@@ -73,10 +76,10 @@ router.post('/announcement', (req, res, next) => {
             };
 
             if (!req.body.scheduleSendDateTime) {
-              // 4.1 immediate send: send email content now
+              // 4.2 immediate send: send email content now
               emailService.send(mailOptions);
             } else {
-              // 4.2 scheduled send: setup cron job
+              // 4.3 scheduled send: setup cron job
               schedule.scheduleJob(req.body.scheduleSendDateTime, () => {
                 emailService.send(mailOptions);
               });
