@@ -12,6 +12,9 @@ class NavMenu extends Component {
         <a id="login" className="menu-item" href="/login">
           Login
         </a>
+        <a id="create-event" className="menu-item" href="/event/create">
+          Create Event
+        </a>
         <a id="event-listings" className="menu-item" href="/event-listings">
           Events
         </a>
