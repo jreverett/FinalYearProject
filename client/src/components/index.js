@@ -2,8 +2,11 @@ import NavBar from './NavBar/NavBar';
 import NavMenu from './NavMenu/NavMenu';
 import PrivateRoute from './PrivateRoute/PrivateRoute';
 
+import ConditionalWrapper from './ConditionalWrapper/ConditionalWrapper';
+
 import EventTile from './EventTile/EventTile';
 import EventGallery from './EventGallery/EventGallery';
+import EventSorting from './EventSorting/EventSorting';
 import EventModal from './EventModal/EventModal';
 
 import SubscriptionRow from './SubscriptionRow/SubscriptionRow';
@@ -18,12 +21,14 @@ export {
   NavBar,
   NavMenu,
   PrivateRoute,
+  ConditionalWrapper,
   EventTile,
   EventGallery,
+  EventSorting,
   EventModal,
   SubscriptionRow,
   SubscriptionTable,
   MyEventsTable,
   MyEventsRow,
-  ConfirmationModal
+  ConfirmationModal,
 };

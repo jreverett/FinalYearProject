@@ -20,7 +20,7 @@ export class Profile extends Component {
       changePassword: false,
       loading: false,
       submitted: false,
-      error: ''
+      error: '',
     };
   }
 
@@ -30,39 +30,39 @@ export class Profile extends Component {
       currentPassword: '',
       newPassword: '',
       confirmNewPassword: '',
-      changePassword: !this.state.changePassword
+      changePassword: !this.state.changePassword,
     });
   };
 
   // called when profile state values are modified
-  handlePasswordChangeValue = e => {
+  handlePasswordChangeValue = (e) => {
     const { name, value } = e.target;
     this.setState({ [name]: value });
   };
 
   // called when a property of the loggedInUser is modified
-  handleUserChangeValue = e => {
+  handleUserChangeValue = (e) => {
     const name = e.target.name;
     var updatedUser = {
       ...this.props.loggedInUser,
       [e.target.name]:
-        name === 'emailConsent' ? e.target.checked : e.target.value
+        name === 'emailConsent' ? e.target.checked : e.target.value,
     };
 
     this.props.updateUser(updatedUser);
   };
 
   // called when a geosuggest suggestion is selected
-  onSuggestSelect = suggest => {
+  onSuggestSelect = (suggest) => {
     var updatedUser = {
       ...this.props.loggedInUser,
-      address: suggest
+      address: suggest,
     };
 
     this.props.updateUser(updatedUser);
   };
 
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     e.preventDefault();
 
     this.setState({ submitted: true });
@@ -76,7 +76,7 @@ export class Profile extends Component {
       currentPassword,
       newPassword,
       confirmNewPassword,
-      changePassword
+      changePassword,
     } = this.state;
     if (changePassword) {
       if (!currentPassword || !newPassword || !confirmNewPassword) {
@@ -101,7 +101,7 @@ export class Profile extends Component {
             </p>
           );
         },
-        error => {
+        (error) => {
           this.setState({ error, loading: false });
           toast.error(error);
         }
@@ -119,7 +119,7 @@ export class Profile extends Component {
       changePassword,
       submitted,
       loading,
-      error
+      error,
     } = this.state;
     return (
       <Fragment>
@@ -310,7 +310,7 @@ export class Profile extends Component {
           <div id="profile-subs-container">
             <Tabs
               activeKey={this.state.tabKey}
-              onSelect={tabKey => this.setState({ tabKey })}
+              onSelect={(tabKey) => this.setState({ tabKey })}
               className="profile-tabs"
             >
               <Tab

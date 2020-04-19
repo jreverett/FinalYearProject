@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { EventGallery } from '../../components';
+import { EventGallery, EventSorting } from '../../components';
 
 import { eventService } from '../../services';
 import './EventListings.css';
@@ -9,27 +9,35 @@ export class EventListings extends Component {
     super(props);
 
     this.state = {
-      events: {}
+      events: {},
     };
   }
 
   componentDidMount() {
     let events = eventService.getEvents();
-    events.then(eventData => {
-      this.setState({ events: eventData });
+    events.then((eventObj) => {
+      this.setState({ events: eventObj });
     });
   }
 
+  updateEvents = (eventData) => {
+    this.setState({ events: eventData });
+  };
+
   render() {
     return (
-      <div>
+      <>
         {/* <EventFilter> */}
-        {/* <EventOrdering> */}
+        <EventSorting
+          events={this.state.events}
+          updateEvents={this.updateEvents}
+          loggedInUser={this.props.loggedInUser}
+        />
         <EventGallery
           events={this.state.events}
           loggedInUser={this.props.loggedInUser}
         />
-      </div>
+      </>
     );
   }
 }

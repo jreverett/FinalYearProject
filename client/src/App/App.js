@@ -12,7 +12,7 @@ import {
   CreateEvent,
   EventListings,
   Profile,
-  SendAnnouncement
+  SendAnnouncement,
 } from '../pages';
 import { NavBar, PrivateRoute } from '../components';
 import { userService } from '../services';
@@ -25,7 +25,7 @@ class App extends Component {
     super(props);
 
     this.state = {
-      loggedInUser: userService.loggedInUser
+      loggedInUser: userService.loggedInUser,
     };
   }
 
@@ -36,7 +36,7 @@ class App extends Component {
     const userID = userService.loggedInUserValue?._id;
 
     if (userID) {
-      userService.get(userID).then(user => {
+      userService.get(userID).then((user) => {
         if (user) {
           userService.updateUserObservable(user.data);
         }
@@ -49,9 +49,9 @@ class App extends Component {
   }
 
   // called when the user is updated (including login/logout)
-  handleUserUpdate = loggedInUser => {
+  handleUserUpdate = (loggedInUser) => {
     this.setState({
-      loggedInUser: loggedInUser
+      loggedInUser: loggedInUser,
     });
   };
 
@@ -65,7 +65,9 @@ class App extends Component {
             {/* LOGIN */}
             <Route
               path="/login"
-              render={props => <Login {...props} loggedInUser={loggedInUser} />}
+              render={(props) => (
+                <Login {...props} loggedInUser={loggedInUser} />
+              )}
             />
 
             {/* SIGN UP */}
@@ -81,7 +83,7 @@ class App extends Component {
             {/* RESET PASSWORD */}
             <Route
               path="/reset-password/:token"
-              render={props => (
+              render={(props) => (
                 <ResetPassword {...props} loggedInUser={loggedInUser} />
               )}
             />
@@ -99,7 +101,7 @@ class App extends Component {
             {/* EVENT LISTINGS */}
             <Route
               path="/event-listings"
-              render={props => (
+              render={(props) => (
                 <EventListings {...props} loggedInUser={loggedInUser} />
               )}
             />
@@ -131,7 +133,7 @@ class App extends Component {
 }
 
 App.propTypes = {
-  loggedInUser: PropTypes.string
+  loggedInUser: PropTypes.string,
 };
 
 export default App;

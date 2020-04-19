@@ -1,0 +1,35 @@
+.sorting-container {
+  display: flex;
+  padding-left: 2%;
+}
+
+#sorting-distance-tooltip.disabled .dropdown {
+  pointer-events: none;
+}
+
+.button-sorting-selector {
+  padding-right: 15px;
+}
+
+.button-sorting-selector,
+.dropdown-sorting-selector {
+  background-color: transparent;
+  border: none;
+  color: rgb(77, 77, 77);
+  font-weight: 600;
+}
+
+.button-sorting-selector:hover,
+.button-sorting-selector:focus,
+.dropdown-sorting-selector:active,
+.dropdown-sorting-selector:hover,
+.dropdown-sorting-selector:focus {
+  /* overrule bootstrap CSS */
+  color: black !important;
+  background-color: transparent !important;
+}
+
+.show > .btn-info.dropdown-sorting-selector {
+  background-color: transparent;
+  color: black;
+}
