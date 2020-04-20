@@ -8,6 +8,7 @@ mongoose.set('useCreateIndex', true);
 
 const userRouter = require('./routes/user');
 const eventRouter = require('./routes/event');
+const topicRouter = require('./routes/topic');
 
 //////////////////////////////////////////////////////////////
 // SERVER SETUP
@@ -22,6 +23,7 @@ app.use(express.static(path.join(__dirname, '../client/build')));
 // routing
 app.use('/api', userRouter);
 app.use('/api', eventRouter);
+app.use('/api', topicRouter);
 
 // heroku + react router bug fix
 app.get('*', (req, res) => {
@@ -30,12 +32,12 @@ app.get('*', (req, res) => {
 });
 
 // catch 404's and send them to the error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // only show error in dev mode
   // ********** TEMPORARILY DISABLED ************
   // res.locals.message = err.message;
@@ -54,7 +56,7 @@ const mongoString = process.env.MONGODB_URL;
 
 // setup listeners
 db.on('error', console.error.bind(console, 'connection error: '));
-db.once('open', function() {
+db.once('open', function () {
   console.log('[mongodb] connection established with MongoDB');
 });
 
@@ -62,6 +64,6 @@ app.listen(port, () => {
   console.log(`listening on port ${port}`);
   mongoose.connect(mongoString, {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
   });
 });

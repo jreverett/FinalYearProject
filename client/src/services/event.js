@@ -4,6 +4,7 @@ import { handleResponse } from '../utilities';
 function createEvent(
   owner,
   title,
+  topic,
   description,
   start,
   end,
@@ -17,13 +18,14 @@ function createEvent(
     body: JSON.stringify({
       owner,
       title,
+      topic,
       description,
       start,
       end,
       cost,
       address,
-      images
-    })
+      images,
+    }),
   };
 
   return fetch(`${API_URL}/api/event/create`, requestOptions)
@@ -31,7 +33,7 @@ function createEvent(
     .then({
       if(event) {
         return event;
-      }
+      },
     });
 }
 
@@ -39,7 +41,7 @@ function createEvent(
 function getEvent(id) {
   const requestOptions = {
     method: 'GET',
-    headers: { 'Content-Type': 'application/json' }
+    headers: { 'Content-Type': 'application/json' },
   };
 
   const encodedParams = encodeURIComponent(id);
@@ -49,14 +51,14 @@ function getEvent(id) {
     .then({
       if(event) {
         return event;
-      }
+      },
     });
 }
 
 function getEvents() {
   const requestOptions = {
     method: 'GET',
-    headers: { 'Content-Type': 'application/json' }
+    headers: { 'Content-Type': 'application/json' },
   };
 
   return fetch(`${API_URL}/api/events`, requestOptions)
@@ -64,7 +66,7 @@ function getEvents() {
     .then({
       if(data) {
         return data;
-      }
+      },
     });
 }
 
@@ -85,8 +87,8 @@ function sendAnnouncement(
       scheduleSendDateTime,
       subject,
       body,
-      requestCopy
-    })
+      requestCopy,
+    }),
   };
 
   return fetch(`${API_URL}/api/event/announcement`, requestOptions)
@@ -94,7 +96,7 @@ function sendAnnouncement(
     .then({
       if(data) {
         return data;
-      }
+      },
     });
 }
 
@@ -102,5 +104,5 @@ export const eventService = {
   createEvent,
   getEvent,
   getEvents,
-  sendAnnouncement
+  sendAnnouncement,
 };

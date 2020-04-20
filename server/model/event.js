@@ -4,35 +4,39 @@ const mongoose = require('mongoose');
 const EventSchema = mongoose.Schema({
   owner: {
     type: String,
-    required: true
+    required: true,
   },
   title: {
     type: String,
-    required: true
+    required: true,
+  },
+  topic: {
+    type: String,
+    required: true,
   },
   description: {
     type: String,
-    required: true
+    required: true,
   },
   start: {
     type: Date,
-    required: true
+    required: true,
   },
   end: {
-    type: Date
+    type: Date,
   },
   cost: {
-    type: Number
+    type: Number,
   },
   address: {
-    type: Object
+    type: Object,
   },
   images: {
-    type: Array
+    type: Array,
   },
   subscribers: {
-    type: Array
-  }
+    type: Array,
+  },
 });
 
 module.exports = Event = mongoose.model('Event', EventSchema);

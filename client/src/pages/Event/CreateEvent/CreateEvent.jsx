@@ -3,7 +3,7 @@ import { Form, Row, Col } from 'react-bootstrap';
 import DateTime from 'react-datetime';
 import Geosuggest from 'react-geosuggest';
 import FileBase64 from 'react-file-base64';
-import { eventService } from '../../../services/event';
+import { eventService, topicService } from '../../../services';
 import '../../../common.css';
 import './CreateEvent.css';
 
@@ -13,40 +13,55 @@ class CreateEvent extends Component {
 
     this.state = {
       title: '',
+      topic: '',
       description: '',
       start: '',
       end: '',
       cost: '',
       address: '',
       images: [],
+      topics: {},
       submitted: false,
       loading: false,
-      error: ''
+      error: '',
     };
-
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.onSuggestSelect = this.onSuggestSelect.bind(this);
   }
 
-  handleChange(e) {
+  componentDidMount() {
+    topicService.get().then((topics) => {
+      this.setState({ topics: topics.data });
+    });
+  }
+
+  handleChange = (e) => {
     const { name, value } = e.target;
     this.setState({ [name]: value });
-  }
+  };
 
-  handleDateChange = key => newDate => {
+  handleDateChange = (key) => (newDate) => {
     this.setState({ [key]: newDate });
   };
 
-  onSuggestSelect(suggest) {
+  onSuggestSelect = (suggest) => {
     this.setState({ address: suggest });
-  }
+  };
+
+  createSelectItems = () => {
+    const topics = this.state.topics;
+    let options = [];
+
+    for (let i = 0; i < topics.length; i++) {
+      options.push(<option key={topics[i]._id}>{topics[i].name}</option>);
+    }
+
+    return options;
+  };
 
   getImageData(images) {
     var base64Images = [];
     var invalidType = false;
 
-    images.forEach(img => {
+    images.forEach((img) => {
       // verify files are of type PNG
       if (img.type !== 'image/png') {
         this.setState({ error: 'Image(s) must be of type PNG' });
@@ -62,28 +77,30 @@ class CreateEvent extends Component {
     if (!invalidType) this.setState({ error: '', images: base64Images });
   }
 
-  handleSubmit(e) {
+  handleSubmit = (e) => {
     e.preventDefault();
 
     this.setState({ submitted: true });
     const {
       title,
+      topic,
       description,
       start,
       end,
       cost,
       address,
       images,
-      error
+      error,
     } = this.state;
 
-    if (!(title && description && start && address && !error)) return;
+    if (!(title && topic && description && start && address && !error)) return;
 
     this.setState({ loading: true });
     eventService
       .createEvent(
         this.props.loggedInUser._id,
         title,
+        topic,
         description,
         start,
         end,
@@ -96,46 +113,72 @@ class CreateEvent extends Component {
           this.setState({ loading: false });
           window.location.href = '/event-listings';
         },
-        error => this.setState({ error, loading: false })
+        (error) => this.setState({ error, loading: false })
       );
-  }
+  };
 
   render() {
     const {
       title,
+      topic,
       description,
       start,
       cost,
       submitted,
       loading,
-      error
+      error,
     } = this.state;
 
     return (
       <Fragment>
         {loading && <div id="loading-fade" />}
 
-        <div className="form-container col-md-6 offset-md-3">
+        <div className="form-container col-md-6 offset-sm-3">
           <Form name="form" onSubmit={this.handleSubmit}>
-            {/* TITLE */}
-            <Form.Group
-              controlId="formTitle"
-              className={submitted && !title ? ' has-error' : ''}
-            >
-              <Form.Label>
-                Title<p className="compulsory-asterisk">*</p>
-              </Form.Label>
-              <Form.Control
-                type="text"
-                name="title"
-                value={title}
-                onChange={this.handleChange}
-                placeholder="Enter title"
-              ></Form.Control>
-              {submitted && !title && (
-                <div className="help-block">Title is required</div>
-              )}
-            </Form.Group>
+            <Row>
+              <Col>
+                {/* TITLE */}
+                <Form.Group
+                  controlId="formTitle"
+                  className={submitted && !title ? ' has-error' : ''}
+                >
+                  <Form.Label>
+                    Title<p className="compulsory-asterisk">*</p>
+                  </Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="title"
+                    value={title}
+                    onChange={this.handleChange}
+                    placeholder="Enter title"
+                  ></Form.Control>
+                  {submitted && !title && (
+                    <div className="help-block">Title is required</div>
+                  )}
+                </Form.Group>
+              </Col>
+              <Col>
+                {/* TOPIC */}
+                <Form.Group
+                  controlId="formTopic"
+                  className={submitted && !topic ? ' has-error' : ''}
+                >
+                  <Form.Label>
+                    Topic<p className="compulsory-asterisk">*</p>
+                  </Form.Label>
+                  <Form.Control
+                    as="select"
+                    name="topic"
+                    onChange={this.handleChange}
+                  >
+                    {this.createSelectItems()}
+                  </Form.Control>
+                  {submitted && !topic && (
+                    <div className="help-block">Topic is required</div>
+                  )}
+                </Form.Group>
+              </Col>
+            </Row>
 
             {/* DESCRIPTION */}
             <Form.Group
