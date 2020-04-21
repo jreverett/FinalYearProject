@@ -10,7 +10,7 @@ export class EventListings extends Component {
 
     this.state = {
       events: {},
-      modifiedEvents: {},
+      modifiedEvents: {}, // stores any active filtering/sorting
     };
   }
 

@@ -19,16 +19,19 @@ class EventFilter extends Component {
   };
 
   onDropdownSelect = (e) => {
-    this.props.updateSearch({ topic: e.target.innerText });
+    const topic = e.target.innerText;
+    this.props.updateSearch({ topic: topic });
 
-    // filter to the selected topic
     const events = this.props.events.data;
-
     if (!events) return;
 
-    const filteredEvents = events.filter(
-      (event) => event.topic === e.target.innerText
-    );
+    // return all events (i.e. no filtering)
+    if (topic === 'All') {
+      return this.props.updateEvents({ data: events });
+    }
+
+    // return filtered events by topic
+    const filteredEvents = events.filter((event) => event.topic === topic);
 
     this.props.updateEvents({ data: filteredEvents });
   };
@@ -56,7 +59,7 @@ class EventFilter extends Component {
 
         <DropdownButton
           id="filtering-topic-input"
-          title={topic ? topic : 'Choose a topic'}
+          title={topic ? topic : 'All'}
         >
           <Dropdown.Item onClick={this.onDropdownSelect}>All</Dropdown.Item>
           {this.createSelectItems()}
