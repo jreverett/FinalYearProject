@@ -15,7 +15,7 @@ import {
   SendAnnouncement,
 } from '../pages';
 import { NavBar, PrivateRoute } from '../components';
-import { userService } from '../services';
+import { userService, topicService } from '../services';
 import './App.css';
 
 toast.configure();
@@ -26,6 +26,9 @@ class App extends Component {
 
     this.state = {
       loggedInUser: userService.loggedInUser,
+      topics: {},
+      searchTopic: '',
+      searchLocation: '',
     };
   }
 
@@ -42,6 +45,10 @@ class App extends Component {
         }
       });
     }
+
+    topicService.get().then((topics) => {
+      this.setState({ topics: topics.data });
+    });
   }
 
   componentWillUnmount() {
@@ -55,8 +62,21 @@ class App extends Component {
     });
   };
 
+  handleSearchUpdate = (topic, location) => {
+    if (topic) {
+      this.setState({
+        searchTopic: topic,
+      });
+    }
+    if (location) {
+      this.setState({
+        searchLocation: location,
+      });
+    }
+  };
+
   render() {
-    const { loggedInUser } = this.state;
+    const { loggedInUser, topics, searchTopic } = this.state;
     return (
       <Fragment>
         <NavBar loggedInUser={loggedInUser} />
@@ -95,14 +115,20 @@ class App extends Component {
 
             {/* CREATE EVENT */}
             <PrivateRoute path="/event/create" loggedInUser={loggedInUser}>
-              <CreateEvent loggedInUser={loggedInUser} />
+              <CreateEvent loggedInUser={loggedInUser} topics={topics} />
             </PrivateRoute>
 
             {/* EVENT LISTINGS */}
             <Route
               path="/event-listings"
               render={(props) => (
-                <EventListings {...props} loggedInUser={loggedInUser} />
+                <EventListings
+                  {...props}
+                  loggedInUser={loggedInUser}
+                  topics={topics}
+                  searchTopic={searchTopic}
+                  updateSearch={this.handleSearchUpdate}
+                />
               )}
             />
 
@@ -123,7 +149,7 @@ class App extends Component {
 
             {/* HOME PAGE */}
             <Route path="/">
-              <Home />
+              <Home topics={topics} /> {/* TODO: check topics is needed */}
             </Route>
           </Switch>
         </Router>

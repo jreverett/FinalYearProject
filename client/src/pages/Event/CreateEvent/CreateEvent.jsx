@@ -3,7 +3,7 @@ import { Form, Row, Col } from 'react-bootstrap';
 import DateTime from 'react-datetime';
 import Geosuggest from 'react-geosuggest';
 import FileBase64 from 'react-file-base64';
-import { eventService, topicService } from '../../../services';
+import { eventService } from '../../../services';
 import '../../../common.css';
 import './CreateEvent.css';
 
@@ -13,24 +13,17 @@ class CreateEvent extends Component {
 
     this.state = {
       title: '',
-      topic: '',
+      topic: -1,
       description: '',
       start: '',
       end: '',
       cost: '',
       address: '',
       images: [],
-      topics: {},
       submitted: false,
       loading: false,
       error: '',
     };
-  }
-
-  componentDidMount() {
-    topicService.get().then((topics) => {
-      this.setState({ topics: topics.data });
-    });
   }
 
   handleChange = (e) => {
@@ -47,7 +40,7 @@ class CreateEvent extends Component {
   };
 
   createSelectItems = () => {
-    const topics = this.state.topics;
+    const topics = this.props.topics;
     let options = [];
 
     for (let i = 0; i < topics.length; i++) {
@@ -170,7 +163,11 @@ class CreateEvent extends Component {
                     as="select"
                     name="topic"
                     onChange={this.handleChange}
+                    value={this.state.topic}
                   >
+                    <option disabled key={-1} value={-1}>
+                      Choose a topic
+                    </option>
                     {this.createSelectItems()}
                   </Form.Control>
                   {submitted && !topic && (

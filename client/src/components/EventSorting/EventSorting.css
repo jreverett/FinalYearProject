@@ -1,6 +1,6 @@
 .sorting-container {
   display: flex;
-  padding-left: 2%;
+  padding-left: 10px;
 }
 
 #sorting-distance-tooltip.disabled .dropdown {

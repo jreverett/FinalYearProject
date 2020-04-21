@@ -6,6 +6,7 @@ import ConditionalWrapper from './ConditionalWrapper/ConditionalWrapper';
 
 import EventTile from './EventTile/EventTile';
 import EventGallery from './EventGallery/EventGallery';
+import EventFiltering from './EventFiltering/EventFiltering';
 import EventSorting from './EventSorting/EventSorting';
 import EventModal from './EventModal/EventModal';
 
@@ -24,6 +25,7 @@ export {
   ConditionalWrapper,
   EventTile,
   EventGallery,
+  EventFiltering,
   EventSorting,
   EventModal,
   SubscriptionRow,
