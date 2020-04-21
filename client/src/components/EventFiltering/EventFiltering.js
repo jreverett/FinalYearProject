@@ -30,7 +30,6 @@ class EventFilter extends Component {
       (event) => event.topic === e.target.innerText
     );
 
-    console.log('events', filteredEvents);
     this.props.updateEvents({ data: filteredEvents });
   };
 
