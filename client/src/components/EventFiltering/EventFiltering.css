@@ -8,13 +8,20 @@
 .filtering-text {
   flex: 1 0 auto;
   font-size: larger;
-  margin: 6px 10px 15px 0px;
+  margin: 6px 10px 15px 3px;
+}
+
+#filtering-showing-text {
+  margin-left: 0;
+  margin-right: 5px;
 }
 
 #filtering-topic-input {
   height: 30px;
-  width: 200px;
+  width: 100%;
   margin-right: 10px;
+  padding-left: 0;
+  padding-right: 0;
   border: none;
   color: blue;
   background-color: transparent;

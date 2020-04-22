@@ -82,7 +82,9 @@ class EventFilter extends Component {
     const topic = this.props.searchTopic;
     return (
       <div id="filtering-container">
-        <p className="filtering-text">Showing</p>
+        <p id="filtering-showing-text" className="filtering-text">
+          Showing
+        </p>
 
         <DropdownButton
           id="filtering-topic-input"
