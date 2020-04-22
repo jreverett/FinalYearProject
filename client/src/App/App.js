@@ -69,9 +69,7 @@ class App extends Component {
       });
     }
     if (location) {
-      this.setState({
-        searchLocation: location,
-      });
+      this.setState({ searchLocation: location });
     }
   };
 

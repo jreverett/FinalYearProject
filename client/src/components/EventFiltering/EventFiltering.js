@@ -13,55 +13,71 @@ class EventFilter extends Component {
 
   onSuggestSelect = (suggest) => {
     this.props.updateSearch(null, suggest);
+  };
 
-    const events = this.props.events.data;
-    if (!events) return;
-
-    // return all events (i.e. no filtering)
-    if (!suggest) return;
-
-    let filteredEvents;
-    let geocoder = new google.maps.Geocoder();
-
-    // get geocoded bounds for the selected location
-    geocoder.geocode({ address: suggest.description }, (res, status) => {
-      if (status === 'OK') {
-        // return events inside the bounds
-        filteredEvents = events.filter((event) => {
-          var latLng = new google.maps.LatLng(
-            event.address.location.lat,
-            event.address.location.lng
-          );
-          return res[0].geometry.bounds.contains(latLng);
-        });
-      } else {
-        alert('Error filtering by location');
-        console.log(
-          'Geocode was not successful for the following reason: ' + status
-        );
-      }
-
-      return this.props.updateEvents({ data: filteredEvents });
-    });
+  onSuggestChange = (e) => {
+    // location box cleared so fetch all events
+    if (e === '') {
+      return this.props.updateSearch(null, 'All');
+    }
   };
 
   onDropdownSelect = (e) => {
     const topic = e.target.innerText;
     this.props.updateSearch(topic, null);
+  };
 
+  componentDidUpdate(prevProps) {
+    const geocoder = new google.maps.Geocoder();
     const events = this.props.events.data;
-    if (!events) return;
+    const { searchTopic, searchLocation } = this.props;
+    let filteredEvents = events;
 
-    // return all events (i.e. no filtering)
-    if (topic === 'All') {
-      return this.props.updateEvents({ data: events });
+    // if filters haven't changed, just return
+    if (
+      prevProps.searchTopic === searchTopic &&
+      prevProps.searchLocation === searchLocation
+    )
+      return;
+
+    // FILTER BY TOPIC
+    if (searchTopic) {
+      // no filtering should be performed if 'ALL' is selected
+      if (searchTopic !== 'All') {
+        filteredEvents = events.filter((event) => event.topic === searchTopic);
+      }
     }
 
-    // else return filtered events by topic
-    const filteredEvents = events.filter((event) => event.topic === topic);
+    // FILTER BY LOCATION
+    if (searchLocation) {
+      if (searchLocation !== 'All') {
+        geocoder.geocode(
+          { address: searchLocation.description },
+          (res, status) => {
+            if (status === 'OK') {
+              // return events inside the location bounds
+              filteredEvents = filteredEvents.filter((event) => {
+                var latLng = new google.maps.LatLng(
+                  event.address.location.lat,
+                  event.address.location.lng
+                );
 
-    this.props.updateEvents({ data: filteredEvents });
-  };
+                return res[0].geometry.bounds.contains(latLng);
+              });
+            } else {
+              alert('Error filtering by location');
+              console.log(
+                'Geocode was not successful for the following reason: ' + status
+              );
+            }
+            return this.props.updateEvents({ data: filteredEvents });
+          }
+        );
+      }
+    }
+
+    return this.props.updateEvents({ data: filteredEvents });
+  }
 
   createSelectItems = () => {
     const topics = this.props.topics;
@@ -100,6 +116,7 @@ class EventFilter extends Component {
           id="filtering-location-input"
           // initialValue="London" // TODO: this.props.location if set
           placeholder="Anywhere"
+          onChange={this.onSuggestChange}
           onSuggestSelect={this.onSuggestSelect}
         />
       </div>
