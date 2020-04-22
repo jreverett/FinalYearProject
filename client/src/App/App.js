@@ -76,7 +76,7 @@ class App extends Component {
   };
 
   render() {
-    const { loggedInUser, topics, searchTopic } = this.state;
+    const { loggedInUser, topics, searchTopic, searchLocation } = this.state;
     return (
       <Fragment>
         <NavBar loggedInUser={loggedInUser} />
@@ -127,6 +127,7 @@ class App extends Component {
                   loggedInUser={loggedInUser}
                   topics={topics}
                   searchTopic={searchTopic}
+                  searchLocation={searchLocation}
                   updateSearch={this.handleSearchUpdate}
                 />
               )}

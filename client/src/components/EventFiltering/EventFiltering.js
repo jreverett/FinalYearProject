@@ -4,23 +4,50 @@ import Geosuggest from 'react-geosuggest';
 import '../../common.css';
 import './EventFiltering.css';
 
+const google = window.google;
+
 class EventFilter extends Component {
   constructor(props) {
     super(props);
-
-    // this.state = {
-    //   topic: '', // this.props.searchCriteria.topic
-    //   location: '', // this.props.searchCriteria.location
-    // };
   }
 
   onSuggestSelect = (suggest) => {
-    this.setState({ location: suggest });
+    this.props.updateSearch(null, suggest);
+
+    const events = this.props.events.data;
+    if (!events) return;
+
+    // return all events (i.e. no filtering)
+    if (!suggest) return;
+
+    let filteredEvents;
+    let geocoder = new google.maps.Geocoder();
+
+    // get geocoded bounds for the selected location
+    geocoder.geocode({ address: suggest.description }, (res, status) => {
+      if (status === 'OK') {
+        // return events inside the bounds
+        filteredEvents = events.filter((event) => {
+          var latLng = new google.maps.LatLng(
+            event.address.location.lat,
+            event.address.location.lng
+          );
+          return res[0].geometry.bounds.contains(latLng);
+        });
+      } else {
+        alert('Error filtering by location');
+        console.log(
+          'Geocode was not successful for the following reason: ' + status
+        );
+      }
+
+      return this.props.updateEvents({ data: filteredEvents });
+    });
   };
 
   onDropdownSelect = (e) => {
     const topic = e.target.innerText;
-    this.props.updateSearch({ topic: topic });
+    this.props.updateSearch(topic, null);
 
     const events = this.props.events.data;
     if (!events) return;
@@ -30,7 +57,7 @@ class EventFilter extends Component {
       return this.props.updateEvents({ data: events });
     }
 
-    // return filtered events by topic
+    // else return filtered events by topic
     const filteredEvents = events.filter((event) => event.topic === topic);
 
     this.props.updateEvents({ data: filteredEvents });
@@ -52,7 +79,7 @@ class EventFilter extends Component {
   };
 
   render() {
-    const topic = this.props.searchTopic.topic;
+    const topic = this.props.searchTopic;
     return (
       <div id="filtering-container">
         <p className="filtering-text">Showing</p>
