@@ -75,10 +75,19 @@ class EventSorting extends Component {
   };
 
   getEventDistances() {
-    const userAddress = this.props.loggedInUser.address;
+    const userLocation = this.props.loggedInUser.address.location;
     var distances = [];
     this.props.events.data.forEach((event) => {
-      distances.push([event, haversineDistance(userAddress, event.address)]);
+      const eventLocation = event.address.location;
+      distances.push([
+        event,
+        haversineDistance(
+          userLocation.lat,
+          userLocation.lng,
+          eventLocation.lat,
+          eventLocation.lng
+        ),
+      ]);
     });
 
     return distances;

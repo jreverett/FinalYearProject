@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Dropdown, DropdownButton } from 'react-bootstrap';
 import Geosuggest from 'react-geosuggest';
+import { haversineDistance } from '../../utilities';
 import '../../common.css';
 import './EventFiltering.css';
 
@@ -62,7 +63,23 @@ class EventFilter extends Component {
                   event.address.location.lng
                 );
 
-                return res[0].geometry.bounds.contains(latLng);
+                // if search location has bounds, use them...
+                if (res[0].geometry.bounds) {
+                  return res[0].geometry.bounds.contains(latLng);
+                } else {
+                  // otherwise check a 5km radius around the lat/long co-ords
+                  const resLocation = res[0].geometry.location;
+                  const eventLocation = event.address.location;
+
+                  return (
+                    haversineDistance(
+                      resLocation.lat(),
+                      resLocation.lng(),
+                      eventLocation.lat,
+                      eventLocation.lng
+                    ) <= 5
+                  );
+                }
               });
             } else {
               alert('Error filtering by location');
@@ -119,6 +136,8 @@ class EventFilter extends Component {
           onChange={this.onSuggestChange}
           onSuggestSelect={this.onSuggestSelect}
         />
+
+        <div className="filtering-text"></div>
       </div>
     );
   }
