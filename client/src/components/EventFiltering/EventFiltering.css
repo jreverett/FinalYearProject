@@ -31,7 +31,6 @@
 }
 
 #filtering-location-input {
-  width: 100%;
   margin-top: 3px;
   padding: 0.2rem 0.2rem;
   color: blue;
@@ -39,6 +38,5 @@
   font-size: larger;
   background-color: transparent; /* rgb(238, 251, 255);*/
   border: none;
-  border-bottom: 2px solid blue;
-  box-shadow: none; /* 0 0 1px #7c8e9c; */
+  box-shadow: none;
 }

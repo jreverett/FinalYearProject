@@ -10,6 +10,21 @@ const google = window.google;
 class EventFilter extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      showCursor: true,
+    };
+  }
+
+  componentDidMount() {
+    this.interval = setInterval(
+      () => this.setState({ showCursor: !this.state.showCursor }),
+      600
+    );
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
   }
 
   onSuggestSelect = (suggest) => {
@@ -118,7 +133,6 @@ class EventFilter extends Component {
         <p id="filtering-showing-text" className="filtering-text">
           Showing
         </p>
-
         <DropdownButton
           id="filtering-topic-input"
           title={topic ? topic : 'All'}
@@ -126,13 +140,12 @@ class EventFilter extends Component {
           <Dropdown.Item onClick={this.onDropdownSelect}>All</Dropdown.Item>
           {this.createSelectItems()}
         </DropdownButton>
-
         <p className="filtering-text">events in</p>
 
         <Geosuggest
           id="filtering-location-input"
           // initialValue="London" // TODO: this.props.location if set
-          placeholder="Anywhere"
+          placeholder={this.state.showCursor ? 'Anywhere|' : 'Anywhere'}
           onChange={this.onSuggestChange}
           onSuggestSelect={this.onSuggestSelect}
         />
