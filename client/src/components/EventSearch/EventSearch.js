@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import Typist from 'react-typist';
 import { getRandomNoRepeats } from '../../utilities';
 import '../../../node_modules/react-typist/dist/Typist.css';
@@ -12,11 +13,17 @@ class EventSearch extends Component {
     this.state = {
       searchValue: '',
       searchFocused: false,
+      submitted: false,
     };
   }
 
   handleSearchChange = (e) => {
     this.setState({ searchValue: e.target.value });
+  };
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+    this.setState({ submitted: true });
   };
 
   handleSearchFocus = () => {
@@ -30,7 +37,7 @@ class EventSearch extends Component {
   };
 
   render() {
-    const { searchValue, searchFocused } = this.state;
+    const { searchValue, searchFocused, submitted } = this.state;
 
     const exampleSearches = [
       'Pub Quiz',
@@ -52,28 +59,42 @@ class EventSearch extends Component {
     }
 
     return (
-      <div id="event-search-container">
-        <label id="event-search-label">
-          <input
-            id="event-search-input"
-            className="event-search-text"
-            value={searchValue}
-            onChange={this.handleSearchChange}
-            onFocus={this.handleSearchFocus}
-            onBlur={this.handleSearchBlur}
-          />
+      <>
+        <form id="event-search-container" onSubmit={this.handleSubmit}>
+          <label id="event-search-label">
+            <input
+              id="event-search-input"
+              className="event-search-text"
+              value={searchValue}
+              onChange={this.handleSearchChange}
+              onFocus={this.handleSearchFocus}
+              onBlur={this.handleSearchBlur}
+            />
 
-          {/* Overlay should only be visible before the textboxt is focused */}
-          {!searchFocused && (
-            <span id="event-search-input-overlay" className="event-search-text">
-              <Typist>
-                {searches}
-                Upvent Event
-              </Typist>
-            </span>
-          )}
-        </label>
-      </div>
+            {/* Overlay should only be visible before the textboxt is focused */}
+            {!searchFocused && (
+              <span
+                id="event-search-input-overlay"
+                className="event-search-text"
+              >
+                <Typist>
+                  {searches}
+                  Upvent Event
+                </Typist>
+              </span>
+            )}
+          </label>
+        </form>
+
+        {submitted && (
+          <Redirect
+            to={{
+              pathname: '/event-listings',
+              state: { searchValue: searchValue, from: '/' },
+            }}
+          />
+        )}
+      </>
     );
   }
 }
