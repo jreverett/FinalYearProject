@@ -4,6 +4,8 @@ import PrivateRoute from './PrivateRoute/PrivateRoute';
 
 import ConditionalWrapper from './ConditionalWrapper/ConditionalWrapper';
 
+import EventSearch from './EventSearch/EventSearch';
+
 import EventTile from './EventTile/EventTile';
 import EventGallery from './EventGallery/EventGallery';
 import EventFiltering from './EventFiltering/EventFiltering';
@@ -23,6 +25,7 @@ export {
   NavMenu,
   PrivateRoute,
   ConditionalWrapper,
+  EventSearch,
   EventTile,
   EventGallery,
   EventFiltering,

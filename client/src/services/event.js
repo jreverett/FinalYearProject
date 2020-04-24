@@ -70,6 +70,21 @@ function getEvents() {
     });
 }
 
+function getEventCount() {
+  const requestOptions = {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+  };
+
+  return fetch(`${API_URL}/api/event/event-count`, requestOptions)
+    .then(handleResponse)
+    .then({
+      if(data) {
+        return data;
+      },
+    });
+}
+
 function sendAnnouncement(
   userID,
   eventID,
@@ -104,5 +119,6 @@ export const eventService = {
   createEvent,
   getEvent,
   getEvents,
+  getEventCount,
   sendAnnouncement,
 };

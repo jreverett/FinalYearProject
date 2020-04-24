@@ -1,0 +1,39 @@
+#event-search-container {
+  display: flex;
+  align-items: center;
+}
+
+#event-search-label {
+  position: relative;
+  width: 380px;
+  height: 70px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: center;
+}
+
+.event-search-text {
+  font-size: 375%;
+}
+
+#event-search-label > span,
+#event-search-label > input {
+  position: absolute;
+}
+
+#event-search-input {
+  height: 80px;
+  width: 380px;
+  border: none;
+  background-color: transparent;
+  outline: 0;
+  border-bottom: 1px solid rgba(110, 110, 110, 0.3);
+}
+
+#event-search-input-overlay {
+  pointer-events: none;
+  white-space: nowrap;
+  overflow: scroll;
+}
