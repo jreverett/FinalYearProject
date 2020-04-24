@@ -16,12 +16,12 @@ class MyEventsRow extends Component {
       title: '',
       start: '',
       removed: false,
-      show: false
+      show: false,
     };
   }
 
   componentDidMount() {
-    eventService.getEvent(this.props.eventID).then(event => {
+    eventService.get(this.props.eventID).then((event) => {
       event = event.data;
       this.setState({ title: event.title, start: event.start });
     });
@@ -35,8 +35,8 @@ class MyEventsRow extends Component {
     this.props.history.push({
       pathname: '/send-announcement',
       state: {
-        eventID: this.props.eventID
-      }
+        eventID: this.props.eventID,
+      },
     });
   };
 

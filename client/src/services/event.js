@@ -37,31 +37,21 @@ function createEvent(
     });
 }
 
-// TODO: change this and getEvents() to be a polymorphic get()/get(id)
-function getEvent(id) {
+function get(id) {
   const requestOptions = {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },
   };
 
-  const encodedParams = encodeURIComponent(id);
+  let urlString = `${API_URL}/api/events`;
 
-  return fetch(`${API_URL}/api/events?id=${encodedParams}`, requestOptions)
-    .then(handleResponse)
-    .then({
-      if(event) {
-        return event;
-      },
-    });
-}
+  // if id specified, only fetch that event
+  if (arguments.length === 1) {
+    const encodedParams = encodeURIComponent(id);
+    urlString = `${API_URL}/api/events?id=${encodedParams}`;
+  }
 
-function getEvents() {
-  const requestOptions = {
-    method: 'GET',
-    headers: { 'Content-Type': 'application/json' },
-  };
-
-  return fetch(`${API_URL}/api/events`, requestOptions)
+  return fetch(urlString, requestOptions)
     .then(handleResponse)
     .then({
       if(data) {
@@ -117,8 +107,7 @@ function sendAnnouncement(
 
 export const eventService = {
   createEvent,
-  getEvent,
-  getEvents,
+  get,
   getEventCount,
   sendAnnouncement,
 };

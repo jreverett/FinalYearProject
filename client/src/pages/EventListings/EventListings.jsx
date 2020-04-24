@@ -15,7 +15,7 @@ export class EventListings extends Component {
   }
 
   componentDidMount() {
-    let events = eventService.getEvents();
+    let events = eventService.get();
     events.then((eventObj) => {
       this.setState({ events: eventObj, modifiedEvents: eventObj });
     });

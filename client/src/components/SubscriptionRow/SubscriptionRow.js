@@ -13,12 +13,12 @@ class SubscriptionRow extends Component {
     this.state = {
       title: '',
       start: '',
-      removed: false
+      removed: false,
     };
   }
 
   componentDidMount() {
-    eventService.getEvent(this.props.eventID).then(event => {
+    eventService.get(this.props.eventID).then((event) => {
       event = event.data;
       this.setState({ title: event.title, start: event.start });
     });
@@ -35,7 +35,7 @@ class SubscriptionRow extends Component {
           </p>
         );
       },
-      error => {
+      (error) => {
         toast.error(error);
       }
     );
