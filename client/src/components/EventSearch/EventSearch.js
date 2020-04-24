@@ -24,7 +24,9 @@ class EventSearch extends Component {
   };
 
   handleSearchBlur = () => {
-    this.setState({ searchFocused: false });
+    if (!this.state.searchValue) {
+      this.setState({ searchFocused: false });
+    }
   };
 
   render() {
@@ -64,12 +66,9 @@ class EventSearch extends Component {
           {/* Overlay should only be visible before the textboxt is focused */}
           {!searchFocused && (
             <span id="event-search-input-overlay" className="event-search-text">
-              <Typist
-                cursor={{
-                  hideWhenDone: true,
-                }}
-              >
+              <Typist>
                 {searches}
+                Upvent Event
               </Typist>
             </span>
           )}
