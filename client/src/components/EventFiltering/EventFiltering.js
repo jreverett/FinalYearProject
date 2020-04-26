@@ -89,7 +89,7 @@ class EventFiltering extends Component {
     // FILTER BY TITLE
     if (searchTitle) {
       filteredEvents = filteredEvents.filter((event) =>
-        event.title.includes(searchTitle)
+        event.title.toLowerCase().includes(searchTitle.toLowerCase())
       );
     }
 
