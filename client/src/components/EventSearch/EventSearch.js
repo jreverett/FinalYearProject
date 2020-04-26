@@ -23,7 +23,7 @@ class EventSearch extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    this.props.updateSearchTitle(this.state.searchTitleValue);
+    this.props.updateSearchTitle(this.state.searchTitleValue.trim());
     this.setState({ submitted: true });
   };
 
