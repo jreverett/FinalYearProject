@@ -7,61 +7,90 @@ import './EventFiltering.css';
 
 const google = window.google;
 
-class EventFilter extends Component {
+class EventFiltering extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      filtered: false,
+      searchTopic: '',
+      searchLocation: '',
       showCursor: true,
     };
   }
 
   componentDidMount() {
+    // filter events if a title filter has been set (from EventSearch.js)
+    if (this.props.searchTitle) {
+      this.filterEvents();
+    }
+
     this.interval = setInterval(
       () => this.setState({ showCursor: !this.state.showCursor }),
       600
     );
   }
 
+  componentDidUpdate() {
+    this.filterEvents();
+  }
+
   componentWillUnmount() {
     clearInterval(this.interval);
   }
 
-  onSuggestSelect = (suggest) => {
-    this.props.updateSearch(null, suggest);
+  handleSuggestSelect = (suggest) => {
+    this.setState(
+      { searchLocation: suggest, filtered: false },
+      this.filterEvents
+    );
   };
 
-  onSuggestChange = (e) => {
+  handleSuggestChange = (e) => {
     // location box cleared so fetch all events
     if (e === '') {
-      return this.props.updateSearch(null, 'All');
+      this.setState(
+        { searchLocation: 'All', filtered: false },
+        this.filterEvents
+      );
     }
   };
 
-  onDropdownSelect = (e) => {
+  handleDropdownSelect = (e) => {
     const topic = e.target.innerText;
-    this.props.updateSearch(topic, null);
+    this.setState({ searchTopic: topic, filtered: false }, this.filterEvents);
   };
 
-  componentDidUpdate(prevProps) {
+  handleTitleSearchChange = (e) => {
+    this.props.updateSearchTitle(e.target.value);
+    this.setState({ filtered: false });
+  };
+
+  filterEvents() {
     const geocoder = new google.maps.Geocoder();
     const events = this.props.events.data;
-    const { searchTopic, searchLocation } = this.props;
+    const searchTitle = this.props.searchTitle;
+    const { searchTopic, searchLocation, filtered } = this.state;
     let filteredEvents = events;
 
-    // if filters haven't changed, just return
-    if (
-      prevProps.searchTopic === searchTopic &&
-      prevProps.searchLocation === searchLocation
-    )
-      return;
+    // return if there are no events to filter, or this set has already been filtered
+    if (!events || filtered) return;
 
     // FILTER BY TOPIC
     if (searchTopic) {
-      // no filtering should be performed if 'ALL' is selected
+      // no filtering should be performed if 'All' is selected
       if (searchTopic !== 'All') {
-        filteredEvents = events.filter((event) => event.topic === searchTopic);
+        filteredEvents = filteredEvents.filter(
+          (event) => event.topic === searchTopic
+        );
       }
+    }
+
+    // FILTER BY TITLE
+    if (searchTitle) {
+      filteredEvents = filteredEvents.filter((event) =>
+        event.title.includes(searchTitle)
+      );
     }
 
     // FILTER BY LOCATION
@@ -102,12 +131,14 @@ class EventFilter extends Component {
                 'Geocode was not successful for the following reason: ' + status
               );
             }
+            this.setState({ filtered: true });
             return this.props.updateEvents({ data: filteredEvents });
           }
         );
       }
     }
 
+    this.setState({ filtered: true });
     return this.props.updateEvents({ data: filteredEvents });
   }
 
@@ -117,7 +148,7 @@ class EventFilter extends Component {
 
     for (let i = 0; i < topics.length; i++) {
       options.push(
-        <Dropdown.Item key={topics[i]._id} onClick={this.onDropdownSelect}>
+        <Dropdown.Item key={topics[i]._id} onClick={this.handleDropdownSelect}>
           {topics[i].name}
         </Dropdown.Item>
       );
@@ -133,27 +164,39 @@ class EventFilter extends Component {
         <p id="filtering-showing-text" className="filtering-text">
           Showing
         </p>
+
+        {/* TOPIC FILTER */}
         <DropdownButton
           id="filtering-topic-input"
           title={topic ? topic : 'All'}
         >
-          <Dropdown.Item onClick={this.onDropdownSelect}>All</Dropdown.Item>
+          <Dropdown.Item onClick={this.handleDropdownSelect}>All</Dropdown.Item>
           {this.createSelectItems()}
         </DropdownButton>
+
         <p className="filtering-text">events in</p>
 
+        {/* LOCATION FILTER */}
         <Geosuggest
           id="filtering-location-input"
-          // initialValue="London" // TODO: this.props.location if set
           placeholder={this.state.showCursor ? 'Anywhere|' : 'Anywhere'}
-          onChange={this.onSuggestChange}
-          onSuggestSelect={this.onSuggestSelect}
+          onChange={this.handleSuggestChange}
+          onSuggestSelect={this.handleSuggestSelect}
         />
 
-        <div className="filtering-text"></div>
+        <p className="filtering-text">containing</p>
+
+        {/* TITLE FILTER */}
+        <input
+          id="filtering-title-input"
+          type="text"
+          placeholder={this.state.showCursor ? 'Anything|' : 'Anything'}
+          value={this.props.searchTitle}
+          onChange={this.handleTitleSearchChange}
+        ></input>
       </div>
     );
   }
 }
 
-export default EventFilter;
+export default EventFiltering;

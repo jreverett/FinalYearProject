@@ -26,7 +26,7 @@ class Home extends Component {
       <div id="home-container">
         <div id="home-search-container">
           <p id="home-upper-text">Discover an amazing...</p>
-          <EventSearch />
+          <EventSearch updateSearchTitle={this.props.updateSearchTitle} />
           {numEvents && (
             <p id="home-event-count">{numEvents} events and counting</p>
           )}

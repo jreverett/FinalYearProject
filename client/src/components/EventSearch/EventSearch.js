@@ -11,18 +11,19 @@ class EventSearch extends Component {
     super(props);
 
     this.state = {
-      searchValue: '',
+      searchTitleValue: '',
       searchFocused: false,
       submitted: false,
     };
   }
 
   handleSearchChange = (e) => {
-    this.setState({ searchValue: e.target.value });
+    this.setState({ searchTitleValue: e.target.value });
   };
 
   handleSubmit = (e) => {
     e.preventDefault();
+    this.props.updateSearchTitle(this.state.searchTitleValue);
     this.setState({ submitted: true });
   };
 
@@ -31,13 +32,13 @@ class EventSearch extends Component {
   };
 
   handleSearchBlur = () => {
-    if (!this.state.searchValue) {
+    if (!this.state.searchTitleValue) {
       this.setState({ searchFocused: false });
     }
   };
 
   render() {
-    const { searchValue, searchFocused, submitted } = this.state;
+    const { searchTitleValue, searchFocused, submitted } = this.state;
 
     const exampleSearches = [
       'Pub Quiz',
@@ -55,7 +56,9 @@ class EventSearch extends Component {
     for (let i = 0; i < exampleSearches.length; i++) {
       const search = selectSearch();
       searches.push(search);
-      searches.push(<Typist.Backspace count={search.length} delay={2000} />);
+      searches.push(
+        <Typist.Backspace key={i} count={search.length} delay={2000} />
+      );
     }
 
     return (
@@ -65,7 +68,7 @@ class EventSearch extends Component {
             <input
               id="event-search-input"
               className="event-search-text"
-              value={searchValue}
+              value={searchTitleValue}
               onChange={this.handleSearchChange}
               onFocus={this.handleSearchFocus}
               onBlur={this.handleSearchBlur}
@@ -90,7 +93,7 @@ class EventSearch extends Component {
           <Redirect
             to={{
               pathname: '/event-listings',
-              state: { searchValue: searchValue, from: '/' },
+              state: { from: '/' },
             }}
           />
         )}

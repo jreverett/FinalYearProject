@@ -32,9 +32,8 @@ export class EventListings extends Component {
           events={this.state.events}
           updateEvents={this.updateEvents}
           topics={this.props.topics}
-          searchTopic={this.props.searchTopic}
-          searchLocation={this.props.searchLocation}
-          updateSearch={this.props.updateSearch}
+          searchTitle={this.props.searchTitle}
+          updateSearchTitle={this.props.updateSearchTitle}
         />
         <EventSorting
           events={this.state.modifiedEvents}

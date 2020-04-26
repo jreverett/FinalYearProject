@@ -27,8 +27,7 @@ class App extends Component {
     this.state = {
       loggedInUser: userService.loggedInUser,
       topics: {},
-      searchTopic: '',
-      searchLocation: '',
+      searchTitle: '',
     };
   }
 
@@ -62,19 +61,15 @@ class App extends Component {
     });
   };
 
-  handleSearchUpdate = (topic, location) => {
-    if (topic) {
-      this.setState({
-        searchTopic: topic,
-      });
-    }
-    if (location) {
-      this.setState({ searchLocation: location });
-    }
+  // TODO: combine this handler with the userUpdate one above
+  handleSearchTitleUpdate = (searchTitle) => {
+    this.setState({
+      searchTitle: searchTitle,
+    });
   };
 
   render() {
-    const { loggedInUser, topics, searchTopic, searchLocation } = this.state;
+    const { loggedInUser, topics, searchTitle } = this.state;
     return (
       <Fragment>
         <NavBar loggedInUser={loggedInUser} />
@@ -124,9 +119,8 @@ class App extends Component {
                   {...props}
                   loggedInUser={loggedInUser}
                   topics={topics}
-                  searchTopic={searchTopic}
-                  searchLocation={searchLocation}
-                  updateSearch={this.handleSearchUpdate}
+                  searchTitle={this.state.searchTitle}
+                  updateSearchTitle={this.handleSearchTitleUpdate}
                 />
               )}
             />
@@ -148,7 +142,7 @@ class App extends Component {
 
             {/* HOME PAGE */}
             <Route path="/">
-              <Home topics={topics} /> {/* TODO: check topics is needed */}
+              <Home updateSearchTitle={this.handleSearchTitleUpdate} />
             </Route>
           </Switch>
         </Router>
