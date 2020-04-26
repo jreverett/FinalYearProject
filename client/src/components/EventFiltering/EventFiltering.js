@@ -16,6 +16,8 @@ class EventFiltering extends Component {
       searchTopic: '',
       searchLocation: '',
       showCursor: true,
+      locationSearchFocused: false,
+      titleSearchFocused: false,
     };
   }
 
@@ -64,6 +66,23 @@ class EventFiltering extends Component {
   handleTitleSearchChange = (e) => {
     this.props.updateSearchTitle(e.target.value);
     this.setState({ filtered: false });
+  };
+
+  // called for location and title inputs
+  handleInputFocus = (e) => {
+    if (!e) {
+      this.setState({ locationSearchFocused: true });
+    } else if (e.target.name === 'titleSearch') {
+      this.setState({ titleSearchFocused: true });
+    }
+  };
+
+  handleInputBlur = (e) => {
+    if (!e) {
+      this.setState({ locationSearchFocused: false });
+    } else if (e.target.name === 'titleSearch') {
+      this.setState({ titleSearchFocused: false });
+    }
   };
 
   filterEvents() {
@@ -158,6 +177,11 @@ class EventFiltering extends Component {
   };
 
   render() {
+    const {
+      showCursor,
+      locationSearchFocused,
+      titleSearchFocused,
+    } = this.state;
     const topic = this.props.searchTopic;
     return (
       <div id="filtering-container">
@@ -179,8 +203,14 @@ class EventFiltering extends Component {
         {/* LOCATION FILTER */}
         <Geosuggest
           id="filtering-location-input"
-          placeholder={this.state.showCursor ? 'Anywhere|' : 'Anywhere'}
+          className={locationSearchFocused ? 'filtering-show' : ''}
+          name="locationSearch"
+          placeholder={
+            locationSearchFocused ? '' : showCursor ? 'Anywhere|' : 'Anywhere'
+          }
           onChange={this.handleSuggestChange}
+          onFocus={this.handleInputFocus}
+          onBlur={this.handleInputBlur}
           onSuggestSelect={this.handleSuggestSelect}
         />
 
@@ -189,10 +219,16 @@ class EventFiltering extends Component {
         {/* TITLE FILTER */}
         <input
           id="filtering-title-input"
+          className={titleSearchFocused ? 'filtering-show' : ''}
+          name="titleSearch"
           type="text"
-          placeholder={this.state.showCursor ? 'Anything|' : 'Anything'}
+          placeholder={
+            titleSearchFocused ? '' : showCursor ? 'Anything|' : 'Anything'
+          }
           value={this.props.searchTitle}
           onChange={this.handleTitleSearchChange}
+          onFocus={this.handleInputFocus}
+          onBlur={this.handleInputBlur}
         ></input>
       </div>
     );
