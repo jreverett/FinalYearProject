@@ -21,7 +21,7 @@ class SubscriptionTable extends Component {
     }
 
     return (
-      <div id="subgallery-container">
+      <div className="table-container">
         <div>{subscriptionRows}</div>
       </div>
     );

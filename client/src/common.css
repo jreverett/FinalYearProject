@@ -94,6 +94,16 @@ div .alert-danger {
   font-size: small;
 }
 
+/* TABLES */
+
+.table-container {
+  height: 94.5%;
+  background-image: linear-gradient(#fff, #d4f7f0);
+  border-radius: 3px;
+  box-shadow: 2px 2px 5px rgba(1, 1, 1, 0.5);
+  overflow: scroll;
+}
+
 /* TABBED CONTENT */
 .profile-tab-item-container {
   display: flex;

@@ -20,7 +20,7 @@ class MyEvents extends Component {
       });
     }
     return (
-      <div id="event-table-container">
+      <div className="table-container">
         <div>{ownedEventItems}</div>
       </div>
     );
