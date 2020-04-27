@@ -3,7 +3,7 @@ import Login from './Login/Login';
 import Signup from './Signup/Signup';
 import ForgotPassword from './ForgotPassword/ForgotPassword';
 import ResetPassword from './ResetPassword/ResetPassword';
-import CreateEvent from './Event/CreateEvent/CreateEvent';
+import CreateEvent from './CreateEvent/CreateEvent';
 import EventListings from './EventListings/EventListings';
 import Profile from './Profile/Profile';
 import SendAnnouncement from './SendAnnouncement/SendAnnouncement';
@@ -17,5 +17,5 @@ export {
   CreateEvent,
   EventListings,
   Profile,
-  SendAnnouncement
+  SendAnnouncement,
 };

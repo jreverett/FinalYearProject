@@ -3,8 +3,8 @@ import { Form, Row, Col } from 'react-bootstrap';
 import DateTime from 'react-datetime';
 import Geosuggest from 'react-geosuggest';
 import FileBase64 from 'react-file-base64';
-import { eventService } from '../../../services';
-import '../../../common.css';
+import { eventService } from '../../services';
+import '../../common.css';
 import './CreateEvent.css';
 
 class CreateEvent extends Component {

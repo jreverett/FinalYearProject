@@ -101,11 +101,6 @@ class App extends Component {
               )}
             />
 
-            {/* VIEW EVENT -- NO LONGER REQUIRED */}
-            <Route path="/event/view">
-              <h1>Event Viewing Page</h1>
-            </Route>
-
             {/* CREATE EVENT */}
             <PrivateRoute path="/event/create" loggedInUser={loggedInUser}>
               <CreateEvent loggedInUser={loggedInUser} topics={topics} />
