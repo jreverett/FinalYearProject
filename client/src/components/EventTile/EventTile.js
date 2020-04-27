@@ -8,7 +8,7 @@ class EventTile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      show: false
+      show: false,
     };
   }
 
@@ -27,7 +27,11 @@ class EventTile extends Component {
 
     return (
       <Fragment>
-        <Card border="primary" onClick={this.toggleModal}>
+        <Card
+          className="event-gallery-masonry-brick"
+          border="primary"
+          onClick={this.toggleModal}
+        >
           <Card.Img className="card-image" variant="top" src={thumbnail} />
           <Card.Body>
             <p className="start-time-label">{startDate}</p>

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { CardColumns } from 'react-bootstrap';
 
 import { EventTile } from '../index';
 import './EventGallery.css';
@@ -21,7 +20,7 @@ class EventGallery extends Component {
       });
     }
 
-    return <CardColumns className="card-column">{eventTiles}</CardColumns>;
+    return <div className="event-gallery-masonry">{eventTiles}</div>;
   }
 }
 

@@ -1,5 +1,6 @@
-.card-column {
+.event-gallery-masonry {
+  display: flex;
+  flex-flow: row wrap;
   margin: 20px;
-  column-count: 4;
-  column-gap: normal;
+  width: 100%;
 }
