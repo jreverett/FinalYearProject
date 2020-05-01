@@ -35,5 +35,4 @@
 #event-search-input-overlay {
   pointer-events: none;
   white-space: nowrap;
-  overflow: scroll;
 }
