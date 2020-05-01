@@ -12,6 +12,7 @@ import {
   CreateEvent,
   EventListings,
   Profile,
+  Admin,
   SendAnnouncement,
 } from '../pages';
 import { NavBar, PrivateRoute } from '../components';
@@ -127,6 +128,13 @@ class App extends Component {
                 updateUser={this.handleUserUpdate}
               />
             </PrivateRoute>
+
+            {/* ADMIN PAGE */}
+            <PrivateRoute
+              path="/admin"
+              loggedInUser={loggedInUser}
+              component={Admin}
+            />
 
             {/* ANNOUNCEMENT PAGE */}
             <PrivateRoute

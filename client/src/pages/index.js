@@ -6,6 +6,7 @@ import ResetPassword from './ResetPassword/ResetPassword';
 import CreateEvent from './CreateEvent/CreateEvent';
 import EventListings from './EventListings/EventListings';
 import Profile from './Profile/Profile';
+import Admin from './Admin/Admin';
 import SendAnnouncement from './SendAnnouncement/SendAnnouncement';
 
 export {
@@ -17,5 +18,6 @@ export {
   CreateEvent,
   EventListings,
   Profile,
+  Admin,
   SendAnnouncement,
 };

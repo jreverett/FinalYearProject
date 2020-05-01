@@ -44,9 +44,7 @@ class SubscriptionRow extends Component {
   render() {
     const { title, start, removed } = this.state;
     return (
-      <div
-        className={`profile-tab-item-container ${removed ? 'hidden' : null}`}
-      >
+      <div className={`table-item-container ${removed ? 'hidden' : null}`}>
         <div className="profile-tab-item-text-container">
           {title && start ? (
             <p>{`${title} @ ${formatDateTime(start)}`}</p>

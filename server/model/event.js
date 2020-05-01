@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 // create user schema
 const EventSchema = mongoose.Schema({
   owner: {
-    type: String,
+    type: Object,
     required: true,
   },
   title: {

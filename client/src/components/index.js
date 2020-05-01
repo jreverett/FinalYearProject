@@ -18,6 +18,9 @@ import SubscriptionTable from './SubscriptionTable/SubscriptionTable';
 import MyEventsTable from './MyEventsTable/MyEventsTable';
 import MyEventsRow from './MyEventsRow/MyEventsRow';
 
+import UserAdminRow from './UserAdminRow/UserAdminRow';
+import UserEventRow from './UserEventRow/UserEventRow';
+
 import ConfirmationModal from './ConfirmationModal/ConfirmationModal';
 
 export {
@@ -35,5 +38,7 @@ export {
   SubscriptionTable,
   MyEventsTable,
   MyEventsRow,
+  UserAdminRow,
+  UserEventRow,
   ConfirmationModal,
 };

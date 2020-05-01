@@ -79,6 +79,10 @@ div .alert-danger {
   font-weight: bold;
 }
 
+.text-bold {
+  font-weight: bold;
+}
+
 .text-success {
   color: var(--green);
   font-size: small;
@@ -105,7 +109,7 @@ div .alert-danger {
 }
 
 /* TABBED CONTENT */
-.profile-tab-item-container {
+.table-item-container {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -117,6 +121,7 @@ div .alert-danger {
   border-radius: 3px;
   line-height: 1.8rem;
   background-color: rgb(221, 221, 221);
+  overflow: scroll;
 }
 
 .profile-tab-item-text-container {
