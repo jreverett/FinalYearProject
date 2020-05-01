@@ -12,7 +12,7 @@ function signup(firstname, lastname, email, address, password) {
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ firstname, lastname, email, address, password })
+    body: JSON.stringify({ firstname, lastname, email, address, password }),
   };
 
   return fetch(`${API_URL}/api/user/signup`, requestOptions) //TODO: change this to use /api/users (POST)
@@ -20,24 +20,30 @@ function signup(firstname, lastname, email, address, password) {
     .then({
       if(user) {
         return user;
-      }
+      },
     });
 }
 
 function get(id) {
   const requestOptions = {
     method: 'GET',
-    headers: { 'Content-Type': 'application/json' }
+    headers: { 'Content-Type': 'application/json' },
   };
 
-  const encodedParams = encodeURIComponent(id);
+  let urlString = `${API_URL}/api/users`;
 
-  return fetch(`${API_URL}/api/users?id=${encodedParams}`, requestOptions)
+  // if id specified, only fetch that event
+  if (arguments.length === 1) {
+    const encodedParams = encodeURIComponent(id);
+    urlString = `${API_URL}/api/users?id=${encodedParams}`;
+  }
+
+  return fetch(urlString, requestOptions)
     .then(handleResponse)
     .then({
       if(user) {
         return user;
-      }
+      },
     });
 }
 
@@ -63,8 +69,8 @@ function update(
       emailConsent,
       address,
       currentPassword,
-      newPassword
-    })
+      newPassword,
+    }),
   };
 
   return fetch(`${API_URL}/api/user/update`, requestOptions)
@@ -72,7 +78,7 @@ function update(
     .then({
       if(user) {
         return user;
-      }
+      },
     });
 }
 
@@ -80,7 +86,7 @@ function forgotPassword(email) {
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email })
+    body: JSON.stringify({ email }),
   };
 
   return fetch(`${API_URL}/api/user/forgot-password`, requestOptions)
@@ -88,7 +94,7 @@ function forgotPassword(email) {
     .then({
       if(user) {
         return user;
-      }
+      },
     });
 }
 
@@ -96,7 +102,7 @@ function resetPassword(token, password) {
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ token, password })
+    body: JSON.stringify({ token, password }),
   };
 
   return fetch(`${API_URL}/api/user/reset-password`, requestOptions)
@@ -104,7 +110,7 @@ function resetPassword(token, password) {
     .then({
       if(user) {
         return user;
-      }
+      },
     });
 }
 
@@ -112,7 +118,7 @@ function subscribe(userID, eventID) {
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ userID, eventID })
+    body: JSON.stringify({ userID, eventID }),
   };
 
   return fetch(`${API_URL}/api/user/subscribe`, requestOptions)
@@ -120,7 +126,7 @@ function subscribe(userID, eventID) {
     .then({
       if(subscription) {
         return subscription;
-      }
+      },
     });
 }
 
@@ -128,7 +134,7 @@ function unsubscribe(userID, eventID) {
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ userID, eventID })
+    body: JSON.stringify({ userID, eventID }),
   };
 
   return fetch(`${API_URL}/api/user/unsubscribe`, requestOptions)
@@ -136,7 +142,7 @@ function unsubscribe(userID, eventID) {
     .then({
       if(unsubscription) {
         return unsubscription;
-      }
+      },
     });
 }
 
@@ -156,5 +162,5 @@ export const userService = {
   resetPassword,
   get loggedInUserValue() {
     return currentUserSubject ? currentUserSubject.value : null;
-  }
+  },
 };
