@@ -89,31 +89,21 @@ class UserAdminRow extends Component {
           </span>
         </div>
 
-        {suspended ? (
-          <button
-            className={`admin-status-button ${
-              hover
-                ? 'admin-status-button-hover'
-                : 'admin-status-button-suspended'
-            }`}
-            onClick={() => this.toggleSuspension(_id, suspended, fullname)}
-            onMouseEnter={() => this.onMouseEnter(suspended)}
-            onMouseLeave={() => this.onMouseLeave(suspended)}
-          >
-            {this.state.userStateText}
-          </button>
-        ) : (
-          <button
-            className={`admin-status-button ${
-              hover ? 'admin-status-button-hover' : 'admin-status-button-active'
-            }`}
-            onClick={() => this.toggleSuspension(_id, suspended, fullname)}
-            onMouseEnter={() => this.onMouseEnter(suspended)}
-            onMouseLeave={() => this.onMouseLeave(suspended)}
-          >
-            {this.state.userStateText}
-          </button>
-        )}
+        <button
+          className={`admin-status-button ${
+            hover
+              ? 'admin-status-button-hover'
+              : suspended
+              ? 'admin-status-button-suspended'
+              : 'admin-status-button-active'
+          }`}
+          onClick={() => this.toggleSuspension(_id, suspended, fullname)}
+          onMouseEnter={() => this.onMouseEnter(suspended)}
+          onMouseLeave={() => this.onMouseLeave(suspended)}
+        >
+          {this.state.userStateText}
+        </button>
+        {/* )} */}
       </div>
     );
   }
