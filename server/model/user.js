@@ -6,55 +6,59 @@ const UserSchema = mongoose.Schema({
   type: {
     type: Number,
     required: true,
-    default: 0
+    default: 0,
   },
   firstname: {
     type: String,
-    required: true
+    required: true,
   },
   lastname: {
     type: String,
-    required: true
+    required: true,
   },
   email: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
   },
   emailConsent: {
     type: Boolean,
-    default: false
+    default: false,
   },
   address: {
-    type: Object
+    type: Object,
   },
   hash: {
-    type: String
+    type: String,
   },
   salt: {
-    type: String
+    type: String,
   },
   verified: {
     type: Boolean,
     required: true,
-    default: false
+    default: false,
   },
   ownedEvents: {
-    type: Array
+    type: Array,
   },
   subscriptions: {
-    type: Array
+    type: Array,
   },
   resetToken: {
-    type: String
+    type: String,
   },
   resetTokenExpiration: {
-    type: Date
-  }
+    type: Date,
+  },
+  suspended: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 // Generate a password w/ salt
-UserSchema.methods.setPassword = function(password) {
+UserSchema.methods.setPassword = function (password) {
   this.salt = crypto.randomBytes(16).toString('hex');
 
   // password w/ a length of 64
@@ -66,7 +70,7 @@ UserSchema.methods.setPassword = function(password) {
 
 // Check if the password is valid (using password payload and database salt)
 // Hash the request and compare it to the stored value
-UserSchema.methods.passwordIsValid = function(password) {
+UserSchema.methods.passwordIsValid = function (password) {
   var hash = crypto
     .pbkdf2Sync(password, this.salt, 1000, 64, 'sha512')
     .toString('hex');

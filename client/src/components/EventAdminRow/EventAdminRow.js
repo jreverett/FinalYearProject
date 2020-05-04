@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { userService } from '../../services';
 import { formatDateTime } from '../../utilities';
 import '../../common.css';
-import './UserEventRow.css';
+import './EventAdminRow.css';
 
-class UserEventRow extends Component {
+class EventAdminRow extends Component {
   constructor(props) {
     super(props);
 
@@ -33,4 +33,4 @@ class UserEventRow extends Component {
   }
 }
 
-export default UserEventRow;
+export default EventAdminRow;

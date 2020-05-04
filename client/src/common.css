@@ -133,6 +133,16 @@ div .alert-danger {
   margin-right: 0.3rem;
 }
 
+.icon-button {
+  background-color: transparent;
+  border: none;
+}
+
+.row-delete-icon {
+  color: var(--red);
+  margin-bottom: 5px;
+}
+
 /* EVENT LABELS */
 .cost-label {
   margin-bottom: 0.25rem;

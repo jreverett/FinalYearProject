@@ -14,9 +14,9 @@ export class Profile extends Component {
 
     this.state = {
       tabKey: 'subscriptions',
-      currentPassword: '',
-      newPassword: '',
-      confirmNewPassword: '',
+      currentPassword: null,
+      newPassword: null,
+      confirmNewPassword: null,
       changePassword: false,
       loading: false,
       submitted: false,
@@ -67,8 +67,12 @@ export class Profile extends Component {
 
     this.setState({ submitted: true });
 
+    let { _id, email, emailConsent, address } = this.props.loggedInUser;
+    // if the address has been cleared, change it to a string so the user update function
+    // overwrites the current address value
+    if (address === undefined) address = '';
+
     // check that the email field has been filled
-    const { _id, email, emailConsent, address } = this.props.loggedInUser;
     if (!email) return;
 
     // check if a new password has been input, validate if it has
@@ -91,7 +95,13 @@ export class Profile extends Component {
 
     this.setState({ loading: true });
     userService
-      .update(_id, email, emailConsent, address, currentPassword, newPassword)
+      .update(_id, {
+        email: email,
+        emailConsent: emailConsent,
+        address: address,
+        currentPassword: currentPassword,
+        newPassword: newPassword,
+      })
       .then(
         () => {
           this.setState({ loading: false });

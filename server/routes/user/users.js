@@ -4,14 +4,18 @@ const router = express.Router();
 // import user schema
 const User = require('../../model/user');
 
+///////////////////
+// GET
+///////////////////
+
 // Get user
 router.get('/users', (req, res, next) => {
   if (req.query.id) {
     User.findById(req.query.id, (err, user) => {
       // Error finding user
       if (err) {
-        return res.status(400).send({
-          message: 'Invalid request: ' + err,
+        return res.status(500).send({
+          message: 'Error getting user: ' + err,
         });
       }
 
@@ -30,7 +34,7 @@ router.get('/users', (req, res, next) => {
       // Error occured finding users
       if (err) {
         return res.status(500).send({
-          message: 'Invalid request: ' + err,
+          message: 'Error getting users: ' + err,
         });
       }
 
@@ -44,5 +48,47 @@ router.get('/users', (req, res, next) => {
     });
   }
 });
+
+///////////////////
+// DELETE
+///////////////////
+
+// router.delete('/users', (req, res, next) => {
+//   console.log('CALLED');
+//   const userID = req.body.userID;
+
+//   if (!userID) {
+//     return res.status(400).send({
+//       message: 'Invalid request: No user ID requested',
+//     });
+//   }
+
+//   User.findById(userID, (err, user) => {
+//     if (err) {
+//       return res.status(500).send({
+//         message: 'Error deleting user: ' + err,
+//       });
+//     }
+
+//     // No user with the requested ID exists
+//     if (!user) {
+//       return res
+//         .status(404)
+//         .send({ message: "Couldn't find a user matching the requested ID" });
+//     }
+
+//     // Valid request, delete user
+//     User.deleteOne(user, (err) => {
+//       if (err) {
+//         return res.status(500).send({
+//           message: 'Error deleting user: ' + err,
+//         });
+//       }
+
+//       // user deleted
+//       return res.status(204).send();
+//     });
+//   });
+// });
 
 module.exports = router;

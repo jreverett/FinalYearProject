@@ -52,25 +52,17 @@ function updateUserObservable(userData) {
   currentUserSubject.next(userData);
 }
 
-function update(
-  id,
-  email,
-  emailConsent,
-  address,
-  currentPassword,
-  newPassword
-) {
+/**
+ * Updates a user document with the passed in *params* object. Any null
+ * values will be ignored in the update operation.
+ * @param {string} userID The user to update.
+ * @param {...object} params The property or propeties to update, e.g. { emailConsent: true }.
+ */
+function update(userID, { ...params }) {
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      id,
-      email,
-      emailConsent,
-      address,
-      currentPassword,
-      newPassword,
-    }),
+    body: JSON.stringify({ userID, ...params }),
   };
 
   return fetch(`${API_URL}/api/user/update`, requestOptions)
@@ -146,8 +138,20 @@ function unsubscribe(userID, eventID) {
     });
 }
 
-// function deleteUser() {
-//   // TODO
+// function deleteUser(userID) {
+//   const requestOptions = {
+//     method: 'DELETE',
+//     headers: { 'Content-Type': 'application/json' },
+//     body: JSON.stringify({ userID }),
+//   };
+
+//   return fetch(`${API_URL}/api/users`, requestOptions)
+//     .then(handleResponse)
+//     .then({
+//       if(res) {
+//         return res;
+//       },
+//     });
 // }
 
 export const userService = {
@@ -160,6 +164,7 @@ export const userService = {
   update,
   forgotPassword,
   resetPassword,
+  // deleteUser,
   get loggedInUserValue() {
     return currentUserSubject ? currentUserSubject.value : null;
   },

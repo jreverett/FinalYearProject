@@ -53,11 +53,8 @@ class SubscriptionRow extends Component {
           )}
         </div>
         <div>
-          <button
-            className="button-cancel-subscription"
-            onClick={this.unsubscribe}
-          >
-            <MdDeleteForever className="subscription-row-icon" size={'1.5em'} />
+          <button className="icon-button" onClick={this.unsubscribe}>
+            <MdDeleteForever className="row-delete-icon" size={'1.5em'} />
           </button>
         </div>
       </div>

@@ -19,7 +19,7 @@ import MyEventsTable from './MyEventsTable/MyEventsTable';
 import MyEventsRow from './MyEventsRow/MyEventsRow';
 
 import UserAdminRow from './UserAdminRow/UserAdminRow';
-import UserEventRow from './UserEventRow/UserEventRow';
+import EventAdminRow from './EventAdminRow/EventAdminRow';
 
 import ConfirmationModal from './ConfirmationModal/ConfirmationModal';
 
@@ -39,6 +39,6 @@ export {
   MyEventsTable,
   MyEventsRow,
   UserAdminRow,
-  UserEventRow,
+  EventAdminRow,
   ConfirmationModal,
 };

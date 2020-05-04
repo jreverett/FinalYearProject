@@ -6,40 +6,27 @@ const User = require('../../model/user');
 
 // User update
 router.post('/update', (req, res, next) => {
-  User.findById(req.body.id, (err, user) => {
-    if (err) {
-      return res.status(500).send({
-        message: 'Failed to update user: ' + err
-      });
-    }
+  let params = {};
 
-    const {
-      email,
-      emailConsent,
-      address,
-      currentPassword,
-      newPassword
-    } = req.body;
+  // gather all non-null props
+  for (let prop in req.body) {
+    if (req.body[prop] != null) params[prop] = req.body[prop];
+  }
 
-    user.email = email;
-    user.emailConsent = emailConsent;
-    user.address = address;
-    if (newPassword) {
-      if (user.passwordIsValid(currentPassword)) {
-        user.setPassword(newPassword);
-      } else {
+  User.findOneAndUpdate(
+    { _id: req.body.userID },
+    params,
+    { useFindAndModify: false },
+    (err) => {
+      if (err) {
         return res.status(500).send({
-          message: 'Current password is invalid'
+          message: 'Failed to update user:' + err,
         });
+      } else {
+        return res.status(204).send();
       }
     }
-
-    user.save();
-
-    return res.status(200).send({
-      message: 'User updated successfully'
-    });
-  });
+  );
 });
 
 module.exports = router;
