@@ -1,24 +1,53 @@
-.admin-verified {
-  color: rgb(0, 0, 255);
+.user-admin-container {
+  display: flex;
 }
 
-.admin-status-button {
+.user-admin-text-container {
+  flex: 1 auto;
+}
+
+.user-admin-button {
+  margin-left: 5px;
   padding-top: 0;
   border: none;
   border-radius: 5px;
 }
 
-.admin-status-button-suspended {
+.user-admin-button-suspended {
   color: red;
   background-color: rgba(255, 0, 0, 0.1);
 }
 
-.admin-status-button-hover {
+.user-admin-button-hover {
   color: orange;
   background-color: rgba(255, 120, 0, 0.1);
 }
 
-.admin-status-button-active {
+.user-admin-button-active {
   color: green;
   background-color: rgba(0, 255, 0, 0.1);
+}
+
+.user-admin-icon-container {
+  pointer-events: none;
+}
+
+.user-admin-verification-badge {
+  pointer-events: none;
+  margin: 0 0 4px 5px;
+}
+
+.user-admin-button-verified {
+  color: blue;
+  background-color: rgba(96, 99, 255, 0.1);
+}
+
+.user-admin-button-administrator {
+  color: rgb(255, 136, 0);
+  background-color: rgba(255, 231, 124, 0.1);
+}
+
+.user-admin-button-default {
+  color: rgb(70, 70, 70);
+  background-color: rgba(96, 99, 255, 0.1);
 }

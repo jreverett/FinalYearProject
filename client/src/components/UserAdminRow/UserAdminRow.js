@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { toast } from 'react-toastify';
+import { GoVerified, GoUnverified } from 'react-icons/go';
 import { AiOutlineUserAdd, AiOutlineUserDelete } from 'react-icons/ai';
 import { userService } from '../../services';
 import '../../common.css';
@@ -10,100 +11,208 @@ class UserAdminRow extends Component {
     super(props);
 
     this.state = {
-      userStateText: this.props.user.suspended ? 'SUSPENDED' : 'ACTIVE',
-      hover: false,
+      userAdminText: this.getAdminText(),
+      adminButtonHover: false,
+      userVerifyText: this.getVerifyText(),
+      verifyButtonHover: false,
+      userSuspendText: this.getSuspendText(),
+      suspendButtonHover: false,
     };
   }
 
-  onMouseEnter = (suspended) => {
-    const prompt = suspended ? 'UNSUSPEND?' : 'SUSPEND?';
-    this.setState({ hover: true, userStateText: prompt });
+  onMouseEnter = (e, status) => {
+    let prompt;
+
+    switch (e.target.name) {
+      case 'adminToggle':
+        prompt = status ? 'DEMOTE?' : 'PROMOTE?';
+        this.setState({ adminButtonHover: true, userAdminText: prompt });
+        break;
+      case 'verifyToggle':
+        this.setState({ verifyButtonHover: true });
+        break;
+      case 'suspendToggle':
+        prompt = status ? 'UNSUSPEND?' : 'SUSPEND?';
+        this.setState({ suspendButtonHover: true, userSuspendText: prompt });
+        break;
+    }
   };
 
-  onMouseLeave = (suspended) => {
-    const prompt = suspended ? 'SUSPENDED' : 'ACTIVE';
-    this.setState({ hover: false, userStateText: prompt });
+  onMouseLeave = (e) => {
+    switch (e.target.name) {
+      case 'adminToggle':
+        this.setState({
+          adminButtonHover: false,
+          userAdminText: this.getAdminText(),
+        });
+        break;
+      case 'verifyToggle':
+        this.setState({ verifyButtonHover: false });
+        break;
+      case 'suspendToggle':
+        this.setState({
+          suspendButtonHover: false,
+          userSuspendText: this.getSuspendText(),
+        });
+        break;
+    }
   };
 
-  toggleSuspension = (userID, suspended, fullname) => {
-    suspended = !suspended;
-    userService.update(userID, { suspended: suspended }).then(() => {
-      this.props.updateUserSuspension(this.props.userRowIndex, suspended);
+  getAdminText = () => {
+    console.log('type', this.props.user.type);
+    return this.props.user.type == 1 ? 'ADMIN' : 'STANDARD';
+  };
 
-      // update to get the new state text prop (this.userStateText)
+  getVerifyText = () => {
+    return this.props.user.verified ? (
+      <GoVerified className="user-admin-verification-badge" size={'1.2em'} />
+    ) : (
+      <GoUnverified className="user-admin-verification-badge" size={'1.2em'} />
+    );
+  };
+
+  getSuspendText = () => {
+    return this.props.user.suspended ? 'SUSPENDED' : 'ACTIVE';
+  };
+
+  toggleAdmin = (userID, isAdmin, fullname) => {
+    isAdmin = !isAdmin;
+    const type = isAdmin ? 1 : 0;
+    userService.update(userID, { type: type }).then(() => {
+      this.props.updateUser(this.props.userRowIndex, 'type', isAdmin);
       this.forceUpdate();
 
-      if (suspended) {
-        toast.success(
-          <p>
-            <AiOutlineUserDelete className="form-icon" />
-            {`Suspended ${fullname}`}
-          </p>
-        );
-      } else {
-        toast.success(
-          <p>
-            <AiOutlineUserAdd className="form-icon" />
-            {`Unsuspended ${fullname}`}
-          </p>
-        );
-      }
+      const text = `${isAdmin ? 'Promoted' : 'Demoted'} ${fullname} to ${
+        isAdmin ? 'admin' : 'standard user'
+      }`;
+      this.toastResponse(isAdmin, text);
+
+      this.setState({ userAdminText: this.getAdminText() });
     });
   };
 
-  // deleteUser = (userID, fullname) => {
-  //   userService.deleteUser(userID).then(
-  //     () => {
-  //       this.setState({ removed: true });
-  //       toast.success(
-  //         <p>
-  //           <AiOutlineUserDelete className="form-icon" />
-  //           {`Removed ${fullname}`}
-  //         </p>
-  //       );
-  //     },
-  //     (error) => {
-  //       toast.error(error);
-  //     }
-  //   );
-  // };
+  toggleVerified = (userID, isVerified, fullname) => {
+    isVerified = !isVerified;
+    userService.update(userID, { verified: isVerified }).then(() => {
+      this.props.updateUser(this.props.userRowIndex, 'verified', isVerified);
+      this.forceUpdate();
+
+      const text = `${isVerified ? 'Verified' : 'Unverified'} ${fullname}`;
+      this.toastResponse(isVerified, text);
+
+      this.setState({ userVerifyText: this.getVerifyText() });
+    });
+  };
+
+  toggleSuspension = (userID, isSuspended, fullname) => {
+    isSuspended = !isSuspended;
+    userService.update(userID, { suspended: isSuspended }).then(() => {
+      this.props.updateUser(this.props.userRowIndex, 'suspended', isSuspended);
+      this.forceUpdate();
+
+      const text = `${isSuspended ? 'Suspended' : 'Unsuspended'} ${fullname}`;
+      this.toastResponse(isSuspended, text);
+
+      this.setState({ userSuspendText: this.getSuspendText() });
+    });
+  };
+
+  toastResponse = (status, text) => {
+    if (status) {
+      toast.success(
+        <p>
+          <AiOutlineUserDelete className="form-icon" />
+          {text}
+        </p>
+      );
+    } else {
+      toast.success(
+        <p>
+          <AiOutlineUserAdd className="form-icon" />
+          {text}
+        </p>
+      );
+    }
+  };
 
   render() {
-    const { removed, hover } = this.state;
+    const {
+      adminButtonHover,
+      suspendButtonHover,
+      verifyButtonHover,
+    } = this.state;
     const {
       _id,
+      type,
       firstname,
       lastname,
       email,
       verified,
       suspended,
     } = this.props.user;
+    const admin = type == 1 ? true : false;
     const fullname = `${firstname} ${lastname}`;
     return (
-      <div className={`table-item-container ${removed ? 'hidden' : null}`}>
-        <div>
+      <div className="table-item-container user-admin-container">
+        <div className="user-admin-text-container">
           <span className="text-bold">{`${lastname}`}</span>
-          {`, ${firstname} | ${email} | `}
-          <span className={verified ? 'admin-verified' : ''}>
-            {verified ? 'verified user' : 'standard user'}
-          </span>
+          {`, ${firstname} | ${email}`}
         </div>
 
+        {/* ADMIN TOGGLE */}
         <button
-          className={`admin-status-button ${
-            hover
-              ? 'admin-status-button-hover'
+          name="adminToggle"
+          className={`user-admin-button ${
+            adminButtonHover
+              ? 'user-admin-button-hover'
+              : admin
+              ? 'user-admin-button-administrator'
+              : 'user-admin-button-default'
+          }`}
+          onClick={() => this.toggleAdmin(_id, admin, fullname)}
+          onMouseEnter={(e) => this.onMouseEnter(e, admin)}
+          onMouseLeave={(e) => this.onMouseLeave(e)}
+        >
+          <span className="form-icon user-admin-icon-container">
+            {this.state.userAdminText}
+          </span>
+        </button>
+
+        {/* VERIFY TOGGLE */}
+        <button
+          name="verifyToggle"
+          className={`user-admin-button ${
+            verifyButtonHover
+              ? 'user-admin-button-hover'
+              : verified
+              ? 'user-admin-button-verified'
+              : 'user-admin-button-default'
+          }`}
+          onClick={() => this.toggleVerified(_id, verified, fullname)}
+          onMouseEnter={(e) => this.onMouseEnter(e, verified)}
+          onMouseLeave={(e) => this.onMouseLeave(e)}
+        >
+          <span className="form-icon user-admin-icon-container">
+            {this.state.userVerifyText}
+          </span>
+        </button>
+
+        {/* SUSPEND TOGGLE */}
+        <button
+          name="suspendToggle"
+          className={`user-admin-button ${
+            suspendButtonHover
+              ? 'user-admin-button-hover'
               : suspended
-              ? 'admin-status-button-suspended'
-              : 'admin-status-button-active'
+              ? 'user-admin-button-suspended'
+              : 'user-admin-button-active'
           }`}
           onClick={() => this.toggleSuspension(_id, suspended, fullname)}
-          onMouseEnter={() => this.onMouseEnter(suspended)}
-          onMouseLeave={() => this.onMouseLeave(suspended)}
+          onMouseEnter={(e) => this.onMouseEnter(e, suspended)}
+          onMouseLeave={(e) => this.onMouseLeave(e)}
         >
-          {this.state.userStateText}
+          {this.state.userSuspendText}
         </button>
-        {/* )} */}
       </div>
     );
   }

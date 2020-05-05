@@ -31,7 +31,7 @@ class Admin extends Component {
             key={index}
             userRowIndex={index}
             user={user}
-            updateUserSuspension={this.handleUserSuspensionUpdate}
+            updateUser={this.handleUserUpdate}
           />
         );
       });
@@ -52,10 +52,10 @@ class Admin extends Component {
     });
   }
 
-  handleUserSuspensionUpdate = (userRowID, suspended) => {
+  handleUserUpdate = (userRowID, propName, status) => {
     // update user state
     let newUsers = this.state.users;
-    newUsers[userRowID].props.user.suspended = suspended;
+    newUsers[userRowID].props.user[propName] = status;
 
     // set new user state
     this.setState({ users: newUsers });
