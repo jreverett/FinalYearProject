@@ -75,6 +75,22 @@ function getEventCount() {
     });
 }
 
+function deleteEvent(eventID) {
+  const requestOptions = {
+    method: 'DELETE',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ eventID }),
+  };
+
+  return fetch(`${API_URL}/api/events`, requestOptions)
+    .then(handleResponse)
+    .then({
+      if(data) {
+        return data;
+      },
+    });
+}
+
 function sendAnnouncement(
   userID,
   eventID,
@@ -109,5 +125,6 @@ export const eventService = {
   createEvent,
   get,
   getEventCount,
+  deleteEvent,
   sendAnnouncement,
 };
