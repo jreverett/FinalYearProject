@@ -43,3 +43,8 @@ img.image-gallery-image {
 .btn-primary.button-subscribed:hover {
   background-color: var(--red);
 }
+
+.modal-count-label {
+  margin-bottom: 0.25rem;
+  /* color: rgb(0, 0, 0); */
+}

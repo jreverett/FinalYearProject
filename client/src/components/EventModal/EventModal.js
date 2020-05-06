@@ -7,8 +7,9 @@ import {
   FaFlagCheckered,
   FaMoneyBillWave,
   FaCalendarCheck,
-  FaCalendarTimes
+  FaCalendarTimes,
 } from 'react-icons/fa';
+import { MdSupervisorAccount } from 'react-icons/md';
 import { formatDateTime } from '../../utilities';
 import { userService } from '../../services';
 import '../../common.css';
@@ -23,13 +24,13 @@ class EventModal extends Component {
       userIsSubscribed: false,
       subscriptionButtonText: '',
       loading: false,
-      error: ''
+      error: '',
     };
   }
 
   componentDidMount() {
     // fetch event owner details
-    userService.get(this.props.eventDetails.owner).then(user => {
+    userService.get(this.props.eventDetails.owner).then((user) => {
       this.setState({ owner: `${user.data.firstname} ${user.data.lastname}` });
     });
 
@@ -41,7 +42,7 @@ class EventModal extends Component {
     )
       this.setState({
         userIsSubscribed: true,
-        subscriptionButtonText: 'Subscribed'
+        subscriptionButtonText: 'Subscribed',
       });
   }
 
@@ -60,7 +61,7 @@ class EventModal extends Component {
             </p>
           );
         },
-        error => {
+        (error) => {
           this.setState({ error, loading: false });
           toast.error(error);
         }
@@ -82,7 +83,7 @@ class EventModal extends Component {
             </p>
           );
         },
-        error => {
+        (error) => {
           this.setState({ error, loading: false });
           toast.error(error);
         }
@@ -102,7 +103,7 @@ class EventModal extends Component {
       owner,
       userIsSubscribed,
       subscriptionButtonText,
-      loading
+      loading,
     } = this.state;
 
     let event = this.props.eventDetails;
@@ -115,8 +116,8 @@ class EventModal extends Component {
       : [
           {
             original: require('../../images/event-thumb-placeholder.png'),
-            thumbnail: require('../../images/event-thumb-placeholder.png')
-          }
+            thumbnail: require('../../images/event-thumb-placeholder.png'),
+          },
         ];
 
     return (
@@ -166,10 +167,28 @@ class EventModal extends Component {
                 </Col>
               )}
             </Row>
-            <p className={'cost-label ' + (!event.cost ? 'free-event' : null)}>
-              <FaMoneyBillWave className="form-icon" size={'1.5em'} />
-              {event.cost ? '£' + event.cost : 'FREE!'}
-            </p>
+            <Row>
+              <Col>
+                <p
+                  className={
+                    'cost-label ' + (!event.cost ? 'free-event' : null)
+                  }
+                >
+                  <FaMoneyBillWave className="form-icon" size={'1.5em'} />
+                  {event.cost ? `£${event.cost}` : 'FREE!'}
+                </p>
+              </Col>
+              <Col>
+                <p className="modal-count-label">
+                  <MdSupervisorAccount className="form-icon" size={'1.5em'} />
+                  {`${event.subscribers.length} ${
+                    event.subscribers.length === 1
+                      ? 'subscriber'
+                      : 'subscribers'
+                  }`}
+                </p>
+              </Col>
+            </Row>
             <Row>
               <Col>
                 <p>
@@ -199,7 +218,7 @@ class EventModal extends Component {
 function formatImages(images) {
   var formattedImages = [];
 
-  images.forEach(img => {
+  images.forEach((img) => {
     img = 'data:image/png;base64,' + img;
     formattedImages.push({ original: img, thumbnail: img });
   });
