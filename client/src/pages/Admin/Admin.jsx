@@ -45,7 +45,12 @@ class Admin extends Component {
       events = events.data.sort((a, b) => a.title.localeCompare(b.title));
       eventRows = events.map((event, index) => {
         return (
-          <EventAdminRow key={index} eventRowIndex={index} event={event} />
+          <EventAdminRow
+            key={index}
+            eventRowIndex={index}
+            event={event}
+            userID={this.props.loggedInUser._id}
+          />
         );
       });
       this.setState({ events: eventRows });

@@ -75,11 +75,11 @@ function getEventCount() {
     });
 }
 
-function deleteEvent(eventID) {
+function deleteEvent(eventID, userID) {
   const requestOptions = {
     method: 'DELETE',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ eventID }),
+    body: JSON.stringify({ eventID, userID }),
   };
 
   return fetch(`${API_URL}/api/events`, requestOptions)

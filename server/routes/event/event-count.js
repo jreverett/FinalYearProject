@@ -5,7 +5,7 @@ const router = express.Router();
 const Event = require('../../model/event');
 
 router.get('/event-count', (req, res, next) => {
-  Event.count({}, (err, count) => {
+  Event.countDocuments({}, (err, count) => {
     if (err) {
       return res.status(500).send({
         message: 'Error getting event count: ' + err,

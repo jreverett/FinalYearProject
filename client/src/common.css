@@ -121,7 +121,7 @@ div .alert-danger {
   border-radius: 3px;
   line-height: 1.8rem;
   background-color: rgb(221, 221, 221);
-  overflow: scroll;
+  overflow: hidden;
 }
 
 .profile-tab-item-text-container {

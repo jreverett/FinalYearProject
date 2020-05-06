@@ -24,7 +24,7 @@ class EventAdminRow extends Component {
   }
 
   deleteEvent = (eventID, title) => {
-    eventService.deleteEvent(eventID).then(
+    eventService.deleteEvent(eventID, this.props.userID).then(
       () => {
         this.setState({ removed: true });
         toast.success(

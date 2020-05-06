@@ -5,7 +5,7 @@ import { haversineDistance } from '../../utilities';
 import '../../common.css';
 import './EventFiltering.css';
 
-const google = window.google;
+const { google } = window;
 
 class EventFiltering extends Component {
   constructor(props) {
@@ -29,7 +29,7 @@ class EventFiltering extends Component {
 
     this.interval = setInterval(
       () => this.setState({ showCursor: !this.state.showCursor }),
-      600
+      600,
     );
   }
 
@@ -44,7 +44,7 @@ class EventFiltering extends Component {
   handleSuggestSelect = (suggest) => {
     this.setState(
       { searchLocation: suggest, filtered: false },
-      this.filterEvents
+      this.filterEvents,
     );
   };
 
@@ -53,7 +53,7 @@ class EventFiltering extends Component {
     if (e === '') {
       this.setState(
         { searchLocation: 'All', filtered: false },
-        this.filterEvents
+        this.filterEvents,
       );
     }
   };
@@ -88,7 +88,7 @@ class EventFiltering extends Component {
   filterEvents() {
     const geocoder = new google.maps.Geocoder();
     const events = this.props.events.data;
-    const searchTitle = this.props.searchTitle;
+    const { searchTitle } = this.props;
     const { searchTopic, searchLocation, filtered } = this.state;
     let filteredEvents = events;
 
@@ -100,16 +100,14 @@ class EventFiltering extends Component {
       // no filtering should be performed if 'All' is selected
       if (searchTopic !== 'All') {
         filteredEvents = filteredEvents.filter(
-          (event) => event.topic === searchTopic
+          (event) => event.topic === searchTopic,
         );
       }
     }
 
     // FILTER BY TITLE
     if (searchTitle) {
-      filteredEvents = filteredEvents.filter((event) =>
-        event.title.toLowerCase().includes(searchTitle.toLowerCase())
-      );
+      filteredEvents = filteredEvents.filter((event) => event.title.toLowerCase().includes(searchTitle.toLowerCase()));
     }
 
     // FILTER BY LOCATION
@@ -121,38 +119,37 @@ class EventFiltering extends Component {
             if (status === 'OK') {
               // return events inside the location bounds
               filteredEvents = filteredEvents.filter((event) => {
-                var latLng = new google.maps.LatLng(
+                const latLng = new google.maps.LatLng(
                   event.address.location.lat,
-                  event.address.location.lng
+                  event.address.location.lng,
                 );
 
                 // if search location has bounds, use them...
                 if (res[0].geometry.bounds) {
                   return res[0].geometry.bounds.contains(latLng);
-                } else {
-                  // otherwise check a 5km radius around the lat/long co-ords
-                  const resLocation = res[0].geometry.location;
-                  const eventLocation = event.address.location;
-
-                  return (
-                    haversineDistance(
-                      resLocation.lat(),
-                      resLocation.lng(),
-                      eventLocation.lat,
-                      eventLocation.lng
-                    ) <= 5
-                  );
                 }
+                // otherwise check a 5km radius around the lat/long co-ords
+                const resLocation = res[0].geometry.location;
+                const eventLocation = event.address.location;
+
+                return (
+                  haversineDistance(
+                    resLocation.lat(),
+                    resLocation.lng(),
+                    eventLocation.lat,
+                    eventLocation.lng,
+                  ) <= 5
+                );
               });
             } else {
               alert('Error filtering by location');
               console.log(
-                'Geocode was not successful for the following reason: ' + status
+                `Geocode was not successful for the following reason: ${status}`,
               );
             }
             this.setState({ filtered: true });
             return this.props.updateEvents({ data: filteredEvents });
-          }
+          },
         );
       }
     }
@@ -162,14 +159,14 @@ class EventFiltering extends Component {
   }
 
   createSelectItems = () => {
-    const topics = this.props.topics;
-    let options = [];
+    const { topics } = this.props;
+    const options = [];
 
     for (let i = 0; i < topics.length; i++) {
       options.push(
         <Dropdown.Item key={topics[i]._id} onClick={this.handleDropdownSelect}>
           {topics[i].name}
-        </Dropdown.Item>
+        </Dropdown.Item>,
       );
     }
 
@@ -192,7 +189,7 @@ class EventFiltering extends Component {
         {/* TOPIC FILTER */}
         <DropdownButton
           id="filtering-topic-input"
-          title={topic ? topic : 'All'}
+          title={topic || 'All'}
         >
           <Dropdown.Item onClick={this.handleDropdownSelect}>All</Dropdown.Item>
           {this.createSelectItems()}
@@ -229,7 +226,7 @@ class EventFiltering extends Component {
           onChange={this.handleTitleSearchChange}
           onFocus={this.handleInputFocus}
           onBlur={this.handleInputBlur}
-        ></input>
+        />
       </div>
     );
   }

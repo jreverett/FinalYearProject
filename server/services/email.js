@@ -6,9 +6,14 @@ function send(mailOptions) {
     secure: false,
     auth: {
       user: process.env.GMAIL_ADDRESS,
-      pass: process.env.GMAIL_PASS
-    }
+      pass: process.env.GMAIL_PASS,
+    },
   });
+
+  // terminate here if email sending is disabled
+  if (process.env.NO_EMAIL) {
+    return;
+  }
 
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {

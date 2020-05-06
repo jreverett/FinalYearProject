@@ -4,10 +4,6 @@ import '../../common.css';
 import './ConfirmationModal.css';
 
 class ConfirmationModal extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   onClose = () => {
     this.props.onClose();
   };
