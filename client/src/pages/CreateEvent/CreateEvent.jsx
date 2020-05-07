@@ -86,7 +86,12 @@ class CreateEvent extends Component {
       error,
     } = this.state;
 
-    if (!(title && topic && description && start && address && !error)) return;
+    if (!(title && topic && description && start && address)) return;
+
+    if (topic === -1) {
+      this.setState({ error: 'Please specify a topic' });
+      return;
+    }
 
     this.setState({ loading: true });
     eventService
