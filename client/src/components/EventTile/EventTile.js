@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { Card } from 'react-bootstrap';
-import { formatDateTime } from '../../utilities';
+import { formatCost, formatDateTime } from '../../utilities';
 import { EventModal } from '../index';
 import './EventTile.css';
 
@@ -17,8 +17,10 @@ class EventTile extends Component {
   };
 
   render() {
-    let event = this.props.eventDetails;
-    let startDate = formatDateTime(event.start);
+    const event = this.props.eventDetails;
+
+    const startDate = formatDateTime(event.start);
+    const cost = formatCost(event.cost);
 
     // check if an image for this event exists, otherwise use the placeholder
     var thumbnail = event.images[0]
@@ -35,8 +37,8 @@ class EventTile extends Component {
           <Card.Img className="card-image" variant="top" src={thumbnail} />
           <Card.Body>
             <p className="start-time-label">{startDate}</p>
-            <p className={'cost-label ' + (!event.cost ? 'free-event' : null)}>
-              {event.cost ? '£' + event.cost : 'FREE!'}
+            <p className={'cost-label ' + (!cost ? 'free-event' : null)}>
+              {cost ? '£' + cost : 'FREE!'}
             </p>
             <Card.Title>{event.title}</Card.Title>
             <Card.Text>{event.address.description}</Card.Text>

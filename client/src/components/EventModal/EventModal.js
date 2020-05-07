@@ -11,7 +11,7 @@ import {
 } from 'react-icons/fa';
 import { GoVerified } from 'react-icons/go';
 import { MdSupervisorAccount } from 'react-icons/md';
-import { formatDateTime } from '../../utilities';
+import { formatCost, formatDateTime } from '../../utilities';
 import { userService } from '../../services';
 import '../../common.css';
 import './EventModal.css';
@@ -119,12 +119,14 @@ class EventModal extends Component {
       loading,
     } = this.state;
 
-    let event = this.props.eventDetails;
+    const event = this.props.eventDetails;
 
-    let startDate = formatDateTime(event.start);
-    let endDate = formatDateTime(event.end);
+    const startDate = formatDateTime(event.start);
+    const endDate = formatDateTime(event.end);
 
-    var images = event.images[0]
+    const cost = formatCost(event.cost);
+
+    let images = event.images[0]
       ? formatImages(event.images)
       : [
           {
@@ -189,13 +191,9 @@ class EventModal extends Component {
             </Row>
             <Row>
               <Col>
-                <p
-                  className={
-                    'cost-label ' + (!event.cost ? 'free-event' : null)
-                  }
-                >
+                <p className={'cost-label ' + (!cost ? 'free-event' : null)}>
                   <FaMoneyBillWave className="form-icon" size={'1.5em'} />
-                  {event.cost ? `£${event.cost}` : 'FREE!'}
+                  {cost ? `£${cost}` : 'FREE!'}
                 </p>
               </Col>
               <Col>
