@@ -19,13 +19,10 @@
   font-weight: 600;
 }
 
-.button-sorting-selector:hover,
-.button-sorting-selector:focus,
-.dropdown-sorting-selector:active,
-.dropdown-sorting-selector:hover,
-.dropdown-sorting-selector:focus {
+.button-sorting-selector,
+.dropdown-sorting-selector {
   /* overrule bootstrap CSS */
-  color: black !important;
+  color: rgb(77, 77, 77) !important;
   background-color: transparent !important;
 }
 

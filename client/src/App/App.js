@@ -125,12 +125,12 @@ class App extends Component {
             />
 
             {/* USER PAGE */}
-            <PrivateRoute path="/user" loggedInUser={loggedInUser}>
-              <Profile
-                loggedInUser={loggedInUser}
-                updateUser={this.handleUserUpdate}
-              />
-            </PrivateRoute>
+            <PrivateRoute
+              path="/user"
+              loggedInUser={loggedInUser}
+              updateUser={this.handleUserUpdate}
+              component={Profile}
+            />
 
             {/* ADMIN PAGE */}
             <PrivateRoute

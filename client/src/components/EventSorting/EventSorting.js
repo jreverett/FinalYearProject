@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Dropdown, Tooltip, OverlayTrigger } from 'react-bootstrap';
 import { ConditionalWrapper } from '../../components';
-import { userService } from '../../services';
 import { haversineDistance } from '../../utilities';
 import '../../common.css';
 import './EventSorting.css';
@@ -9,22 +8,14 @@ import './EventSorting.css';
 class EventSorting extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      allowDistance: false,
-    };
   }
 
-  componentDidMount() {
-    this.setState({
-      allowDistance: userService.loggedInUserValue?.address,
-    });
-  }
-
-  renderTooltip() {
+  renderTooltip(distanceTooltip) {
     return (
       <Tooltip id="dropdown-tooltip">
-        An account with an address is required to use this function
+        {`An account${
+          distanceTooltip ? ' with an address ' : ' '
+        }is required to use this function`}
       </Tooltip>
     );
   }
@@ -36,7 +27,7 @@ class EventSorting extends Component {
     if (!events) return;
 
     switch (criteria) {
-      case 'reccomended':
+      case 'recomended':
         // TODO - based on mix of other criteria
         break;
       case 'popularity':
@@ -94,16 +85,31 @@ class EventSorting extends Component {
   }
 
   render() {
-    const allowDistance = this.state.allowDistance;
+    const { loggedInUser } = this.props;
+    const allowDistance = loggedInUser?.address ? true : false;
     return (
       <div className="sorting-container">
-        {/* RECCOMENDED */}
-        <Button
-          className="button-sorting-selector"
-          onClick={() => this.sortBy('reccomended')}
+        {/* RECOMENDED */}
+        <ConditionalWrapper
+          condition={!loggedInUser}
+          wrapper={(children) => (
+            <OverlayTrigger
+              placement="right"
+              overlay={this.renderTooltip(false)}
+            >
+              {children}
+            </OverlayTrigger>
+          )}
         >
-          Reccomended
-        </Button>
+          <Button
+            className={`button-sorting-selector ${
+              loggedInUser ? '' : 'disabled'
+            }`}
+            onClick={() => this.sortBy('recomended')}
+          >
+            Recomended
+          </Button>
+        </ConditionalWrapper>
 
         {/* POPULARITY */}
         <Button
@@ -117,7 +123,10 @@ class EventSorting extends Component {
         <ConditionalWrapper
           condition={!allowDistance}
           wrapper={(children) => (
-            <OverlayTrigger placement="right" overlay={this.renderTooltip()}>
+            <OverlayTrigger
+              placement="right"
+              overlay={this.renderTooltip(true)}
+            >
               {children}
             </OverlayTrigger>
           )}

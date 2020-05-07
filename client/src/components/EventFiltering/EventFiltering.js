@@ -29,7 +29,7 @@ class EventFiltering extends Component {
 
     this.interval = setInterval(
       () => this.setState({ showCursor: !this.state.showCursor }),
-      600,
+      600
     );
   }
 
@@ -44,7 +44,7 @@ class EventFiltering extends Component {
   handleSuggestSelect = (suggest) => {
     this.setState(
       { searchLocation: suggest, filtered: false },
-      this.filterEvents,
+      this.filterEvents
     );
   };
 
@@ -53,7 +53,7 @@ class EventFiltering extends Component {
     if (e === '') {
       this.setState(
         { searchLocation: 'All', filtered: false },
-        this.filterEvents,
+        this.filterEvents
       );
     }
   };
@@ -100,14 +100,16 @@ class EventFiltering extends Component {
       // no filtering should be performed if 'All' is selected
       if (searchTopic !== 'All') {
         filteredEvents = filteredEvents.filter(
-          (event) => event.topic === searchTopic,
+          (event) => event.topic === searchTopic
         );
       }
     }
 
     // FILTER BY TITLE
     if (searchTitle) {
-      filteredEvents = filteredEvents.filter((event) => event.title.toLowerCase().includes(searchTitle.toLowerCase()));
+      filteredEvents = filteredEvents.filter((event) =>
+        event.title.toLowerCase().includes(searchTitle.toLowerCase())
+      );
     }
 
     // FILTER BY LOCATION
@@ -121,7 +123,7 @@ class EventFiltering extends Component {
               filteredEvents = filteredEvents.filter((event) => {
                 const latLng = new google.maps.LatLng(
                   event.address.location.lat,
-                  event.address.location.lng,
+                  event.address.location.lng
                 );
 
                 // if search location has bounds, use them...
@@ -137,19 +139,19 @@ class EventFiltering extends Component {
                     resLocation.lat(),
                     resLocation.lng(),
                     eventLocation.lat,
-                    eventLocation.lng,
+                    eventLocation.lng
                   ) <= 5
                 );
               });
             } else {
               alert('Error filtering by location');
               console.log(
-                `Geocode was not successful for the following reason: ${status}`,
+                `Geocode was not successful for the following reason: ${status}`
               );
             }
             this.setState({ filtered: true });
             return this.props.updateEvents({ data: filteredEvents });
-          },
+          }
         );
       }
     }
@@ -166,7 +168,7 @@ class EventFiltering extends Component {
       options.push(
         <Dropdown.Item key={topics[i]._id} onClick={this.handleDropdownSelect}>
           {topics[i].name}
-        </Dropdown.Item>,
+        </Dropdown.Item>
       );
     }
 
@@ -175,11 +177,11 @@ class EventFiltering extends Component {
 
   render() {
     const {
+      searchTopic,
       showCursor,
       locationSearchFocused,
       titleSearchFocused,
     } = this.state;
-    const topic = this.props.searchTopic;
     return (
       <div id="filtering-container">
         <p id="filtering-showing-text" className="filtering-text">
@@ -187,10 +189,7 @@ class EventFiltering extends Component {
         </p>
 
         {/* TOPIC FILTER */}
-        <DropdownButton
-          id="filtering-topic-input"
-          title={topic || 'All'}
-        >
+        <DropdownButton id="filtering-topic-input" title={searchTopic || 'All'}>
           <Dropdown.Item onClick={this.handleDropdownSelect}>All</Dropdown.Item>
           {this.createSelectItems()}
         </DropdownButton>
