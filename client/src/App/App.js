@@ -103,9 +103,12 @@ class App extends Component {
             />
 
             {/* CREATE EVENT */}
-            <PrivateRoute path="/event/create" loggedInUser={loggedInUser}>
-              <CreateEvent loggedInUser={loggedInUser} topics={topics} />
-            </PrivateRoute>
+            <PrivateRoute
+              path="/event/create"
+              loggedInUser={loggedInUser}
+              topics={topics}
+              component={CreateEvent}
+            />
 
             {/* EVENT LISTINGS */}
             <Route

@@ -23,6 +23,7 @@ class EventModal extends Component {
     this.state = {
       owner: '',
       verified: false,
+      userIsOwner: false,
       userIsSubscribed: false,
       subscriptionButtonText: '',
       loading: false,
@@ -31,8 +32,10 @@ class EventModal extends Component {
   }
 
   componentDidMount() {
+    const { eventDetails, loggedInUser } = this.props;
+
     // fetch event owner details
-    userService.get(this.props.eventDetails.owner).then((user) => {
+    userService.get(eventDetails.owner).then((user) => {
       const userData = user.data;
       this.setState({
         owner: `${userData.firstname} ${userData.lastname}`,
@@ -40,16 +43,18 @@ class EventModal extends Component {
       });
     });
 
+    // check if user is the owner of this event
+    if (loggedInUser?.ownedEvents.includes(eventDetails._id)) {
+      this.setState({ userIsOwner: true });
+    }
+
     // check if user is subscribed to this event
-    if (
-      this.props.loggedInUser?.subscriptions.includes(
-        this.props.eventDetails._id
-      )
-    )
+    if (loggedInUser?.subscriptions.includes(eventDetails._id)) {
       this.setState({
         userIsSubscribed: true,
         subscriptionButtonText: 'Subscribed',
       });
+    }
   }
 
   subscribeToEvent = () => {
@@ -108,6 +113,7 @@ class EventModal extends Component {
     const {
       owner,
       verified,
+      userIsOwner,
       userIsSubscribed,
       subscriptionButtonText,
       loading,
@@ -154,7 +160,7 @@ class EventModal extends Component {
                   )}
                 </p>
               </Col>
-              {this.props.loggedInUser && (
+              {this.props.loggedInUser && !userIsOwner && (
                 <Col>
                   {userIsSubscribed ? (
                     <Button

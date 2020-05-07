@@ -3,6 +3,7 @@ import { Form, Row, Col } from 'react-bootstrap';
 import DateTime from 'react-datetime';
 import Geosuggest from 'react-geosuggest';
 import FileBase64 from 'react-file-base64';
+import moment from 'moment';
 import { eventService } from '../../services';
 import '../../common.css';
 import './CreateEvent.css';
@@ -83,13 +84,25 @@ class CreateEvent extends Component {
       cost,
       address,
       images,
-      error,
     } = this.state;
 
     if (!(title && topic && description && start && address)) return;
 
+    // check a valid topic has been selected
     if (topic === -1) {
       this.setState({ error: 'Please specify a topic' });
+      return;
+    }
+
+    // check the start date is in the future
+    if (moment(start).isBefore(moment())) {
+      this.setState({ error: 'Start date must be a future date' });
+      return;
+    }
+
+    // check the end date is after the start date (if specified)
+    if (moment(end).isBefore(start)) {
+      this.setState({ error: 'End date must be after start date' });
       return;
     }
 
