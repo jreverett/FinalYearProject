@@ -28,7 +28,7 @@ function createEvent(
     }),
   };
 
-  return fetch(`${API_URL}/api/event/create`, requestOptions)
+  return fetch(`${API_URL}/api/events`, requestOptions)
     .then(handleResponse)
     .then({
       if(event) {

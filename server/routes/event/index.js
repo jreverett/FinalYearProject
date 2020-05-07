@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 
 router.use('/event', require('./announcement'));
-router.use('/event', require('./create'));
 router.use(require('./events'));
 router.use('/event', require('./event-count'));
 

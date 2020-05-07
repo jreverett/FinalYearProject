@@ -1,12 +1,58 @@
 const express = require('express');
 const router = express.Router();
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
+const moment = require('moment');
 const emailService = require('../../services/email');
 
 // import schemas
 const Event = require('../../model/event');
 const User = require('../../model/user');
 
+// CREATE
+router.post('/events', (req, res, next) => {
+  User.findById(req.body.owner, (userErr, user) => {
+    // create new event document
+    let newEvent = new Event();
+
+    // find and update user document
+    if (userErr) {
+      return res.status(500).send({
+        message: 'Invalid request: ' + err,
+      });
+    }
+
+    user.ownedEvents.push(newEvent._id);
+
+    // set event properties
+    newEvent.owner = user._id;
+    newEvent.title = req.body.title;
+    newEvent.topic = req.body.topic;
+    newEvent.description = req.body.description;
+    newEvent.start = req.body.start;
+    newEvent.end = req.body.end;
+    newEvent.cost = req.body.cost;
+    newEvent.address = req.body.address;
+    newEvent.images = req.body.images;
+
+    // save the new event
+    newEvent.save((eventErr) => {
+      if (eventErr) {
+        return res.status(500).send({
+          message: 'Failed to create event: ' + eventErr,
+        });
+      } else {
+        // event save successful, so save the user
+        user.save();
+
+        return res.status(201).send({
+          message: 'Event added successfully',
+        });
+      }
+    });
+  });
+});
+
+// READ
 router.get('/events', (req, res) => {
   if (req.query.id) {
     Event.findById(req.query.id, (err, event) => {
@@ -26,25 +72,30 @@ router.get('/events', (req, res) => {
       return res.status(200).send({ data: event });
     });
   } else {
-    Event.find({}, (err, events) => {
-      // Error occured finding events
-      if (err) {
-        return res.status(500).send({
-          message: 'Invalid request: ' + err,
-        });
-      }
+    Event.find(
+      // only get events which haven't started yet
+      { start: { $gt: moment() } },
+      (err, events) => {
+        // Error occured finding events
+        if (err) {
+          return res.status(500).send({
+            message: 'Invalid request: ' + err,
+          });
+        }
 
-      // No events in the database
-      if (!events.length) {
-        return res.status(500).send({ message: 'No events found' });
-      }
+        // No events in the database
+        if (!events.length) {
+          return res.status(500).send({ message: 'No events found' });
+        }
 
-      // Valid request, return events
-      return res.status(200).send({ data: events });
-    });
+        // Valid request, return events
+        return res.status(200).send({ data: events });
+      }
+    );
   }
 });
 
+// DELETE
 router.delete('/events', (req, res) => {
   const { eventID, userID } = req.body;
 
