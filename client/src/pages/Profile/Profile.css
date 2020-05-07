@@ -10,6 +10,11 @@
   width: 100%;
 }
 
+#profile-verified-badge {
+  color: var(--verified);
+  margin-left: 5px;
+}
+
 #profile-subs-container {
   margin-bottom: 0.3rem;
   margin-left: 2%;

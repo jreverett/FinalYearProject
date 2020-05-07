@@ -5,14 +5,20 @@ const router = express.Router();
 const User = require('../../model/user');
 
 router.post('/login', (req, res) => {
-  User.findOne({ email: req.body.email }, function(err, user) {
+  User.findOne({ email: req.body.email }, function (err, user) {
     if (user === null) {
       // Account with this email does not exist
-      return res.status(400).send({
-        message: 'Invalid credentials'
+      return res.status(401).send({
+        message: 'Invalid credentials',
       });
     } else {
       if (user.passwordIsValid(req.body.password)) {
+        if (user.suspended) {
+          return res.status(403).send({
+            message: 'This account has been suspended',
+          });
+        }
+
         return res.status(200).send({
           _id: user.id,
           firstname: user.firstname,
@@ -23,12 +29,12 @@ router.post('/login', (req, res) => {
           verified: user.verified,
           ownedEvents: user.ownedEvents,
           subscriptions: user.subscriptions,
-          token: 'test-token' // TODO: add token generation/storage in MongoDB
+          token: 'test-token', // TODO: add token generation/storage in MongoDB
         });
       } else {
         // Incorrect password for this account
-        return res.status(400).send({
-          message: 'Invalid credentials'
+        return res.status(401).send({
+          message: 'Invalid credentials',
         });
       }
     }

@@ -9,6 +9,7 @@ import {
   FaCalendarCheck,
   FaCalendarTimes,
 } from 'react-icons/fa';
+import { GoVerified } from 'react-icons/go';
 import { MdSupervisorAccount } from 'react-icons/md';
 import { formatDateTime } from '../../utilities';
 import { userService } from '../../services';
@@ -21,6 +22,7 @@ class EventModal extends Component {
 
     this.state = {
       owner: '',
+      verified: false,
       userIsSubscribed: false,
       subscriptionButtonText: '',
       loading: false,
@@ -31,7 +33,11 @@ class EventModal extends Component {
   componentDidMount() {
     // fetch event owner details
     userService.get(this.props.eventDetails.owner).then((user) => {
-      this.setState({ owner: `${user.data.firstname} ${user.data.lastname}` });
+      const userData = user.data;
+      this.setState({
+        owner: `${userData.firstname} ${userData.lastname}`,
+        verified: userData.verified,
+      });
     });
 
     // check if user is subscribed to this event
@@ -101,6 +107,7 @@ class EventModal extends Component {
   render() {
     const {
       owner,
+      verified,
       userIsSubscribed,
       subscriptionButtonText,
       loading,
@@ -138,7 +145,14 @@ class EventModal extends Component {
             <Row>
               <Col id="modal-col-title">
                 <Modal.Title id="modal-title">{event.title}</Modal.Title>
-                <p className="text-subtext">hosted by {owner}</p>
+                <p className="text-subtext">
+                  hosted by {owner}{' '}
+                  {verified && (
+                    <span id="modal-verified-badge">
+                      <GoVerified />
+                    </span>
+                  )}
+                </p>
               </Col>
               {this.props.loggedInUser && (
                 <Col>

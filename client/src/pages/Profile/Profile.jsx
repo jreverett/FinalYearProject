@@ -3,6 +3,7 @@ import { Tabs, Tab } from 'react-bootstrap';
 import Geosuggest from 'react-geosuggest';
 import { toast } from 'react-toastify';
 import { FaSave } from 'react-icons/fa';
+import { GoVerified } from 'react-icons/go';
 import { userService } from '../../services';
 import { SubscriptionTable, MyEventsTable } from '../../components';
 import '../../common.css';
@@ -119,7 +120,7 @@ export class Profile extends Component {
   };
 
   render() {
-    const { email, emailConsent, address } = this.props.loggedInUser;
+    const { email, emailConsent, address, verified } = this.props.loggedInUser;
     const name = `${this.props.loggedInUser.firstname} ${this.props.loggedInUser.lastname}`;
 
     const {
@@ -141,7 +142,14 @@ export class Profile extends Component {
         >
           <div id="profile-form-container">
             <div>
-              <p className="text-header">{name}</p>
+              <p className="text-header">
+                {name}
+                {verified && (
+                  <span id="profile-verified-badge">
+                    <GoVerified />
+                  </span>
+                )}
+              </p>
             </div>
             <form name="form" onSubmit={this.handleSubmit}>
               {/* EMAIL */}
