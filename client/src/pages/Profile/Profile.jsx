@@ -184,7 +184,7 @@ export class Profile extends Component {
                     onChange={this.handleUserChangeValue}
                   />
                   <p id="notification-label">
-                    I would like to recieve event announcements
+                    I would like to recieve promotional emails
                   </p>
                 </label>
               </div>

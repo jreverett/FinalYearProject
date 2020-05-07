@@ -25,7 +25,7 @@ router.post('/announcement', (req, res, next) => {
     if (req.body.scheduleSendDateTime === 'Invalid date') {
       return res.status(400).send({
         message:
-          'Invalid date: Submit either a valid date or choose immediate send'
+          'Invalid date: Submit either a valid date or choose immediate send',
       });
     }
 
@@ -64,15 +64,12 @@ router.post('/announcement', (req, res, next) => {
           }
 
           // 4. for each subscriber of the event...
-          docs.forEach(doc => {
-            // 4.1 check consent
-            if (!doc.emailConsent) return;
-
+          docs.forEach((doc) => {
             const mailOptions = {
               from: 'Upvent ☁️ <accounts@upvent.com>', // 'from' email cannot be customised when using gmail as host
               to: doc.email,
               subject: req.body.subject,
-              text: req.body.body
+              text: req.body.body,
             };
 
             if (!req.body.scheduleSendDateTime) {
