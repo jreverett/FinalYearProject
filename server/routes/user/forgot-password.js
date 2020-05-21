@@ -14,18 +14,18 @@ router.post('/forgot-password', (req, res, next) => {
     if (err) {
       return res
         .status(500)
-        .send({ message: 'Failed to reset password: ' + err });
+        .send({ message: 'Failed to send reset password reset email: ' + err });
     }
     if (!user) {
       // for security reasons, this response should be the same as when a user is found
-      return res.status(200).send();
+      return res.status(204).send();
     }
 
     const token = crypto.randomBytes(20).toString('hex');
     user
       .updateOne({
         resetToken: token,
-        resetTokenExpiration: Date.now() + 1200000
+        resetTokenExpiration: Date.now() + 1200000,
       })
       .exec();
 
@@ -37,11 +37,11 @@ router.post('/forgot-password', (req, res, next) => {
         <p>If you made this request, <a href='${config.API_URL}/reset-password/${token}'>click here</a> to continue the password reset process within 20 minutes.</p>
         <p>If you did not make this request, please ignore this email and your password will remain unchanged.</p>
         <br />
-        <p>Note: To keep your account secure, do not share this link with anyone else.</p>`
+        <p>Note: To keep your account secure, do not share this link with anyone else.</p>`,
     };
 
     emailService.send(mailOptions);
-    return res.status(200).send();
+    return res.status(204).send();
   });
 });
 

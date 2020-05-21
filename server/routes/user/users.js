@@ -22,7 +22,7 @@ router.get('/users', (req, res, next) => {
       // No user with the requested ID exists
       if (!user) {
         return res
-          .status(404)
+          .status(400)
           .send({ message: "Couldn't find a user matching the requested ID" });
       }
 

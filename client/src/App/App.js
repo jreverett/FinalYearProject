@@ -26,14 +26,17 @@ class App extends Component {
     super(props);
 
     this.state = {
-      loggedInUser: userService.loggedInUser,
+      loggedInUser: {},
       topics: {},
       searchTitle: '',
     };
   }
 
   componentDidMount() {
-    userService.loggedInUser.subscribe(this.handleUserUpdate);
+    // subscribe to the logged in user observable
+    this.state.loggedInUser = userService.loggedInUser.subscribe(
+      this.handleUserUpdate
+    );
 
     // fetch data for the current logged-in user
     const userID = userService.loggedInUserValue?._id;
@@ -52,7 +55,8 @@ class App extends Component {
   }
 
   componentWillUnmount() {
-    userService.loggedInUser.unsubscribe(this.handleUserUpdate);
+    // clear the observable if set
+    this.state.loggedInUser.unsubscribe();
   }
 
   // called when the user is updated (including login/logout)

@@ -60,7 +60,7 @@ function updateUserObservable(userData) {
  */
 function update(userID, { ...params }) {
   const requestOptions = {
-    method: 'POST',
+    method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ userID, ...params }),
   };
@@ -92,7 +92,7 @@ function forgotPassword(email) {
 
 function resetPassword(token, password) {
   const requestOptions = {
-    method: 'POST',
+    method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ token, password }),
   };

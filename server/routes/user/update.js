@@ -5,7 +5,7 @@ const router = express.Router();
 const User = require('../../model/user');
 
 // User update
-router.post('/update', (req, res, next) => {
+router.patch('/update', (req, res, next) => {
   let params = {};
 
   // gather all non-null props

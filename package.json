@@ -6,7 +6,8 @@
     "start": "nodemon server/server.js",
     "dev": "concurrently --kill-others-on-fail -n \"server,client\" -c \"bgBlue,bgMagenta\" \"npm start\" \"npm run client\"",
     "build": "cd client && npm run build",
-    "heroku-postbuild": "cd client && npm install && npm install --only=dev --no-shrinkwrap && npm run build && echo finished postbuild"
+    "heroku-postbuild": "cd client && npm install && npm install --only=dev --no-shrinkwrap && npm run build && echo finished postbuild",
+    "test": "cd client && npm run test"
   },
   "dependencies": {
     "cors": "^2.8.5",

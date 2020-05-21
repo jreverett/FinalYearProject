@@ -11,12 +11,12 @@ router.post('/unsubscribe', (req, res, next) => {
   Event.findById(req.body.eventID, (err, event) => {
     if (err) {
       return res.status(500).send({
-        message: 'Failed to unsubscribe: ' + err
+        message: 'Failed to unsubscribe: ' + err,
       });
     }
     if (!event) {
       return res.status(500).send({
-        message: 'Failed to unsubsribe: Could not find the specifed event'
+        message: 'Failed to unsubsribe: Could not find the specifed event',
       });
     }
 
@@ -24,12 +24,12 @@ router.post('/unsubscribe', (req, res, next) => {
     User.findById(req.body.userID, (err, user) => {
       if (err) {
         return res.status(500).send({
-          message: 'Failed to unsubscribe: ' + err
+          message: 'Failed to unsubscribe: ' + err,
         });
       }
       if (!user) {
         return res.status(500).send({
-          message: 'Failed to unsubsribe: Could not find the specifed user'
+          message: 'Failed to unsubsribe: Could not find the specifed user',
         });
       }
 
@@ -37,7 +37,7 @@ router.post('/unsubscribe', (req, res, next) => {
       let index = user.subscriptions.indexOf(event._id);
       if (!(index > -1)) {
         return res.status(500).send({
-          message: 'Failed to unsubsribe: User is not subscribed to this event'
+          message: 'Failed to unsubsribe: User is not subscribed to this event',
         });
       }
 
@@ -50,7 +50,7 @@ router.post('/unsubscribe', (req, res, next) => {
       event.save();
 
       return res.status(200).send({
-        message: 'Subscription successful'
+        message: 'Unsubscription successful',
       });
     });
   });
