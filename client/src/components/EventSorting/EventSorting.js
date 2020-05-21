@@ -10,12 +10,10 @@ class EventSorting extends Component {
     super(props);
   }
 
-  renderTooltip(distanceTooltip) {
+  renderTooltip() {
     return (
       <Tooltip id="dropdown-tooltip">
-        {`An account${
-          distanceTooltip ? ' with an address ' : ' '
-        }is required to use this function`}
+        {'An account with an address is required to use this function'}
       </Tooltip>
     );
   }
@@ -28,8 +26,18 @@ class EventSorting extends Component {
 
     switch (criteria) {
       case 'recomended':
-        // TODO - based on mix of other criteria
-        break;
+        if (!this.props.loggedInUser?.address.location) return;
+
+        // distance (close-far) -> popularity (high-low) -> cost (low-high)
+        var recomended = this.getEventDistances(true).sort(
+          (a, b) =>
+            b[0].subscribers.length - a[0].subscribers.length ||
+            a[1] - b[1] ||
+            a[0].cost - b[0].cost
+        );
+        recomended = recomended.map((d) => d[0]);
+
+        return updateEvents({ data: recomended });
       case 'popularity':
         return updateEvents({
           data: events.sort(
@@ -65,20 +73,35 @@ class EventSorting extends Component {
     }
   };
 
-  getEventDistances() {
+  getEventDistances(toNearest20km) {
     const userLocation = this.props.loggedInUser.address.location;
     var distances = [];
     this.props.events.data.forEach((event) => {
       const eventLocation = event.address.location;
-      distances.push([
-        event,
-        haversineDistance(
-          userLocation.lat,
-          userLocation.lng,
-          eventLocation.lat,
-          eventLocation.lng
-        ),
-      ]);
+
+      if (toNearest20km) {
+        distances.push([
+          event,
+          Math.ceil(
+            haversineDistance(
+              userLocation.lat,
+              userLocation.lng,
+              eventLocation.lat,
+              eventLocation.lng
+            ) / 20
+          ) * 20,
+        ]);
+      } else {
+        distances.push([
+          event,
+          haversineDistance(
+            userLocation.lat,
+            userLocation.lng,
+            eventLocation.lat,
+            eventLocation.lng
+          ),
+        ]);
+      }
     });
 
     return distances;
@@ -93,10 +116,7 @@ class EventSorting extends Component {
         <ConditionalWrapper
           condition={!loggedInUser}
           wrapper={(children) => (
-            <OverlayTrigger
-              placement="right"
-              overlay={this.renderTooltip(false)}
-            >
+            <OverlayTrigger placement="right" overlay={this.renderTooltip()}>
               {children}
             </OverlayTrigger>
           )}
@@ -123,10 +143,7 @@ class EventSorting extends Component {
         <ConditionalWrapper
           condition={!allowDistance}
           wrapper={(children) => (
-            <OverlayTrigger
-              placement="right"
-              overlay={this.renderTooltip(true)}
-            >
+            <OverlayTrigger placement="right" overlay={this.renderTooltip()}>
               {children}
             </OverlayTrigger>
           )}
