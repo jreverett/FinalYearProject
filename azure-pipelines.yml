@@ -23,7 +23,8 @@ steps:
   displayName: 'run build script'
 
 # testing
-- script: npm test
+- script: |
+    npm test
   displayName: npm test
 
 # publish test results
