@@ -12,7 +12,15 @@ steps:
 
 - script: |
     cd client && npm install react-scripts
+    npm install
+  displayName: 'npm install'
+
+- script: |
     npm run build
-  displayName: 'npm install and build'
+  displayName: 'run build script'
 
-
+- task: PublishTestResults@2
+  condition: succeededOrFailed()
+  inputs:
+    testRunner: JUnit
+    testResultsFiles: '**/junit.xml'
