@@ -24,8 +24,8 @@ steps:
 
 # testing
 - script: |
-    npm test
-  displayName: npm test
+    npm run citest
+  displayName: npm CI test
 
 # publish test results
 - task: PublishTestResults@2
