@@ -45,6 +45,9 @@ const UserSchema = mongoose.Schema({
   subscriptions: {
     type: Array,
   },
+  authToken: {
+    type: String,
+  },
   resetToken: {
     type: String,
   },

@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import fetchIntercept from 'fetch-intercept';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {
@@ -20,6 +21,7 @@ import { userService, topicService } from '../services';
 import './App.css';
 
 toast.configure();
+let unregister; // fetch interceptor
 
 class App extends Component {
   constructor(props) {
@@ -52,11 +54,30 @@ class App extends Component {
     topicService.get().then((topics) => {
       this.setState({ topics: topics.data });
     });
+
+    // FETCH INTERCEPTOR ///////
+    unregister = fetchIntercept.register({
+      request: (url, config) => {
+        // add the auth token to any requests (if user is logged in)
+        const authToken = this.state.loggedInUser?.authToken;
+        if (authToken) {
+          config.headers['x-access-token'] = authToken;
+        }
+        return [url, config];
+      },
+      requestError: (error) => {
+        return Promise.reject(error);
+      },
+    });
+    ///////////////////////////
   }
 
   componentWillUnmount() {
     // clear the observable if set
     this.state.loggedInUser.unsubscribe();
+
+    // unregister fetch interceptor
+    unregister();
   }
 
   // called when the user is updated (including login/logout)

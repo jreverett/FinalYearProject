@@ -1,3 +1,4 @@
+const jwt = require('jsonwebtoken');
 const express = require('express');
 const router = express.Router();
 
@@ -19,6 +20,15 @@ router.post('/login', (req, res) => {
           });
         }
 
+        // create auth token (60 minute expiry)
+        const authToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+          expiresIn: 3600,
+        });
+
+        // save the token to the user
+        user.authToken = authToken;
+        user.save();
+
         return res.status(200).send({
           _id: user.id,
           firstname: user.firstname,
@@ -29,7 +39,7 @@ router.post('/login', (req, res) => {
           verified: user.verified,
           ownedEvents: user.ownedEvents,
           subscriptions: user.subscriptions,
-          token: 'test-token', // TODO: add token generation/storage in MongoDB
+          authToken: authToken,
         });
       } else {
         // Incorrect password for this account

@@ -20,11 +20,11 @@ class SendAnnouncement extends Component {
       requestCopy: true,
       submitted: false,
       loading: false,
-      error: ''
+      error: '',
     };
   }
 
-  handleChange = e => {
+  handleChange = (e) => {
     const target = e.target;
     const value = target.name === 'requestCopy' ? target.checked : target.value;
     const name = target.name;
@@ -40,11 +40,11 @@ class SendAnnouncement extends Component {
     this.setState({ [name]: value });
   };
 
-  handleDateChange = e => {
+  handleDateChange = (e) => {
     this.setState({ scheduleSendDateTime: e });
   };
 
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     e.preventDefault();
 
     this.setState({ submitted: true });
@@ -54,7 +54,7 @@ class SendAnnouncement extends Component {
       subject,
       body,
       requestCopy,
-      error
+      error,
     } = this.state;
 
     if (!subject || !body || error) return;
@@ -62,7 +62,6 @@ class SendAnnouncement extends Component {
     this.setState({ loading: true });
     eventService
       .sendAnnouncement(
-        this.props.loggedInUser._id,
         this.props.location.state.eventID,
         scheduleSendDateTime,
         subject,
@@ -89,7 +88,7 @@ class SendAnnouncement extends Component {
             );
           }
         },
-        error => {
+        (error) => {
           toast.error(error);
         }
       );
@@ -104,7 +103,7 @@ class SendAnnouncement extends Component {
       requestCopy,
       submitted,
       loading,
-      error
+      error,
     } = this.state;
     return (
       <>
