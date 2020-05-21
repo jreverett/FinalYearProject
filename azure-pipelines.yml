@@ -5,22 +5,30 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
+# install node
 - task: NodeTool@0
   inputs:
     versionSpec: '10.x'
   displayName: 'Install Node.js'
 
+# install npm
 - script: |
     cd client && npm install react-scripts
     npm install
   displayName: 'npm install'
 
+# build
 - script: |
     npm run build
   displayName: 'run build script'
 
+# testing
+- script: npm test
+  displayName: npm test
+
+# publish test results
 - task: PublishTestResults@2
-  condition: succeededOrFailed()
   inputs:
-    testRunner: JUnit
+    testResultsFormat: 'JUnit'
     testResultsFiles: '**/junit.xml'
+    failTaskOnFailedTests: true
