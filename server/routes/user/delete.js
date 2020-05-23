@@ -17,7 +17,7 @@ router.post('/delete', verifyAuthToken, (req, res, next) => {
   User.collection.deleteOne(user, (err) => {
     if (err) {
       return res.status(500).send({
-        message: 'Failed to delete user: ' + err,
+        message: 'Failed to delete user',
       });
     } else {
       return res.status(200).send({

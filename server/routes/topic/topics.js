@@ -9,7 +9,7 @@ router.get('/topics', (req, res, next) => {
     // Error occured finding topics
     if (err) {
       return res.status(500).send({
-        message: 'Error retrieving topics: ' + err,
+        message: 'Error retrieving topics',
       });
     }
 

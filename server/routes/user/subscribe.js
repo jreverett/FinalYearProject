@@ -17,7 +17,7 @@ router.post(
     Event.findById(req.body.eventID, (err, event) => {
       if (err) {
         return res.status(500).send({
-          message: 'Failed to subscribe: ' + err,
+          message: 'Failed to subscribe',
         });
       }
       if (!event) {

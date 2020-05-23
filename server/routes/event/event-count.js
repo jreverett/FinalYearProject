@@ -4,11 +4,11 @@ const router = express.Router();
 // import event schema
 const Event = require('../../model/event');
 
-router.get('/event-count', (req, res, next) => {
+router.get('/event-count', (req, res) => {
   Event.countDocuments({}, (err, count) => {
     if (err) {
       return res.status(500).send({
-        message: 'Error getting event count: ' + err,
+        message: 'Error getting event count',
       });
     }
 

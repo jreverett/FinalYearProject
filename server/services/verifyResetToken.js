@@ -11,13 +11,13 @@ function verifyResetToken(token, callback) {
     if (err) {
       return callback({
         status: 500,
-        message: 'Failed to verify token: ' + err
+        message: 'Failed to verify token',
       });
     }
     if (!user) {
       return callback({
         status: 500,
-        message: 'This reset link is invalid, please request a new one'
+        message: 'This reset link is invalid, please request a new one',
       });
     }
 
@@ -25,7 +25,7 @@ function verifyResetToken(token, callback) {
     if (user.resetTokenExpiration.getTime() < Date.now()) {
       return callback({
         status: 500,
-        message: 'This reset link has expired, please request a new one'
+        message: 'This reset link has expired, please request a new one',
       });
     }
 

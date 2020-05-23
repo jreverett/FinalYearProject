@@ -95,7 +95,7 @@ class App extends Component {
   };
 
   render() {
-    const { loggedInUser, topics, searchTitle } = this.state;
+    const { loggedInUser, topics } = this.state;
     return (
       <Fragment>
         <NavBar loggedInUser={loggedInUser} />
@@ -160,6 +160,7 @@ class App extends Component {
             {/* ADMIN PAGE */}
             <PrivateRoute
               path="/admin"
+              adminRequired={true}
               loggedInUser={loggedInUser}
               component={Admin}
             />

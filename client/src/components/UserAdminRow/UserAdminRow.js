@@ -78,43 +78,62 @@ class UserAdminRow extends Component {
   toggleAdmin = (userID, isAdmin, fullname) => {
     isAdmin = !isAdmin;
     const type = isAdmin ? 1 : 0;
-    userService.update(userID, { type: type }).then(() => {
-      this.props.updateUser(this.props.userRowIndex, 'type', isAdmin);
-      this.forceUpdate();
+    userService.update(userID, { type: type }).then(
+      () => {
+        this.props.updateUser(this.props.userRowIndex, 'type', isAdmin);
+        this.forceUpdate();
 
-      const text = `${isAdmin ? 'Promoted' : 'Demoted'} ${fullname} to ${
-        isAdmin ? 'admin' : 'standard user'
-      }`;
-      this.toastResponse(isAdmin, text);
+        const text = `${isAdmin ? 'Promoted' : 'Demoted'} ${fullname} to ${
+          isAdmin ? 'admin' : 'standard user'
+        }`;
+        this.toastResponse(isAdmin, text);
 
-      this.setState({ userAdminText: this.getAdminText() });
-    });
+        this.setState({ userAdminText: this.getAdminText() });
+      },
+      (error) => {
+        toast.error(error);
+      }
+    );
   };
 
   toggleVerified = (userID, isVerified, fullname) => {
     isVerified = !isVerified;
-    userService.update(userID, { verified: isVerified }).then(() => {
-      this.props.updateUser(this.props.userRowIndex, 'verified', isVerified);
-      this.forceUpdate();
+    userService.update(userID, { verified: isVerified }).then(
+      () => {
+        this.props.updateUser(this.props.userRowIndex, 'verified', isVerified);
+        this.forceUpdate();
 
-      const text = `${isVerified ? 'Verified' : 'Unverified'} ${fullname}`;
-      this.toastResponse(isVerified, text);
+        const text = `${isVerified ? 'Verified' : 'Unverified'} ${fullname}`;
+        this.toastResponse(isVerified, text);
 
-      this.setState({ userVerifyText: this.getVerifyText() });
-    });
+        this.setState({ userVerifyText: this.getVerifyText() });
+      },
+      (error) => {
+        toast.error(error);
+      }
+    );
   };
 
   toggleSuspension = (userID, isSuspended, fullname) => {
     isSuspended = !isSuspended;
-    userService.update(userID, { suspended: isSuspended }).then(() => {
-      this.props.updateUser(this.props.userRowIndex, 'suspended', isSuspended);
-      this.forceUpdate();
+    userService.update(userID, { suspended: isSuspended }).then(
+      () => {
+        this.props.updateUser(
+          this.props.userRowIndex,
+          'suspended',
+          isSuspended
+        );
+        this.forceUpdate();
 
-      const text = `${isSuspended ? 'Suspended' : 'Unsuspended'} ${fullname}`;
-      this.toastResponse(isSuspended, text);
+        const text = `${isSuspended ? 'Suspended' : 'Unsuspended'} ${fullname}`;
+        this.toastResponse(isSuspended, text);
 
-      this.setState({ userSuspendText: this.getSuspendText() });
-    });
+        this.setState({ userSuspendText: this.getSuspendText() });
+      },
+      (error) => {
+        toast.error(error);
+      }
+    );
   };
 
   toastResponse = (status, text) => {

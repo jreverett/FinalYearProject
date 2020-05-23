@@ -47,12 +47,12 @@ describe('event service', () => {
   it('should return an appropriate error if event creation fails', (done) => {
     fetchMock.post(`${API_URL}/api/events`, {
       status: 500,
-      message: 'Failed to create event: *err*',
+      message: 'Failed to create event',
     });
 
     eventService.createEvent(mockEventData).then((res) => {
       expect(res.status).toEqual(500);
-      expect(res.message).toEqual('Failed to create event: *err*');
+      expect(res.message).toEqual('Failed to create event');
       done();
     });
     expect(fetchMock).toHavePosted(`${API_URL}/api/events`);
@@ -187,12 +187,12 @@ describe('event service', () => {
   it('should return an appropriate error if theres an error getting the event count', (done) => {
     fetchMock.get(`${API_URL}/api/event/event-count`, {
       status: 500,
-      message: 'Error getting event count: *err*',
+      message: 'Error getting event count',
     });
 
     eventService.getEventCount().then((res) => {
       expect(res.status).toEqual(500);
-      expect(res.message).toEqual('Error getting event count: *err*');
+      expect(res.message).toEqual('Error getting event count');
       done();
     });
     expect(fetchMock).toHaveGot(`${API_URL}/api/event/event-count`);

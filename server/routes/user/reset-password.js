@@ -6,9 +6,7 @@ router.patch('/reset-password', (req, res, next) => {
   // check token is valid
   verificationService.verifyResetToken(req.body.token, (err, success) => {
     if (err) {
-      return res
-        .status(500)
-        .send({ message: 'Error resetting password: ' + err.message });
+      return res.status(500).send({ message: 'Error resetting password' });
     }
 
     // if valid, update the user's password and remove remove the reset token

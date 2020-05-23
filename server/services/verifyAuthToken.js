@@ -8,9 +8,7 @@ function verifyAuthToken(req, res, next, adminRequired) {
 
   jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
     if (err)
-      return res
-        .status(500)
-        .send({ message: 'Failed to authenticate token: ' + err });
+      return res.status(500).send({ message: 'Failed to authenticate token' });
 
     User.findById(decoded.id, (err, user) => {
       if (err) {

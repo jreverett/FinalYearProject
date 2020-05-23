@@ -17,7 +17,7 @@ router.post(
     Event.findById(req.body.eventID, (err, event) => {
       if (err) {
         return res.status(500).send({
-          message: 'Failed to unsubscribe: ' + err,
+          message: 'Failed to unsubscribe',
         });
       }
       if (!event) {
@@ -30,7 +30,7 @@ router.post(
       User.findById(req.body.userID, (err, user) => {
         if (err) {
           return res.status(500).send({
-            message: 'Failed to unsubscribe: ' + err,
+            message: 'Failed to unsubscribe',
           });
         }
         if (!user) {

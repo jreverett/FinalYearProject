@@ -40,12 +40,12 @@ describe('event service', () => {
   it('should return an appropriate error if an error occours during user creation', (done) => {
     fetchMock.post(`${API_URL}/api/user/signup`, {
       status: 500,
-      message: 'Failed to add user: *err*',
+      message: 'Failed to add user',
     });
 
     userService.signup(userMockData).then((res) => {
       expect(res.status).toEqual(500);
-      expect(res.message).toEqual('Failed to add user: *err*');
+      expect(res.message).toEqual('Failed to add user');
       done();
     });
     expect(fetchMock).toHavePosted(`${API_URL}/api/user/signup`);
@@ -294,12 +294,12 @@ describe('event service', () => {
   it('should return an appropriate error if an error occurs during updating', (done) => {
     fetchMock.patch(`${API_URL}/api/user/update`, {
       status: 500,
-      message: 'Failed to update user: *err*',
+      message: 'Failed to update user',
     });
 
     userService.update(mockUserID, mockUserUpdateData).then((res) => {
       expect(res.status).toEqual(500);
-      expect(res.message).toEqual('Failed to update user: *err*');
+      expect(res.message).toEqual('Failed to update user');
       done();
     });
     expect(fetchMock).toHavePatched(`${API_URL}/api/user/update`);
@@ -327,14 +327,12 @@ describe('event service', () => {
   it('should return an appropriate error if an error occours sending the email', (done) => {
     fetchMock.post(`${API_URL}/api/user/forgot-password`, {
       status: 500,
-      message: 'Failed to send reset password reset email: *err*',
+      message: 'Failed to send reset password reset email',
     });
 
     userService.forgotPassword(mockUserEmail).then((res) => {
       expect(res.status).toEqual(500);
-      expect(res.message).toEqual(
-        'Failed to send reset password reset email: *err*'
-      );
+      expect(res.message).toEqual('Failed to send reset password reset email');
       done();
     });
     expect(fetchMock).toHavePosted(`${API_URL}/api/user/forgot-password`);
@@ -363,12 +361,12 @@ describe('event service', () => {
   it('should return an appropriate error if an error occours during password reset', (done) => {
     fetchMock.patch(`${API_URL}/api/user/reset-password`, {
       status: 500,
-      message: 'Error resetting password: *err*',
+      message: 'Error resetting password',
     });
 
     userService.resetPassword(mockToken, mockPassword).then((res) => {
       expect(res.status).toEqual(500);
-      expect(res.message).toEqual('Error resetting password: *err*');
+      expect(res.message).toEqual('Error resetting password');
       done();
     });
     expect(fetchMock).toHavePatched(`${API_URL}/api/user/reset-password`);

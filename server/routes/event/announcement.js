@@ -18,9 +18,7 @@ router.post(
     // 1. find event
     Event.findById(req.body.eventID, (err, event) => {
       if (err) {
-        return res
-          .status(500)
-          .send({ message: 'Could not send announcement: ' + err });
+        return res.status(500).send({ message: 'Could not send announcement' });
       }
 
       if (!event) {
@@ -40,7 +38,7 @@ router.post(
         if (err) {
           return res
             .status(500)
-            .send({ message: 'Could not send announcement: ' + err });
+            .send({ message: 'Could not send announcement' });
         }
 
         if (!user) {
@@ -67,7 +65,7 @@ router.post(
             if (err) {
               return res
                 .status(500)
-                .send({ message: 'Could not send announcement: ' + err });
+                .send({ message: 'Could not send announcement' });
             }
 
             // 4. for each subscriber of the event...

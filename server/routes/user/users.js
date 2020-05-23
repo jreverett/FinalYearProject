@@ -15,7 +15,7 @@ router.get('/users', (req, res, next) => {
       // Error finding user
       if (err) {
         return res.status(500).send({
-          message: 'Error getting user: ' + err,
+          message: 'Error getting user',
         });
       }
 

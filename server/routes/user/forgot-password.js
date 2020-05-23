@@ -14,7 +14,7 @@ router.post('/forgot-password', (req, res, next) => {
     if (err) {
       return res
         .status(500)
-        .send({ message: 'Failed to send reset password reset email: ' + err });
+        .send({ message: 'Failed to send reset password reset email' });
     }
     if (!user) {
       // for security reasons, this response should be the same as when a user is found

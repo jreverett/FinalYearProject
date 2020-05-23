@@ -26,7 +26,7 @@ router.patch(
       (err) => {
         if (err) {
           return res.status(500).send({
-            message: 'Failed to update user:' + err,
+            message: 'Failed to update user',
           });
         } else {
           return res.status(204).send();

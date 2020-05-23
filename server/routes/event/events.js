@@ -44,7 +44,7 @@ router.post(
       newEvent.save((eventErr) => {
         if (eventErr) {
           return res.status(500).send({
-            message: 'Failed to create event: ' + eventErr,
+            message: 'Failed to create event',
           });
         } else {
           // event save successful, so save the user
@@ -66,7 +66,7 @@ router.get('/events', (req, res) => {
       // Error occured finding events
       if (err) {
         return res.status(500).send({
-          message: 'Invalid request: ' + err,
+          message: 'Failed to retrieve events',
         });
       }
 
@@ -86,7 +86,7 @@ router.get('/events', (req, res) => {
         // Error occured finding events
         if (err) {
           return res.status(500).send({
-            message: 'Invalid request: ' + err,
+            message: 'Failed to retrieve events',
           });
         }
 
@@ -115,78 +115,96 @@ router.delete(
       return res.status(400).send({ message: 'Missing event or user ID' });
     }
 
-    Event.findByIdAndDelete(eventID, (err, event) => {
+    Event.findById(eventID, (err, event) => {
       if (err) {
-        return res.status(500).send({ message: 'Error deleting event:', err });
+        return res.status(500).send({ message: 'Error deleting event' });
       }
 
-      // remove the event from the event owners ownedEvents array
-      User.updateOne(
-        { _id: event.owner },
-        { $pullAll: { ownedEvents: [mongoose.Types.ObjectId(eventID)] } },
-        (err) => {
-          if (err) console.log(err);
-        }
-      );
-
-      // remove the event from any of the subscribers subscription arrays
-      const subscriberIDs = event.subscribers;
-      User.updateMany(
-        { _id: { $in: subscriberIDs } },
-        { $pullAll: { subscriptions: [mongoose.Types.ObjectId(eventID)] } },
-        (err) => {
-          if (err) console.log(err);
-        }
-      );
-
       User.findById(userID, (err, user) => {
-        const deletedByAdmin = user.type == 1 ? true : false;
+        if (err) {
+          return res.status(500).send({ message: 'Error deleting event' });
+        }
 
-        // send notification email to the event owner
-        User.findById(event.owner, (err, user) => {
-          let ownerEmailText;
-          if (deletedByAdmin) {
-            ownerEmailText = `This email is to notify you that your event titled '${event.title}' has been deleted by an administrator.\n\nAdministrators remove posts that violate Upvent's posting rules.\n\nPlease contact the admin team if you have any further queries.`;
-          } else {
-            ownerEmailText = `This email is to notify you that your request to delete your event titled '${event.title}' has been completed successully.\n\nWe have notified the subscribers of this event about its deletion.`;
+        // delete request must come from an admin or the event's owner
+        if (user.type !== 1 && user._id != event.owner) {
+          return res
+            .status(403)
+            .send({ message: 'You do not have permission to do that' });
+        }
+
+        // delete the event
+        Event.deleteOne(event, (err) => {
+          if (err) {
+            return res.status(500).send({ message: 'Error deleting event' });
           }
 
-          const mailOptions = {
-            from: 'Upvent ☁️ <accounts@upvent.com>', // 'from' email cannot be customised when using gmail as host
-            to: user.email,
-            subject: `Event Deleted: '${event.title}'`,
-            text: ownerEmailText,
-          };
+          // remove the event from the event owners ownedEvents array
+          User.updateOne(
+            { _id: event.owner },
+            { $pullAll: { ownedEvents: [mongoose.Types.ObjectId(eventID)] } },
+            (err) => {
+              if (err) console.log(err);
+            }
+          );
 
-          emailService.send(mailOptions);
-        });
+          // remove the event from any of the subscribers subscription arrays
+          const subscriberIDs = event.subscribers;
+          User.updateMany(
+            { _id: { $in: subscriberIDs } },
+            { $pullAll: { subscriptions: [mongoose.Types.ObjectId(eventID)] } },
+            (err) => {
+              if (err) console.log(err);
+            }
+          );
 
-        // send notification emails to subscribers
-        User.find()
-          .where('_id')
-          .in(subscriberIDs)
-          .exec((err, docs) => {
-            docs.forEach((doc) => {
-              let subEmailText;
-              if (deletedByAdmin) {
-                subEmailText = `This email is to notify you that the event titled: '${event.title}' that you are subscribed to has been deleted by an administrator.\n\nAdministrators remove posts that violate Upvent's posting rules.\n\nPlease contact the admin team if you have any further queries.`;
-              } else {
-                subEmailText = `This email is to notify you that the event titled: '${event.title}' that you are subscribed to has been deleted by the host.\n\nPlease contact the host if you have any queries regarding the event's deletion.`;
-              }
+          const deletedByAdmin = user.type == 1 ? true : false;
 
-              const mailOptions = {
-                from: 'Upvent ☁️ <accounts@upvent.com>',
-                to: doc.email,
-                subject: `Subscribed Event Deleted: '${event.title}'`,
-                text: subEmailText,
-              };
+          // send notification email to the event owner
+          User.findById(event.owner, (err, user) => {
+            let ownerEmailText;
+            if (deletedByAdmin) {
+              ownerEmailText = `This email is to notify you that your event titled '${event.title}' has been deleted by an administrator.\n\nAdministrators remove posts that violate Upvent's posting rules.\n\nPlease contact the admin team if you have any further queries.`;
+            } else {
+              ownerEmailText = `This email is to notify you that your request to delete your event titled '${event.title}' has been completed successully.\n\nWe have notified the subscribers of this event about its deletion.`;
+            }
 
-              emailService.send(mailOptions);
-            });
+            const mailOptions = {
+              from: 'Upvent ☁️ <accounts@upvent.com>', // 'from' email cannot be customised when using gmail as host
+              to: user.email,
+              subject: `Event Deleted: '${event.title}'`,
+              text: ownerEmailText,
+            };
+
+            emailService.send(mailOptions);
           });
-      });
 
-      return res.status(204).send();
+          // send notification emails to subscribers
+          User.find()
+            .where('_id')
+            .in(subscriberIDs)
+            .exec((err, docs) => {
+              docs.forEach((doc) => {
+                let subEmailText;
+                if (deletedByAdmin) {
+                  subEmailText = `This email is to notify you that the event titled: '${event.title}' that you are subscribed to has been deleted by an administrator.\n\nAdministrators remove posts that violate Upvent's posting rules.\n\nPlease contact the admin team if you have any further queries.`;
+                } else {
+                  subEmailText = `This email is to notify you that the event titled: '${event.title}' that you are subscribed to has been deleted by the host.\n\nPlease contact the host if you have any queries regarding the event's deletion.`;
+                }
+
+                const mailOptions = {
+                  from: 'Upvent ☁️ <accounts@upvent.com>',
+                  to: doc.email,
+                  subject: `Subscribed Event Deleted: '${event.title}'`,
+                  text: subEmailText,
+                };
+
+                emailService.send(mailOptions);
+              });
+            });
+
+          return res.status(204).send();
+        });
+      });
     });
   }
 );
