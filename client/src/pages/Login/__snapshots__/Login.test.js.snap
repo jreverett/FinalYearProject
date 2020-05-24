@@ -1,0 +1,108 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Login /> matches the snapshot 1`] = `
+<div
+  className="form-container col-md-4 offset-md-4"
+>
+  <div
+    id="logo-container"
+  >
+    <img
+      alt="Upvent logo"
+      id="logo"
+      src="upvent.png"
+    />
+  </div>
+  <form
+    name="form"
+    onSubmit={[Function]}
+  >
+    <div
+      className="form-group"
+    >
+      <label
+        htmlFor="email"
+      >
+        Email
+        <p
+          className="compulsory-asterisk"
+        >
+          *
+        </p>
+      </label>
+      <input
+        autoComplete="username"
+        className="form-control"
+        name="email"
+        onChange={[Function]}
+        type="text"
+        value=""
+      />
+    </div>
+    <div
+      className="form-group"
+    >
+      <label
+        htmlFor="password"
+      >
+        Password
+        <p
+          className="compulsory-asterisk"
+        >
+          *
+        </p>
+      </label>
+      <input
+        autoComplete="current-password"
+        className="form-control"
+        name="password"
+        onChange={[Function]}
+        type="password"
+        value=""
+      />
+    </div>
+    <div
+      className="form-group"
+      id="login-button-container"
+    >
+      <button
+        className="btn btn-primary"
+        disabled={false}
+        id="login-button"
+      >
+        Login
+      </button>
+    </div>
+    
+  </form>
+  <div
+    className="login-forgot-password-container"
+  >
+    <a
+      className="login-forgot-password"
+      href="/forgot-password"
+    >
+      Forgot password?
+    </a>
+  </div>
+  <div
+    className="strike"
+  >
+    <span>
+      or
+    </span>
+  </div>
+  <div
+    id="question-container"
+  >
+    <p>
+      Don't have an account? 
+    </p>
+    <a
+      href="/signup"
+    >
+      Sign up
+    </a>
+  </div>
+</div>
+`;

@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Home /> matches the snapshot 1`] = `
+<div
+  id="home-container"
+>
+  <div
+    id="home-search-container"
+  >
+    <p
+      id="home-upper-text"
+    >
+      Discover an amazing...
+    </p>
+    <form
+      id="event-search-container"
+      onSubmit={[Function]}
+    >
+      <label
+        id="event-search-label"
+      >
+        <input
+          className="event-search-text"
+          id="event-search-input"
+          onBlur={[Function]}
+          onChange={[Function]}
+          onFocus={[Function]}
+          value=""
+        />
+        <span
+          className="event-search-text"
+          id="event-search-input-overlay"
+        >
+          <div
+            className="Typist "
+          >
+            <span
+              className="Cursor Cursor--blinking"
+            >
+              |
+            </span>
+          </div>
+        </span>
+      </label>
+    </form>
+    
+  </div>
+</div>
+`;

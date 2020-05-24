@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<EventSearch /> matches the snapshot 1`] = `
+<form
+  id="event-search-container"
+  onSubmit={[Function]}
+>
+  <label
+    id="event-search-label"
+  >
+    <input
+      className="event-search-text"
+      id="event-search-input"
+      onBlur={[Function]}
+      onChange={[Function]}
+      onFocus={[Function]}
+      value=""
+    />
+    <span
+      className="event-search-text"
+      id="event-search-input-overlay"
+    >
+      <div
+        className="Typist "
+      >
+        <span
+          className="Cursor Cursor--blinking"
+        >
+          |
+        </span>
+      </div>
+    </span>
+  </label>
+</form>
+`;

@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<MyEventsRow /> matches the snapshot 1`] = `
+<div
+  className="table-item-container null"
+  id="eventrow-container"
+>
+  <div
+    className="profile-tab-item-text-container"
+  >
+    <p>
+      loading...
+    </p>
+  </div>
+  <div
+    className="eventrow-event-dropdown dropdown nav-item"
+    onKeyDown={[Function]}
+  >
+    <a
+      aria-expanded={false}
+      aria-haspopup={true}
+      className="dropdown-toggle nav-link"
+      href="#"
+      id="collapsible-nav-dropdown"
+      onClick={[Function]}
+      onKeyDown={[Function]}
+      role="button"
+    >
+      <svg
+        fill="currentColor"
+        height="1.5em"
+        size="1.5em"
+        stroke="currentColor"
+        strokeWidth="0"
+        style={
+          Object {
+            "color": undefined,
+          }
+        }
+        viewBox="0 0 512 512"
+        width="1.5em"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z"
+        />
+      </svg>
+    </a>
+  </div>
+</div>
+`;

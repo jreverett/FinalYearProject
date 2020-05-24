@@ -1,0 +1,129 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<SendAnnouncement /> matches the snapshot 1`] = `
+<div
+  className="form-container col-md-8 offset-md-2"
+>
+  <div>
+    <p
+      className="text-header"
+    >
+      Send Announcement
+    </p>
+  </div>
+  <form
+    name="send-announcement-form"
+    onSubmit={[Function]}
+  >
+    <div
+      className="form-group"
+    >
+      <label
+        className="text-small"
+        htmlFor="subject"
+      >
+        Subject
+        <p
+          className="compulsory-asterisk"
+        >
+          *
+        </p>
+      </label>
+      <input
+        className="form-control"
+        id="announcement-subject"
+        name="subject"
+        onChange={[Function]}
+        type="text"
+        value=""
+      />
+    </div>
+    <div
+      className="announcement-inline-container"
+    >
+      <input
+        checked={true}
+        className="form-control announcement-inline-radio"
+        name="immediateSend"
+        onChange={[Function]}
+        type="radio"
+      />
+      <label
+        className="text-small announcement-inline-label"
+        htmlFor="immediateSend"
+      >
+        Send Immediately
+      </label>
+    </div>
+    <div
+      className="announcement-inline-container"
+      id="announcement-inline-container"
+    >
+      <input
+        checked={false}
+        className="form-control announcement-inline-radio"
+        name="scheduleSend"
+        onChange={[Function]}
+        type="radio"
+      />
+      <label
+        className="text-small announcement-inline-label"
+        htmlFor="scheduleSend"
+      >
+        Schedule Release
+      </label>
+    </div>
+    <div
+      className="form-group"
+    >
+      <label
+        className="text-small"
+        htmlFor="body"
+      >
+        Message Body
+        <p
+          className="compulsory-asterisk"
+        >
+          *
+        </p>
+      </label>
+      <textarea
+        className="form-control"
+        form="send-announcement-form"
+        name="body"
+        onChange={[Function]}
+        value=""
+      />
+    </div>
+    <div
+      className="announcement-inline-container"
+    >
+      <input
+        checked={true}
+        className="form-control announcement-inline-radio"
+        name="requestCopy"
+        onChange={[Function]}
+        type="checkbox"
+      />
+      <label
+        className="text-small announcement-inline-label"
+        htmlFor="requestCopy"
+      >
+        Send a copy to my email
+      </label>
+    </div>
+    <div
+      className="announcement-send-button-container"
+      id="form-group"
+    >
+      <button
+        className="btn btn-primary button-green announcement-send-button"
+        disabled={false}
+      >
+        Send
+      </button>
+    </div>
+    
+  </form>
+</div>
+`;

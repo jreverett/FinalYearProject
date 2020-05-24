@@ -1,0 +1,83 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<EventSorting /> matches the snapshot 1`] = `
+<div
+  className="sorting-container"
+>
+  <button
+    className="button-sorting-selector disabled btn btn-primary"
+    disabled={false}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onMouseOut={[Function]}
+    onMouseOver={[Function]}
+    type="button"
+  >
+    Recomended
+  </button>
+  <button
+    className="button-sorting-selector btn btn-primary"
+    disabled={false}
+    onClick={[Function]}
+    type="button"
+  >
+    Most Popular
+  </button>
+  <div
+    className=" disabled"
+    id="sorting-distance-tooltip"
+    onBlur={[Function]}
+    onFocus={[Function]}
+    onMouseOut={[Function]}
+    onMouseOver={[Function]}
+  >
+    <div
+      className="dropdown"
+      onClick={[Function]}
+      onKeyDown={[Function]}
+    >
+      <button
+        aria-expanded={false}
+        aria-haspopup={true}
+        className="dropdown-sorting-selector dropdown-toggle btn btn-info"
+        disabled={true}
+        onClick={[Function]}
+        type="button"
+      >
+        Distance
+      </button>
+    </div>
+  </div>
+  <div
+    className="dropdown"
+    onKeyDown={[Function]}
+  >
+    <button
+      aria-expanded={false}
+      aria-haspopup={true}
+      className="dropdown-sorting-selector dropdown-toggle btn btn-info"
+      disabled={false}
+      onClick={[Function]}
+      type="button"
+    >
+      Cost
+    </button>
+  </div>
+  <div
+    className="dropdown"
+    onKeyDown={[Function]}
+  >
+    <button
+      aria-expanded={false}
+      aria-haspopup={true}
+      className="dropdown-sorting-selector dropdown-toggle btn btn-info"
+      disabled={false}
+      onClick={[Function]}
+      type="button"
+    >
+      Date
+    </button>
+  </div>
+</div>
+`;

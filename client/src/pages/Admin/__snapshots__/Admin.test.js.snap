@@ -1,0 +1,85 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Admin /> matches the snapshot 1`] = `
+<div
+  className="form-container col-md-6 offset-md-3"
+  id="admin-container"
+>
+  <p
+    className="text-header"
+  >
+    Upvent Admin Panel
+  </p>
+  <div
+    style={
+      Object {
+        "height": "auto",
+      }
+    }
+  >
+    <nav
+      className="nav nav-tabs"
+      onKeyDown={[Function]}
+      role="tablist"
+    >
+      <a
+        aria-controls={null}
+        aria-selected={true}
+        className="nav-item nav-link active"
+        data-rb-event-key="users"
+        href="#"
+        id={null}
+        onClick={[Function]}
+        onKeyDown={[Function]}
+        role="tab"
+      >
+        Users
+      </a>
+      <a
+        aria-controls={null}
+        aria-selected={false}
+        className="nav-item nav-link"
+        data-rb-event-key="events"
+        href="#"
+        id={null}
+        onClick={[Function]}
+        onKeyDown={[Function]}
+        role="tab"
+        tabIndex={-1}
+      >
+        Events
+      </a>
+    </nav>
+    <div
+      className="tab-content"
+    >
+      <div
+        aria-hidden={false}
+        aria-labelledby={null}
+        className="fade admin-tab tab-pane active show"
+        id={null}
+        role="tabpanel"
+      >
+        <div
+          className="table-container"
+        >
+          <div />
+        </div>
+      </div>
+      <div
+        aria-hidden={true}
+        aria-labelledby={null}
+        className="fade admin-tab tab-pane"
+        id={null}
+        role="tabpanel"
+      >
+        <div
+          className="table-container"
+        >
+          <div />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

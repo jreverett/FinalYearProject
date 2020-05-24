@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<EventTile /> matches the snapshot 1`] = `
+<div
+  className="event-gallery-masonry-brick card border-primary"
+  onClick={[Function]}
+>
+  <img
+    className="card-img-top card-image"
+    src="event-thumb-placeholder.png"
+  />
+  <div
+    className="card-body"
+  >
+    <p
+      className="start-time-label"
+    >
+      12:34 pm, Tue 1st Jan, 2030
+    </p>
+    <p
+      className="cost-label null"
+    >
+      £NaN
+    </p>
+    <div
+      className="card-title h5"
+    />
+    <p
+      className="card-text"
+    >
+      Test Lane
+    </p>
+  </div>
+</div>
+`;
