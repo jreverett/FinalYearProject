@@ -35,6 +35,8 @@ class UserAdminRow extends Component {
         prompt = status ? 'UNSUSPEND?' : 'SUSPEND?';
         this.setState({ suspendButtonHover: true, userSuspendText: prompt });
         break;
+      default:
+        return;
     }
   };
 
@@ -55,12 +57,13 @@ class UserAdminRow extends Component {
           userSuspendText: this.getSuspendText(),
         });
         break;
+      default:
+        return;
     }
   };
 
   getAdminText = () => {
-    console.log('type', this.props.user.type);
-    return this.props.user.type == 1 ? 'ADMIN' : 'STANDARD';
+    return this.props.user.type === 1 ? 'ADMIN' : 'STANDARD';
   };
 
   getVerifyText = () => {
@@ -169,7 +172,7 @@ class UserAdminRow extends Component {
       verified,
       suspended,
     } = this.props.user;
-    const admin = type == 1 ? true : false;
+    const admin = type === 1 ? true : false;
     const fullname = `${firstname} ${lastname}`;
     return (
       <div className="table-item-container user-admin-container">

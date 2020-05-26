@@ -15,7 +15,7 @@ function signup(firstname, lastname, email, address, password) {
     body: JSON.stringify({ firstname, lastname, email, address, password }),
   };
 
-  return fetch(`${API_URL}/api/user/signup`, requestOptions) //TODO: change this to use /api/users (POST)
+  return fetch(`${API_URL}/api/users`, requestOptions)
     .then(handleResponse)
     .then({
       if(user) {
@@ -65,7 +65,7 @@ function update(userID, { ...params }) {
     body: JSON.stringify({ userID, ...params }),
   };
 
-  return fetch(`${API_URL}/api/user/update`, requestOptions)
+  return fetch(`${API_URL}/api/users`, requestOptions)
     .then(handleResponse)
     .then({
       if(user) {
@@ -138,21 +138,21 @@ function unsubscribe(userID, eventID) {
     });
 }
 
-// function deleteUser(userID) {
-//   const requestOptions = {
-//     method: 'DELETE',
-//     headers: { 'Content-Type': 'application/json' },
-//     body: JSON.stringify({ userID }),
-//   };
+function deleteUser(userID) {
+  const requestOptions = {
+    method: 'DELETE',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ userID }),
+  };
 
-//   return fetch(`${API_URL}/api/users`, requestOptions)
-//     .then(handleResponse)
-//     .then({
-//       if(res) {
-//         return res;
-//       },
-//     });
-// }
+  return fetch(`${API_URL}/api/users`, requestOptions)
+    .then(handleResponse)
+    .then({
+      if(res) {
+        return res;
+      },
+    });
+}
 
 export const userService = {
   loggedInUser: currentUserSubject.asObservable(),
@@ -164,7 +164,7 @@ export const userService = {
   update,
   forgotPassword,
   resetPassword,
-  // deleteUser,
+  deleteUser,
   get loggedInUserValue() {
     return currentUserSubject ? currentUserSubject.value : null;
   },

@@ -30,6 +30,7 @@ const EventSchema = mongoose.Schema({
   },
   address: {
     type: Object,
+    required: true,
   },
   images: {
     type: Array,

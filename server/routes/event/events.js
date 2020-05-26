@@ -141,20 +141,14 @@ router.delete(
           // remove the event from the event owners ownedEvents array
           User.updateOne(
             { _id: event.owner },
-            { $pullAll: { ownedEvents: [mongoose.Types.ObjectId(eventID)] } },
-            (err) => {
-              if (err) console.log(err);
-            }
+            { $pullAll: { ownedEvents: [mongoose.Types.ObjectId(eventID)] } }
           );
 
           // remove the event from any of the subscribers subscription arrays
           const subscriberIDs = event.subscribers;
           User.updateMany(
             { _id: { $in: subscriberIDs } },
-            { $pullAll: { subscriptions: [mongoose.Types.ObjectId(eventID)] } },
-            (err) => {
-              if (err) console.log(err);
-            }
+            { $pullAll: { subscriptions: [mongoose.Types.ObjectId(eventID)] } }
           );
 
           const deletedByAdmin = user.type == 1 ? true : false;

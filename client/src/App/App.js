@@ -36,9 +36,7 @@ class App extends Component {
 
   componentDidMount() {
     // subscribe to the logged in user observable
-    this.state.loggedInUser = userService.loggedInUser.subscribe(
-      this.handleUserUpdate
-    );
+    userService.loggedInUser.subscribe(this.handleUserUpdate);
 
     // fetch data for the current logged-in user
     const userID = userService.loggedInUserValue?._id;
@@ -87,7 +85,6 @@ class App extends Component {
     });
   };
 
-  // TODO: combine this handler with the userUpdate one above
   handleSearchTitleUpdate = (searchTitle) => {
     this.setState({
       searchTitle: searchTitle,

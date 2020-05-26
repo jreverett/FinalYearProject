@@ -145,9 +145,6 @@ class EventFiltering extends Component {
               });
             } else {
               alert('Error filtering by location');
-              console.log(
-                `Geocode was not successful for the following reason: ${status}`
-              );
             }
             this.setState({ filtered: true });
             return this.props.updateEvents({ data: filteredEvents });

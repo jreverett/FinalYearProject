@@ -24,7 +24,7 @@ describe('event service', () => {
   };
 
   it('should create an account for the user', (done) => {
-    fetchMock.post(`${API_URL}/api/user/signup`, {
+    fetchMock.post(`${API_URL}/api/users`, {
       status: 201,
       message: 'User added successfully',
     });
@@ -34,11 +34,11 @@ describe('event service', () => {
       expect(res.message).toEqual('User added successfully');
       done();
     });
-    expect(fetchMock).toHavePosted(`${API_URL}/api/user/signup`);
+    expect(fetchMock).toHavePosted(`${API_URL}/api/users`);
   });
 
   it('should return an appropriate error if an error occours during user creation', (done) => {
-    fetchMock.post(`${API_URL}/api/user/signup`, {
+    fetchMock.post(`${API_URL}/api/users`, {
       status: 500,
       message: 'Failed to add user',
     });
@@ -48,7 +48,7 @@ describe('event service', () => {
       expect(res.message).toEqual('Failed to add user');
       done();
     });
-    expect(fetchMock).toHavePosted(`${API_URL}/api/user/signup`);
+    expect(fetchMock).toHavePosted(`${API_URL}/api/users`);
   });
 
   ////////////////////////////////////////
@@ -278,7 +278,7 @@ describe('event service', () => {
   };
 
   it("should update a user's details", (done) => {
-    fetchMock.patch(`${API_URL}/api/user/update`, {
+    fetchMock.patch(`${API_URL}/api/users`, {
       status: 204,
       message: null,
     });
@@ -288,11 +288,11 @@ describe('event service', () => {
       expect(res.message).toBeNull();
       done();
     });
-    expect(fetchMock).toHavePatched(`${API_URL}/api/user/update`);
+    expect(fetchMock).toHavePatched(`${API_URL}/api/users`);
   });
 
   it('should return an appropriate error if an error occurs during updating', (done) => {
-    fetchMock.patch(`${API_URL}/api/user/update`, {
+    fetchMock.patch(`${API_URL}/api/users`, {
       status: 500,
       message: 'Failed to update user',
     });
@@ -302,7 +302,7 @@ describe('event service', () => {
       expect(res.message).toEqual('Failed to update user');
       done();
     });
-    expect(fetchMock).toHavePatched(`${API_URL}/api/user/update`);
+    expect(fetchMock).toHavePatched(`${API_URL}/api/users`);
   });
 
   ////////////////////////////////////////
@@ -370,5 +370,38 @@ describe('event service', () => {
       done();
     });
     expect(fetchMock).toHavePatched(`${API_URL}/api/user/reset-password`);
+  });
+
+  ////////////////////////////////////////
+  // DELETE USER
+  ////////////////////////////////////////
+  const mockDeleteUserID = '315253523030303030303241';
+
+  it('should delete the user', (done) => {
+    fetchMock.delete(`${API_URL}/api/users`, {
+      status: 204,
+      message: null,
+    });
+
+    userService.deleteUser(mockDeleteUserID).then((res) => {
+      expect(res.status).toEqual(204);
+      expect(res.message).toBeNull();
+      done();
+    });
+    expect(fetchMock).toHaveDeleted(`${API_URL}/api/users`);
+  });
+
+  it('should return an appropriate error if no userID is supplied for user deletion', (done) => {
+    fetchMock.delete(`${API_URL}/api/users`, {
+      status: 400,
+      message: 'Failed to delete user: No email specified',
+    });
+
+    userService.deleteUser(mockDeleteUserID).then((res) => {
+      expect(res.status).toEqual(400);
+      expect(res.message).toEqual('Failed to delete user: No email specified');
+      done();
+    });
+    expect(fetchMock).toHaveDeleted(`${API_URL}/api/users`);
   });
 });

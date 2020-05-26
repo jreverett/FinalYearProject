@@ -44,12 +44,12 @@ class EventModal extends Component {
     });
 
     // check if user is the owner of this event
-    if (loggedInUser?.ownedEvents.includes(eventDetails._id)) {
+    if (loggedInUser?.ownedEvents?.includes(eventDetails._id)) {
       this.setState({ userIsOwner: true });
     }
 
     // check if user is subscribed to this event
-    if (loggedInUser?.subscriptions.includes(eventDetails._id)) {
+    if (loggedInUser?.subscriptions?.includes(eventDetails._id)) {
       this.setState({
         userIsSubscribed: true,
         subscriptionButtonText: 'Subscribed',
@@ -156,7 +156,7 @@ class EventModal extends Component {
                 <p className="text-subtext">
                   hosted by {owner}{' '}
                   {verified && (
-                    <span id="modal-verified-badge">
+                    <span id="modal-verified-badge" title={'Verified'}>
                       <GoVerified />
                     </span>
                   )}

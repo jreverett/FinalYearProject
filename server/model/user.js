@@ -23,6 +23,7 @@ const UserSchema = mongoose.Schema({
   },
   emailConsent: {
     type: Boolean,
+    required: true,
     default: false,
   },
   address: {
@@ -30,9 +31,11 @@ const UserSchema = mongoose.Schema({
   },
   hash: {
     type: String,
+    required: true,
   },
   salt: {
     type: String,
+    required: true,
   },
   verified: {
     type: Boolean,
@@ -56,6 +59,7 @@ const UserSchema = mongoose.Schema({
   },
   suspended: {
     type: Boolean,
+    required: true,
     default: false,
   },
 });

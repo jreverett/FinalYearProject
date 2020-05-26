@@ -6,10 +6,6 @@ import '../../common.css';
 import './EventSorting.css';
 
 class EventSorting extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   renderTooltip() {
     return (
       <Tooltip id="dropdown-tooltip">
@@ -26,7 +22,7 @@ class EventSorting extends Component {
 
     switch (criteria) {
       case 'recomended':
-        if (!this.props.loggedInUser?.address.location) return;
+        if (!this.props.loggedInUser?.address?.location) return;
 
         // distance (close-far) -> popularity (high-low) -> cost (low-high)
         var recomended = this.getEventDistances(true).sort(
@@ -114,7 +110,7 @@ class EventSorting extends Component {
       <div className="sorting-container">
         {/* RECOMENDED */}
         <ConditionalWrapper
-          condition={!loggedInUser}
+          condition={!allowDistance}
           wrapper={(children) => (
             <OverlayTrigger placement="right" overlay={this.renderTooltip()}>
               {children}
@@ -123,7 +119,7 @@ class EventSorting extends Component {
         >
           <Button
             className={`button-sorting-selector ${
-              loggedInUser ? '' : 'disabled'
+              allowDistance ? '' : 'disabled'
             }`}
             onClick={() => this.sortBy('recomended')}
           >
