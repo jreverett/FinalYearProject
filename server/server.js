@@ -1,4 +1,3 @@
-const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
@@ -29,24 +28,6 @@ app.use('/api', topicRouter);
 app.get('*', (req, res) => {
   let url = path.join(__dirname, '../client/build', 'index.html');
   res.sendFile(url);
-});
-
-// catch 404's and send them to the error handler
-app.use(function (req, res, next) {
-  next(createError(404));
-});
-
-// error handler
-app.use(function (err, req, res, next) {
-  // only show error in dev mode
-  // ********** TEMPORARILY DISABLED ************
-  // res.locals.message = err.message;
-  // res.locals.error = process.env.NODE_ENV === 'development' ? err : {};
-  // ********************************************
-
-  // show error page
-  res.status(err.status || 500);
-  res.json({ message: err.message, error: err });
 });
 
 //////////////////////////////////////////////////////////////
