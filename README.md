@@ -26,7 +26,7 @@ Finally, return to the root directory by running '**cd ..**'.
 
 <ins>Running the Project:</ins>
 
-Execute the command **npm run dev** to concurrently launch both the client and server. Upvent should open automatically in your default browser, but if it doesn’t head to localhost:9000 in your browser.
+Execute the command **npm run dev** to concurrently launch both the client and server. Upvent should open automatically in your default browser, but if it doesn’t head to localhost:3000 in your browser.
 
 When the project is running successfully, the terminal should look something like this:
 
