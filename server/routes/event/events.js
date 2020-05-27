@@ -16,21 +16,21 @@ router.post(
     verifyAuthToken(req, res, next);
   },
   (req, res) => {
-    User.findById(req.body.userID, (userErr, user) => {
+    User.findById(req.body.owner, (err, owner) => {
       // create new event document
       let newEvent = new Event();
 
       // find and update user document
-      if (userErr || !user) {
+      if (err || !owner) {
         return res.status(500).send({
           message: 'Unable to create event: Please try again later',
         });
       }
 
-      user.ownedEvents.push(newEvent._id);
+      owner.ownedEvents.push(newEvent._id);
 
       // set event properties
-      newEvent.owner = req.body.userID;
+      newEvent.owner = req.body.owner;
       newEvent.title = req.body.title;
       newEvent.topic = req.body.topic;
       newEvent.description = req.body.description;
@@ -47,8 +47,8 @@ router.post(
             message: 'Failed to create event',
           });
         } else {
-          // event save successful, so save the user
-          user.save();
+          // event save successful, so save the user (owner)
+          owner.save();
 
           return res.status(201).send({
             message: 'Event added successfully',
@@ -126,7 +126,7 @@ router.delete(
         }
 
         // delete request must come from an admin or the event's owner
-        if (user.type !== 1 && user._id != event.owner) {
+        if (!user._id.equals(event.owner) && user.type !== 1) {
           return res
             .status(403)
             .send({ message: 'You do not have permission to do that' });
@@ -138,17 +138,20 @@ router.delete(
             return res.status(500).send({ message: 'Error deleting event' });
           }
 
-          // remove the event from the event owners ownedEvents array
-          User.updateOne(
-            { _id: event.owner },
-            { $pullAll: { ownedEvents: [mongoose.Types.ObjectId(eventID)] } }
-          );
-
-          // remove the event from any of the subscribers subscription arrays
-          const subscriberIDs = event.subscribers;
+          // remove the event from the event owners 'ownedEvents' array and subscribers 'subscriptions' array
+          const queryEventID = mongoose.Types.ObjectId(eventID);
           User.updateMany(
-            { _id: { $in: subscriberIDs } },
-            { $pullAll: { subscriptions: [mongoose.Types.ObjectId(eventID)] } }
+            {},
+            {
+              $pull: { ownedEvents: queryEventID, subscriptions: queryEventID },
+            },
+            (err) => {
+              if (err) {
+                return res
+                  .status(500)
+                  .send({ message: 'Error deleting event' });
+              }
+            }
           );
 
           const deletedByAdmin = user.type == 1 ? true : false;
@@ -173,6 +176,8 @@ router.delete(
           });
 
           // send notification emails to subscribers
+          const subscriberIDs = event.subscribers;
+
           User.find()
             .where('_id')
             .in(subscriberIDs)

@@ -108,7 +108,17 @@ class CreateEvent extends Component {
 
     this.setState({ loading: true });
     eventService
-      .createEvent(title, topic, description, start, end, cost, address, images)
+      .createEvent(
+        this.props.loggedInUser._id,
+        title,
+        topic,
+        description,
+        start,
+        end,
+        cost,
+        address,
+        images
+      )
       .then(
         () => {
           this.setState({ loading: false });
